@@ -24,7 +24,7 @@ echo $gcp_svc_acct_key > /tmp/svc-acct.json
   -var "pcf_ert_domain=$pcf_ert_domain" \
   -var "pcf_ert_ssl_cert=$pcf_ert_ssl_cert" \
   -var "pcf_ert_ssl_key=$pcf_ert_ssl_key" \
-  gcp-concourse-ert/terraform/$gcp_pcf_terraform_template
+  gcp-concourse/terraform/$gcp_pcf_terraform_template
 
 /opt/terraform/terraform apply \
   -var "gcp_proj_id=$gcp_proj_id" \
@@ -40,4 +40,4 @@ echo $gcp_svc_acct_key > /tmp/svc-acct.json
   -var "pcf_ert_domain=$pcf_ert_domain" \
   -var "pcf_ert_ssl_cert=$pcf_ert_ssl_cert" \
   -var "pcf_ert_ssl_key=$pcf_ert_ssl_key" \
-  gcp-concourse-ert/terraform/$gcp_pcf_terraform_template
+  gcp-concourse/terraform/$gcp_pcf_terraform_template
