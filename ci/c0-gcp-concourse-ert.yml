@@ -154,7 +154,6 @@ jobs:
       image: docker:///virtmerlin/pcf-gcp-worker
       inputs:
         - name: gcp-concourse
-        - name: pivnet-elastic-runtime
         - name: tool-om
       run:
         path: gcp-concourse/ci/tasks/ert/config-opsman.sh
