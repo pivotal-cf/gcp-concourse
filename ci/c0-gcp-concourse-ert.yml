@@ -8,7 +8,10 @@ groups:
   - deploy-iaas
 - name: ert
   jobs:
+  - config-opsman
+  - deploy-director
   - upload-ert
+  - deploy-ert
 - name: cats
 
 resource_types:
@@ -135,6 +138,35 @@ jobs:
         pcf_ert_ssl_cert: {{pcf_ert_ssl_cert}}
         pcf_ert_ssl_key: {{pcf_ert_ssl_key}}
 
+
+- name: config-opsman
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+    - get: tool-om
+  - task: upload-ert
+    config:
+      inputs:
+        - name: gcp-concourse
+        - name: pivnet-elastic-runtime
+        - name: tool-om
+      run:
+        path: gcp-concourse/ci/tasks/ert/config-opsman.sh
+
+- name: deploy-director
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+    - get: tool-om
+
 - name: upload-ert
   serial: true
   max_in_flight: 1
@@ -157,3 +189,13 @@ jobs:
         - name: tool-om
       run:
         path: gcp-concourse/ci/tasks/ert/upload-ert.sh
+
+- name: deploy-ert
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+    - get: tool-om
