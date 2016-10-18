@@ -3,6 +3,11 @@ set -e
 
 sudo cp tool-om/om-linux /usr/local/bin
 
+echo "=============================================================================================="
+echo "Configuring OpsManager @ https://opsmgr.$pcf_ert_domain ..."
+echo "=============================================================================================="
+
+
 #Configure Opsman
 om-linux --target https://opsmgr.$pcf_ert_domain -k \
      configure-authentication \
