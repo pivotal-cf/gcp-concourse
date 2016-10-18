@@ -5,7 +5,7 @@
 resource "google_dns_managed_zone" "env_dns_zone" {
   name        = "${var.gcp_terraform_prefix}-zone"
   dns_name    = "${var.pcf_ert_domain}."
-  description = "DNS zone (${pcf_ert_domain})for the ${var.gcp_terraform_prefix} deployment"
+  description = "DNS zone (var.pcf_ert_domain)for the var.gcp_terraform_prefix deployment"
 }
 
 ///////////////////////////////////////////////
