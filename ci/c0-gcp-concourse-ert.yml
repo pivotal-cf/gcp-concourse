@@ -7,6 +7,7 @@ groups:
   jobs:
   - deploy-iaas
 - name: ert
+  - upload-ert
 - name: cats
 
 resource_types:
@@ -62,17 +63,6 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
-#    - get: pivnet-opsmgr
-#      trigger: true
-#      params:
-#        globs:
-#        - "*GCP*"
-#    - get: pivnet-elastic-runtime
-#      trigger: true
-#      params:
-#        globs:
-#        - "*pivotal"
-#      trigger: true
   - task: wipe-env
     config:
       platform: linux
@@ -100,7 +90,7 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       params:
         globs:
         - "*GCP*"
@@ -143,3 +133,26 @@ jobs:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_ert_ssl_cert: {{pcf_ert_ssl_cert}}
         pcf_ert_ssl_key: {{pcf_ert_ssl_key}}
+
+- name: upload-ert
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+    - get: pivnet-elastic-runtime
+      trigger: false
+      params:
+        globs:
+        - "*pivotal"
+    - get: tool-om
+  - task: upload-ert
+    config:
+      inputs:
+        - name: gcp-concourse
+        - name: pivnet-elastic-runtime
+        - name: tool-om
+      run:
+        path: gcp-concourse/ci/tasks/ert/upload-ert.sh
