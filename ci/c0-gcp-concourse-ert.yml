@@ -148,8 +148,10 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: tool-om
-  - task: upload-ert
+  - task: config-opsman
     config:
+      platform: linux
+      image: docker:///virtmerlin/pcf-gcp-worker
       inputs:
         - name: gcp-concourse
         - name: pivnet-elastic-runtime
@@ -183,6 +185,8 @@ jobs:
     - get: tool-om
   - task: upload-ert
     config:
+      platform: linux
+      image: docker:///virtmerlin/pcf-gcp-worker
       inputs:
         - name: gcp-concourse
         - name: pivnet-elastic-runtime
