@@ -39,6 +39,7 @@ resources:
   source:
     user: pivotal-cf
     repository: om
+    access_token: {{githubtoken}}
 
 - name: pivnet-opsmgr
   type: pivnet
