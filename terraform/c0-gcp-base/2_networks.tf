@@ -15,7 +15,7 @@
 
   //// Create Subnet for the Ops Manager & Jumpbox
   resource "google_compute_subnetwork" "subnet-ops-manager" {
-    name          = "${var.gcp_terraform_prefix}-subnet-bosh-${var.gcp_region}"
+    name          = "${var.gcp_terraform_prefix}-subnet-opsman-${var.gcp_region}"
     ip_cidr_range = "${var.gcp_terraform_subnet_ops_manager}"
     network       = "${google_compute_network.pcf-virt-net.self_link}"
   }
@@ -38,7 +38,7 @@
 //// Addresses      =============//////////////
 ///////////======================//////////////
 
-  // Global IP for 
+  // Global IP for
   resource "google_compute_global_address" "pcf" {
     name = "${var.gcp_terraform_prefix}-global-pcf"
   }
