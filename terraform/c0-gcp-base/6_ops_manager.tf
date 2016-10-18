@@ -8,7 +8,7 @@ resource "google_compute_instance" "ops-manager" {
   machine_type = "n1-standard-2"
   zone         = "${var.gcp_zone_1}"
 
-  tags = ["${var.gcp_terraform_prefix}-ops-manager", "allow-https"]
+  tags = ["${var.gcp_terraform_prefix}", "allow-https"]
 
   disk {
     image = "${var.pcf_opsman_image_name}"
