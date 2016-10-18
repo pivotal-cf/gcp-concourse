@@ -32,11 +32,10 @@ resources:
     private_key: {{githubsshkey}}
 
 - name: tool-om
-  type: git
+  type: github-release
   source:
-    uri: git@github.com:pivotal-cf/om.git
-    branch: master
-    private_key: {{githubsshkey}}
+    user: pivotal-cf
+    repository: om
 
 - name: pivnet-opsmgr
   type: pivnet
@@ -148,6 +147,9 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: tool-om
+      params:
+        globs:
+        - "om-linux"
   - task: config-opsman
     config:
       platform: linux
@@ -166,7 +168,6 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
-    - get: tool-om
 
 - name: upload-ert
   serial: true
@@ -181,7 +182,6 @@ jobs:
       params:
         globs:
         - "*pivotal"
-    - get: tool-om
   - task: upload-ert
     config:
       platform: linux
@@ -189,7 +189,6 @@ jobs:
       inputs:
         - name: gcp-concourse
         - name: pivnet-elastic-runtime
-        - name: tool-om
       run:
         path: gcp-concourse/ci/tasks/ert/upload-ert.sh
 
@@ -201,4 +200,3 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
-    - get: tool-om
