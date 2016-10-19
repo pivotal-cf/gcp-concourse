@@ -44,3 +44,6 @@ fn_set_dyn_dns "api" "$dns_api_ip"
 fn_set_dyn_dns "opsman" "$dns_opsman_ip"
 fn_set_dyn_dns "ssh" "$dns_tcp_ip"
 fn_set_dyn_dns "tcp" "$dns_tcp_ip"
+
+echo "Sleeping for 300 seconds while DNS Cache updates..."
+sleep 300
