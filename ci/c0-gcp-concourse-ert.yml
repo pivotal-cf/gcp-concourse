@@ -4,7 +4,7 @@ groups:
   jobs:
   - wipe-env
 
-- name: iaas+opsman
+- name: iaas_opsman
   jobs:
   - deploy-iaas
 
@@ -101,7 +101,7 @@ jobs:
       params:
         globs:
         - "*GCP*"
-  - task: deploy-opsman
+  - task: upload-opsman
     config:
       platform: linux
       image: docker:///virtmerlin/pcf-gcp-worker
@@ -111,7 +111,7 @@ jobs:
       outputs:
         - name: opsman-metadata
       run:
-        path: gcp-concourse/ci/tasks/iaas/deploy-opsman.sh
+        path: gcp-concourse/ci/tasks/iaas/upload-opsman.sh
       params:
         gcp_proj_id: {{gcp_proj_id}}
         gcp_region: {{gcp_region}}
