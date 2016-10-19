@@ -140,23 +140,23 @@ jobs:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_ert_ssl_cert: {{pcf_ert_ssl_cert}}
         pcf_ert_ssl_key: {{pcf_ert_ssl_key}}
-    - task: c0-set-dns.sh
-      config:
-        platform: linux
-        image: docker:///virtmerlin/pcf-gcp-worker
-        inputs:
-          - name: gcp-concourse
-          - name: opsman-metadata
-        run:
-          path: gcp-concourse/ci/tasks/iaas/c0-set-dns.sh
-        params:
-          gcp_proj_id: {{gcp_proj_id}}
-          gcp_region: {{gcp_region}}
-          gcp_svc_acct_key: {{gcp_svc_acct_key}}
-          dyn_enabled: {{dyn_enabled}}
-          dyn_user: {{dyn_user}}
-          dyn_token: {{dyn_token}}
-          pcf_ert_domain: {{pcf_ert_domain}}
+  - task: c0-set-dns.sh
+    config:
+      platform: linux
+      image: docker:///virtmerlin/pcf-gcp-worker
+      inputs:
+        - name: gcp-concourse
+        - name: opsman-metadata
+      run:
+        path: gcp-concourse/ci/tasks/iaas/c0-set-dns.sh
+      params:
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        dyn_enabled: {{dyn_enabled}}
+        dyn_user: {{dyn_user}}
+        dyn_token: {{dyn_token}}
+        pcf_ert_domain: {{pcf_ert_domain}}
 
 - name: config-opsman
   serial: true
