@@ -65,7 +65,7 @@ for (( z=1; z<${dns_retries}; z++ )); do
     fi
 done
 
-echo "FAIL!!! Standard Dyn DNS not updated for  $pcf_ert_domain"
+#echo "FAIL!!! Standard Dyn DNS not updated for  $pcf_ert_domain"
 dig opsman.$pcf_ert_domain
 
-exit 1
+#exit 1
