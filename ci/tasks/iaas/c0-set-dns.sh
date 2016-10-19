@@ -47,6 +47,25 @@ fn_set_dyn_dns "tcp" "$dns_tcp_ip"
 
 echo
 echo "----------------------------------------------------------------------------------------------"
-echo "Sleeping for 300 seconds while DNS Cache updates..."
-sleep 300
+echo "Sleeping until DNS Cache updates..."
 echo "----------------------------------------------------------------------------------------------"
+
+sudo apt-get -y install dnsutils
+let dns_retries=20
+let dns_sleep_seconds=15
+for (( z=1; z<${dns_retries}; z++ )); do
+
+    resolve_ip=$(dig opsman.$pcf_ert_domain | grep -A 1 "ANSWER SECTION" | grep ^opsman | awk '{print$5}')
+    if [[ ! $resolve_ip == $dns_opsman_ip ]]; then
+      echo "dnsattempt_$z of $dns_retries:DNS not updated yet!!! I expected the new IP of $dns_opsman_ip but got this instead - $resolve_ip"
+      sleep $dns_sleep_seconds
+    else
+      echo "SUCCESS!!! Standard Dyn DNS updated for  $pcf_ert_domain"
+      exit 0
+    fi
+done
+
+echo "FAIL!!! Standard Dyn DNS not updated for  $pcf_ert_domain"
+dig opsman.$pcf_ert_domain
+
+exit 1

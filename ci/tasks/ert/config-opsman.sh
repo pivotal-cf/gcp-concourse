@@ -5,7 +5,7 @@ sudo cp tool-om/om-linux /usr/local/bin
 sudo chmod 755 /usr/local/bin/om-linux
 
 echo "=============================================================================================="
-echo "Configuring OpsManager @ https://opsmgr.$pcf_ert_domain ..."
+echo "Configuring OpsManager @ https://opsman.$pcf_ert_domain ..."
 echo "=============================================================================================="
 
 
