@@ -1,6 +1,6 @@
 // Health check
 resource "google_compute_http_health_check" "cf-tcp" {
-  name                = "${var.gcp_terraform_prefix}-cf-tcp"
+  name                = "${var.gcp_terraform_prefix}-tcp-lb"
   host                = "tcp.sys.${google_dns_managed_zone.env_dns_zone.dns_name}"
   port                = 80
   request_path        = "/health"
