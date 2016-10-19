@@ -43,7 +43,12 @@
     name = "${var.gcp_terraform_prefix}-global-pcf"
   }
 
-  // Static IP address for forwarding rule
+  // Static IP address for forwarding rule for tcp LB
   resource "google_compute_address" "cf-tcp" {
-    name = "${var.gcp_terraform_prefix}-cf-tcp"
+    name = "${var.gcp_terraform_prefix}-tcp-lb"
+  }
+
+  // Static IP address for forwarding rule for sshproxy
+  resource "google_compute_address" "ssh-tcp" {
+    name = "${var.gcp_terraform_prefix}-ssh-lb"
   }

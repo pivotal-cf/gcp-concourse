@@ -38,6 +38,7 @@ dns_opsman_cmd="gcloud compute instances list --format json | jq ' .[] | select 
 dns_opsman_ip=$(eval $dns_opsman_cmd)
 dns_api_ip=$(fn_get_ip "global-pcf")
 dns_tcp_ip=$(fn_get_ip "tcp-lb")
+dns_ssh_ip=$(fn_get_ip "ssh-lb")
 
 fn_set_dyn_dns "api" "$dns_api_ip"
 fn_set_dyn_dns "opsman" "$dns_opsman_ip"
