@@ -104,7 +104,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: false
+      trigger: true
       passed: [wipe-env]
     - get: pivnet-opsmgr
       trigger: false
