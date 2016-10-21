@@ -31,7 +31,7 @@ resource "google_compute_http_health_check" "cf-tcp" {
 
 // GoRouter target pool
 resource "google_compute_target_pool" "cf-gorouter" {
-  name = "${var.gcp_terraform_prefix}-gorouter"
+  name = "${var.gcp_terraform_prefix}-wss-logs"
 
   health_checks = [
     "${google_compute_http_health_check.cf-gorouter.name}",
@@ -59,7 +59,7 @@ resource "google_compute_target_pool" "cf-tcp" {
 // Doppler forwarding rule
 resource "google_compute_forwarding_rule" "cf-gorouter" {
   name        = "${var.gcp_terraform_prefix}-gorouter-wss"
-  target      = "${google_compute_target_pool.cf-tcp.self_link}"
+  target      = "${google_compute_target_pool.cf-gorouter.self_link}"
   port_range  = "443"
   ip_protocol = "TCP"
   ip_address  = "${google_compute_address.ssh-and-doppler.address}"
