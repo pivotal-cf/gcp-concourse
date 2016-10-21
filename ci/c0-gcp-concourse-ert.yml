@@ -190,7 +190,7 @@ jobs:
         - name: gcp-concourse
         - name: tool-om
       run:
-        path: gcp-concourse/ci/tasks/ert/config-opsman.sh
+        path: gcp-concourse/ci/tasks/iaas/config-opsman.sh
       params:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_opsman_admin: {{pcf_opsman_admin}}
@@ -217,7 +217,7 @@ jobs:
         - name: gcp-concourse
         - name: tool-om
       run:
-        path: gcp-concourse/ci/tasks/ert/deploy-director.sh
+        path: gcp-concourse/ci/tasks/iaas/deploy-director.sh
       params:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_opsman_admin: {{pcf_opsman_admin}}
