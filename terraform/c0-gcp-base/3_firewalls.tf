@@ -78,8 +78,8 @@ resource "google_compute_firewall" "allow-ert-all" {
   allow {
     protocol = "udp"
   }
-  target_tags = ["${var.gcp_terraform_prefix}"]
-  source_tags = ["${var.gcp_terraform_prefix}"]
+  target_tags = ["${var.gcp_terraform_prefix}","${var.gcp_terraform_prefix}-opsman","nat-traverse"]
+  source_tags = ["${var.gcp_terraform_prefix}","${var.gcp_terraform_prefix}-opsman","nat-traverse"]
 }
 
 //// Allow access to Optional CF TCP router
