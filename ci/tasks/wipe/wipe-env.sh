@@ -131,7 +131,7 @@ for z in ${COMPONENT[@]}; do
           gcloud $z delete $i --region $gcp_region --quiet
       fi
     elif [[ $z == "compute forwarding-rules" ]]; then
-       tmp_region=$(gcloud $z list | grep $i | awk '{print$2}')
+       tmp_region=$(gcloud $z list | grep ^$i | awk '{print$2}')
        if [[ ! $tmp_region == $gcp_region ]]; then
            echo "|||Removing global forwarding-rules $i..."
            gcloud $z delete $i --global --quiet
