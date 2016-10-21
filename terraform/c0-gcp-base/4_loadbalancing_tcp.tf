@@ -69,7 +69,7 @@ resource "google_compute_forwarding_rule" "cf-gorouter" {
 resource "google_compute_forwarding_rule" "cf-ssh" {
   name        = "${var.gcp_terraform_prefix}-ssh-proxy"
   target      = "${google_compute_target_pool.cf-ssh.self_link}"
-  port_range  = "443"
+  port_range  = "2222"
   ip_protocol = "TCP"
   ip_address  = "${google_compute_address.ssh-and-doppler.address}"
 }
