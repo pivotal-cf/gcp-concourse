@@ -1,5 +1,12 @@
 groups:
 
+- name: all
+  jobs:
+  - wipe-env
+  - deploy-iaas
+  - config-opsman
+  - deploy-director
+
 - name: wipe
   jobs:
   - wipe-env
@@ -7,11 +14,11 @@ groups:
 - name: iaas_opsman
   jobs:
   - deploy-iaas
+  - config-opsman
+  - deploy-director
 
 - name: ert
   jobs:
-  - config-opsman
-  - deploy-director
   - upload-ert
   - deploy-ert
 
@@ -76,6 +83,8 @@ jobs:
       image: docker:///virtmerlin/pcf-gcp-worker
       inputs:
         - name: gcp-concourse
+      outputs:
+        - name: opsman-metadata
       run:
         path: gcp-concourse/ci/tasks/wipe/wipe-env.sh
       params:
@@ -96,6 +105,7 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
+      passed: [wipe-env]
     - get: pivnet-opsmgr
       trigger: false
       params:
@@ -108,6 +118,7 @@ jobs:
       inputs:
         - name: gcp-concourse
         - name: pivnet-opsmgr
+        - name: opsman-metadata
       outputs:
         - name: opsman-metadata
       run:
@@ -167,6 +178,7 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
+      passed: [deploy-iaas]
     - get: tool-om
       params:
         globs:
