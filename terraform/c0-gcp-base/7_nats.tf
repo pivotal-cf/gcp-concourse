@@ -81,7 +81,7 @@ resource "google_compute_instance" "nat-gateway-ter" {
 resource "google_compute_route" "nat-primary" {
   name        = "${var.gcp_terraform_prefix}-nat-pri"
   dest_range  = "0.0.0.0/0"
-  network     = "${google_compute_network.vnet.name}"
+  network     = "${google_compute_network.pcf-virt-net.name}"
   next_hop_instance = "${google_compute_instance.nat-gateway-pri.name}"
   next_hop_instance_zone = "${var.gcp_zone_1}"
   priority    = 800
@@ -90,7 +90,7 @@ resource "google_compute_route" "nat-primary" {
 resource "google_compute_route" "nat-secondary" {
   name        = "${var.gcp_terraform_prefix}-nat-sec"
   dest_range  = "0.0.0.0/0"
-  network     = "${google_compute_network.vnet.name}"
+  network     = "${google_compute_network.pcf-virt-net.name}"
   next_hop_instance = "${google_compute_instance.nat-gateway-sec.name}"
   next_hop_instance_zone = "${var.gcp_zone_2}"
   priority    = 801
@@ -99,7 +99,7 @@ resource "google_compute_route" "nat-secondary" {
 resource "google_compute_route" "nat-tertiary" {
   name        = "${var.gcp_terraform_prefix}-nat-ter"
   dest_range  = "0.0.0.0/0"
-  network     = "${google_compute_network.vnet.name}"
+  network     = "${google_compute_network.pcf-virt-net.name}"
   next_hop_instance = "${google_compute_instance.nat-gateway-ter.name}"
   next_hop_instance_zone = "${var.gcp_zone_3}"
   priority    = 802
