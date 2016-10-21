@@ -15,7 +15,7 @@
 
   //// Create Subnet for the Ops Manager & Jumpbox
   resource "google_compute_subnetwork" "subnet-ops-manager" {
-    name          = "${var.gcp_terraform_prefix}-subnet-opsman-${var.gcp_region}"
+    name          = "${var.gcp_terraform_prefix}-subnet-infrastructure-${var.gcp_region}"
     ip_cidr_range = "${var.gcp_terraform_subnet_ops_manager}"
     network       = "${google_compute_network.pcf-virt-net.self_link}"
   }
@@ -38,7 +38,7 @@
 //// Addresses      =============//////////////
 ///////////======================//////////////
 
-  // Global IP for
+  // Global IP for PCF API & Apps
   resource "google_compute_global_address" "pcf" {
     name = "${var.gcp_terraform_prefix}-global-pcf"
   }
@@ -48,7 +48,7 @@
     name = "${var.gcp_terraform_prefix}-tcp-lb"
   }
 
-  // Static IP address for forwarding rule for sshproxy
-  resource "google_compute_address" "ssh-tcp" {
-    name = "${var.gcp_terraform_prefix}-ssh-lb"
+  // Static IP address for forwarding rule for sshproxy & doppler
+  resource "google_compute_address" "ssh-and-doppler" {
+    name = "${var.gcp_terraform_prefix}-ssh-and-doppler"
   }

@@ -27,8 +27,23 @@ resource "google_compute_firewall" "pcf-allow-http" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["allow-http"]
+  target_tags = ["allow-http","router"]
 }
+
+//// Create Firewall Rule to allow GO ROuter Health Checks
+resource "google_compute_firewall" "pcf-allow-http-8080" {
+  name    = "${var.gcp_terraform_prefix}-allow-http-8080"
+  network = "${google_compute_network.pcf-virt-net.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["8080"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["router"]
+}
+
 
 //// Create Firewall Rule for allow-https from public
 resource "google_compute_firewall" "pcf-allow-https" {
@@ -41,7 +56,7 @@ resource "google_compute_firewall" "pcf-allow-https" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["allow-https"]
+  target_tags = ["allow-https","router"]
 }
 
 

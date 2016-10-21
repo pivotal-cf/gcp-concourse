@@ -62,6 +62,11 @@ resource "google_compute_target_https_proxy" "https_lb_proxy" {
   ssl_certificates = ["${google_compute_ssl_certificate.ssl-cert.self_link}"]
 }
 
+///////////////////////////////////////////////
+//////// SSL Certificate(s) ///////////////////
+///////////////////////////////////////////////
+
+
 resource "google_compute_ssl_certificate" "ssl-cert" {
   name        = "${var.gcp_terraform_prefix}-lb-cert"
   description = "user provided ssl private key / ssl certificate pair"
@@ -75,7 +80,7 @@ resource "google_compute_ssl_certificate" "ssl-cert" {
 
 resource "google_compute_http_health_check" "cf" {
   name                = "${var.gcp_terraform_prefix}-cf-public"
-  host                = "api.sys.${google_dns_managed_zone.env_dns_zone.dns_name}"
+//  host                = "api.sys.${google_dns_managed_zone.env_dns_zone.dns_name}"
   port                = 8080
   request_path        = "/health"
   check_interval_sec  = 30
@@ -85,7 +90,7 @@ resource "google_compute_http_health_check" "cf" {
 }
 
 ///////////////////////////////////////////////
-//////// Forwarding Rules /////////////////////
+//////// Global Forwarding Rules //////////////
 ///////////////////////////////////////////////
 
 resource "google_compute_global_forwarding_rule" "cf-http" {
