@@ -6,6 +6,8 @@ groups:
   - deploy-iaas
   - config-opsman
   - deploy-director
+  - upload-ert
+  - deploy-ert
 
 - name: wipe
   jobs:
