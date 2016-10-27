@@ -48,6 +48,14 @@ resources:
     repository: om
     access_token: {{githubtoken}}
 
+- name: tool-pcfdrive
+  type: github-release
+  source:
+    user: c0-ops
+    repository: pcfdrive
+    drafts: true
+    access_token: {{githubtoken}}
+
 - name: pivnet-opsmgr
   type: pivnet
   check_every: 2h
@@ -209,6 +217,10 @@ jobs:
       params:
         globs:
         - "om-linux"
+    - get: tool-pcfdrive
+      params:
+        globs:
+        - "pcfdrive-linux"
   - task: deploy-director
     config:
       platform: linux
@@ -216,6 +228,7 @@ jobs:
       inputs:
         - name: gcp-concourse
         - name: tool-om
+        - name: tool-pcfdrive
       run:
         path: gcp-concourse/ci/tasks/iaas/deploy-director.sh
       params:
