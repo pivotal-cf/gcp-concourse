@@ -10,18 +10,20 @@
 #!/bin/bash
 set -e
 
+
+
 # Import reqd BASH functions
-source ./config-director-json-fn-opsman-curl.sh
-source ./config-director-json-fn-opsman-auth.sh
-source ./config-director-json-fn-opsman-json-to-post-data.sh
-source ./config-director-json-fn-opsman-extensions.sh
+source ./gcp-concourse/json-opsman/config-director-json-fn-opsman-curl.sh
+source ./gcp-concourse/json-opsman/config-director-json-fn-opsman-auth.sh
+source ./gcp-concourse/json-opsman/config-director-json-fn-opsman-json-to-post-data.sh
+source ./gcp-concourse/json-opsman/config-director-json-fn-opsman-extensions.sh
 
 ############################################################################################################
 ############################################# Variables  ###################################################
 ############################################################################################################
 # Set by script or args to script
   provider_type="gcp" # *MG TMP "${1}" should be passed by concourse job as an arg
-  json_file_path="${gcp_pcf_terraform_template}"
+  json_file_path="./gcp-concourse/json-opsman/${gcp_pcf_terraform_template}"
   opsman_host="opsman.${pcf_ert_domain}"
 
 ############################################################################################################
@@ -56,11 +58,11 @@ fi
 
   declare -a POSTS_DIRECTOR=(
   "iaas_configuration:var"
-  "director_configuration:file"
-  "availability_zones:file"
-  "networks:file"
-  "az_and_network_assignment:file"
-  "resources:file"
+#  "director_configuration:file"
+#  "availability_zones:file"
+#  "networks:file"
+#  "az_and_network_assignment:file"
+#  "resources:file"
   )
 
 
