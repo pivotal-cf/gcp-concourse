@@ -93,7 +93,7 @@ resource "google_compute_route" "nat-secondary" {
   network     = "${google_compute_network.pcf-virt-net.name}"
   next_hop_instance = "${google_compute_instance.nat-gateway-sec.name}"
   next_hop_instance_zone = "${var.gcp_zone_2}"
-  priority    = 801
+  priority    = 800
   tags        = ["${var.gcp_terraform_prefix}"]
 }
 resource "google_compute_route" "nat-tertiary" {
@@ -102,6 +102,6 @@ resource "google_compute_route" "nat-tertiary" {
   network     = "${google_compute_network.pcf-virt-net.name}"
   next_hop_instance = "${google_compute_instance.nat-gateway-ter.name}"
   next_hop_instance_zone = "${var.gcp_zone_3}"
-  priority    = 802
+  priority    = 800
   tags        = ["${var.gcp_terraform_prefix}"]
 }
