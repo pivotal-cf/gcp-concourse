@@ -12,5 +12,3 @@ sudo chmod 755 /usr/bin/jq
 
 # Exec bash scripts to config Opsman
 ./gcp-concourse/json-opsman/config-director-json.sh
-
-exit 1
