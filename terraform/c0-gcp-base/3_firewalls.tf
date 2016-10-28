@@ -82,6 +82,22 @@ resource "google_compute_firewall" "allow-ert-all" {
   source_tags = ["${var.gcp_terraform_prefix}","${var.gcp_terraform_prefix}-opsman","nat-traverse"]
 }
 
+//// Allow access to ssh-proxy [Optional]
+resource "google_compute_firewall" "cf-ssh-proxy" {
+  name       = "${var.gcp_terraform_prefix}-allow-ssh-proxy"
+  depends_on = ["google_compute_network.pcf-virt-net"]
+  network    = "${google_compute_network.pcf-virt-net.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["2222"]
+  }
+
+  target_tags = ["${var.gcp_terraform_prefix}-ssh-proxy","diego-brain"]
+}
+
+
+
 //// Allow access to Optional CF TCP router
 resource "google_compute_firewall" "cf-tcp" {
   name       = "${var.gcp_terraform_prefix}-allow-cf-tcp"
