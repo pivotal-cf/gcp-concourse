@@ -10,33 +10,49 @@
 #!/bin/bash
 set -e
 
-
-
-# Import reqd BASH functions
-source ./gcp-concourse/json-opsman/config-director-json-fn-opsman-curl.sh
-source ./gcp-concourse/json-opsman/config-director-json-fn-opsman-auth.sh
-source ./gcp-concourse/json-opsman/config-director-json-fn-opsman-json-to-post-data.sh
-source ./gcp-concourse/json-opsman/config-director-json-fn-opsman-extensions.sh
-
 ############################################################################################################
 ############################################# Variables  ###################################################
 ############################################################################################################
-# Set by script or args to script
-  provider_type="gcp" # *MG TMP "${1}" should be passed by concourse job as an arg
-  json_file_path="./gcp-concourse/json-opsman/${gcp_pcf_terraform_template}"
-  opsman_host="opsman.${pcf_ert_domain}"
+
+# Setting exec_mode=local for debugging, otherise vars get pulled from Concourse
+provider_type="gcp" # *MG TMP "${1}" should be passed by concourse job as an arg
+json_file_path="./gcp-concourse/json-opsman/${gcp_pcf_terraform_template}"
+opsman_host="opsman.${pcf_ert_domain}"
+
+exec_mode="CONCOURSE" # LOCAL|CONCOURSE
+  if [[ $exec_mode == "LOCAL" ]]; then
+     exec_mode_root="."
+     pcf_opsman_admin="admin"
+     pcf_opsman_admin_passwd='P1v0t4l!'
+     if [[ $provider_type == "gcp" ]]; then
+       gcp_pcf_terraform_template="c0-gcp-base"
+       gcp_proj_id="google.com:pcf-demos"
+       gcp_terraform_prefix="kryten"
+       gcp_svc_acct_key='{}'
+     fi
+  else
+     exec_mode_root="./gcp-concourse/json-opsman"
+     if [[ -z ${pcf_opsman_admin} || -z ${pcf_opsman_admin} ]]; then
+       echo "config-director-json_err: Missing Key Variables!!!!"
+       exit 1
+     fi
+  fi
+
+
+# Import reqd BASH functions
+
+source ${exec_mode_root}/config-director-json-fn-opsman-curl.sh
+source ${exec_mode_root}/config-director-json-fn-opsman-auth.sh
+source ${exec_mode_root}/config-director-json-fn-opsman-json-to-post-data.sh
+source ${exec_mode_root}/config-director-json-fn-opsman-extensions.sh
+
+
 
 ############################################################################################################
-###### Set by Concourse parameters but can be set manually here for testing outside of pipeline.      ######
+###### Create iaas_configuration JSON                                                                 ######
 ############################################################################################################
 
 if [[ $provider_type == "gcp" ]]; then
-  ## GCP Specific variables
-  #gcp_pcf_terraform_template="c0-gcp-base"
-  #gcp_proj_id="google.com:pcf-demos"
-  #gcp_terraform_prefix="kryten"
-  #gcp_svc_acct_key='{'
-  ## Set variables for GCP iaas_configuration, these should NOT be pulled from a static json file since they are creds
   iaas_configuration_json=$(echo "{
     \"iaas_configuration[project]\": \"${gcp_proj_id}\",
     \"iaas_configuration[default_deployment_tag]\": \"${gcp_terraform_prefix}\",
@@ -48,9 +64,6 @@ else
   echo "config-director-json_err: Provider Type ${provider_type} not yet supported"
   exit 1
 fi
-  ## Set variables common across all CPIs
-  #pcf_opsman_admin="admin"
-  #pcf_opsman_admin_passwd='P1v0t4l!'
 
 
 
@@ -155,12 +168,19 @@ fi
     done
   }
 
+
+  function fn_config_director {
+      echo " :)"
+  }
 ############################################################################################################
 ############################################# Main Logic ###################################################
 ############################################################################################################
 
-
+# Config Director Tile
 fn_config_director
+
+# Config ERT Tile
+fn_config_ert
 
 
 ############################################################################################################
