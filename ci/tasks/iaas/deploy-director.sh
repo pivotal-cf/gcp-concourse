@@ -10,5 +10,5 @@ echo "==========================================================================
 sudo wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 -O /usr/bin/jq
 sudo chmod 755 /usr/bin/jq
 
-# Exec bash scripts to config Opsman
+# Exec bash scripts to config Opsman Director Tile
 ./gcp-concourse/json-opsman/config-director-json.sh gcp director

@@ -15,3 +15,6 @@ om-linux --target https://opsman.$pcf_ert_domain -k \
        --password "$pcf_opsman_admin_passwd" \
       upload-product \
       --product pivnet-elastic-runtime/cf*.pivotal
+
+#MG Inserted for Debugging
+exit 1
