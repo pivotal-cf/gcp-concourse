@@ -8,10 +8,13 @@ function fn_opsman_curl() {
   ### (4) Request Special Instructions
   ###     "--NOENCODE"  will strip -H "Content-Type: application/x-www-form-urlencoded" from rqst
   ### (5) Json data for POST, -d @
+  ### (6) Additonal Curl Args (Optional)
 
   ####### Curl Core Command Flags #######
 
-              curl_cmd="curl -k -v -v -i --cookie mycookiejar --cookie-jar mycookiejar -X $1 "
+              #curl_cmd="curl -k -v -v -i --cookie mycookiejar --cookie-jar mycookiejar -X $1 "
+              curl_cmd="curl -k -s -i ${6} --cookie mycookiejar --cookie-jar mycookiejar -X $1 "
+
 
   ####### Headers #######
 
@@ -39,7 +42,11 @@ function fn_opsman_curl() {
   ####### Post Form Data Builder #######
 
             if [[ ! -z ${3} && ${1} == "POST" && ${4} != "--NOENCODE" && ! -z ${5} ]]; then
-                  curl_form_data="-d \"utf8=%E2%9C%93&_method=put&authenticity_token=${3}${5}\""
+                  if [[ ${2} == *"az_and_network_assignments"* ]]; then
+                    curl_form_data="-d \"utf8=%E2%9C%93&_method=patch&authenticity_token=${3}${5}\""
+                  else
+                    curl_form_data="-d \"utf8=%E2%9C%93&_method=put&authenticity_token=${3}${5}\""
+                  fi
                   echo "Im Gonna use this for data: ${curl_form_data}"
             elif [[ ${1} == "POST" && ! -z ${5} ]]; then
                   curl_form_data="${5}"

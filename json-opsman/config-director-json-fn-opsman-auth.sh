@@ -7,8 +7,8 @@ function fn_opsman_auth {
       rm -rf mycookiejar
     fi
     # GET JSESSIONID
-    url_authorize=$(fn_opsman_curl "GET" "auth/cloudfoundry" | grep "Redirecting to" | awk '{print$3}' | sed 's/.\{3\}$//' | sed 's/http.*:443\///')
-    chk_session_id=$(fn_opsman_curl "GET" $url_authorize | grep "JSESSIONID" | awk '{print$2}' | awk -F"=" '{print$2}' | tr -d ';')
+    url_authorize=$(fn_opsman_curl "GET" "auth/cloudfoundry"| grep "Redirecting to" | awk '{print$3}' | sed 's/.\{3\}$//' | sed 's/http.*:443\///')
+    chk_session_id=$(fn_opsman_curl "GET" $url_authorize| grep "JSESSIONID" | awk '{print$2}' | awk -F"=" '{print$2}' | tr -d ';')
     cookie_session_id=$(cat mycookiejar | grep "JSESSIONID" | awk '{print$7}')
 
     # Validate
@@ -25,7 +25,7 @@ function fn_opsman_auth {
     url_authorize_state=$(echo "https://${opsman_host}/${url_authorize}" | awk -F '&' '{print$4}')
 
     # Validate
-    if [ ! ${chk_login} == ${url_authorize_state} || -z ${chk_login} ]; then
+    if [[ ! ${chk_login} == ${url_authorize_state} || -z ${chk_login} ]]; then
       echo "chk=$chk_login"
       echo "val=$url_authorize_state"
       fn_err "fn_opsman_auth has failed to login with opsman creds!!!"
@@ -49,8 +49,8 @@ function fn_opsman_auth {
       echo "cookie_uaa_access_token=${cookie_uaa_access_token}"
       fn_err "fn_opsman_auth has failed to get proper uaa tokens!!!"
     else
-      echo "chk_uaa_access_token=${chk_uaa_access_token}"
-      echo "cookie_uaa_access_token=${cookie_uaa_access_token}"
+      #echo "chk_uaa_access_token=${chk_uaa_access_token}"
+      #echo "cookie_uaa_access_token=${cookie_uaa_access_token}"
       echo "PASS: fn_opsman_auth get proper uaa tokens succeeded..."
     fi
 }

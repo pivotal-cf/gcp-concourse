@@ -32,6 +32,5 @@ function fn_json_to_post_data {
           return_var=$(eval ${ext_cmd})
    fi
 
-   #return_var=$(echo ${return_var} | tr -d '\n' | tr -d '\r')
    echo ${return_var}
 }

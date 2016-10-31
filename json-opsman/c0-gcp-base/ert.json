@@ -1,0 +1,8 @@
+[{
+  "az_and_network_assignments": {
+    "product_singleton_availability_zone_reference": "us-east1-b",
+    "product_availability_zone_references": ["us-east1-b","us-east1-c","us-east1-d"],
+    "product[network_reference]": "ert",
+    "pipeline_extension": "fn_form_gen_ert_az_and_network_assignments"
+  }
+}]
