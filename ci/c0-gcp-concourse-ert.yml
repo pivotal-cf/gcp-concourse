@@ -50,14 +50,6 @@ resources:
     repository: om
     access_token: {{githubtoken}}
 
-- name: tool-pcfdrive
-  type: github-release
-  source:
-    user: c0-ops
-    repository: pcfdrive
-    drafts: true
-    access_token: {{githubtoken}}
-
 - name: pivnet-opsmgr
   type: pivnet
   check_every: 2h
@@ -220,10 +212,6 @@ jobs:
       params:
         globs:
         - "om-linux"
-    - get: tool-pcfdrive
-      params:
-        globs:
-        - "pcfdrive-linux"
   - task: deploy-director
     config:
       platform: linux
@@ -231,7 +219,6 @@ jobs:
       inputs:
         - name: gcp-concourse
         - name: tool-om
-        - name: tool-pcfdrive
       run:
         path: gcp-concourse/ci/tasks/iaas/deploy-director.sh
       params:
@@ -283,6 +270,22 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: false
-    - get: pivnet-elastic-runtime
-      passed: [upload-ert]
+      trigger: true
+      passed: [deploy-director]
+    - get: tool-om
+      params:
+        globs:
+        - "om-linux"
+  - task: deploy-ert
+    config:
+      platform: linux
+      image: docker:///virtmerlin/pcf-gcp-worker
+      inputs:
+        - name: gcp-concourse
+        - name: tool-om
+      run:
+        path: gcp-concourse/ci/tasks/ert/deploy-ert.sh
+      params:
+        pcf_ert_domain: {{pcf_ert_domain}}
+        pcf_opsman_admin: {{pcf_opsman_admin}}
+        pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
