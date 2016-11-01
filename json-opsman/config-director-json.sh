@@ -107,7 +107,7 @@ case $config_target in
   ;;
   "ert")
     echo "Starting $config_target config ...."
-    fn_config_director
+    fn_config_ert
   ;;
   *)
     fn_err "$config_target not enabled"
