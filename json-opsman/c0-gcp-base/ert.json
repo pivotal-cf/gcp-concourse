@@ -4,5 +4,9 @@
     "product_availability_zone_references": ["us-east1-b","us-east1-c","us-east1-d"],
     "product[network_reference]": "ert",
     "pipeline_extension": "fn_form_gen_ert_az_and_network_assignments"
+  },
+  "domains": {
+    "domains[.cloud_controller.system_domain]": "sys.gcp.customer0.net",
+    "domains[.cloud_controller.apps_domain]": "cfapps.gcp.customer0.net"
   }
 }]

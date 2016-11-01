@@ -292,6 +292,7 @@ jobs:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
+        gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
 
 - name: run-cats
   serial: true

@@ -4,6 +4,7 @@ function fn_config_ert {
 
   declare -a POSTS_ERT=(
   "az_and_network_assignments:file"
+  "domains:file"
   )
 
   # Interact w/ Opsman API to grab ERT deployment tag,this requires ERT tiles is already uploaded
@@ -22,6 +23,8 @@ function fn_config_ert {
     # set GET Page url so we can Grab a csrf token or do other variable collection
     if [[ $POSTS_PAGE == "OTHER" ]]; then
       GET_PAGE="OTHER STRINGS HERE"
+    elif [[ $POSTS_PAGE == "domains" ]]; then
+      GET_PAGE="products/${ert_product_id}/forms/${POSTS_PAGE}/edit"
     else
       GET_PAGE="products/${ert_product_id}/${POSTS_PAGE}/edit"
     fi
@@ -59,10 +62,13 @@ function fn_config_ert {
     # set POST Page url so we can push config
     if [[ $POSTS_PAGE == "OTHER" ]]; then
       POSTS_PAGE="products/${ert_product_id}/$POSTS_PAGE/OTHER"
+    elif [[ $POSTS_PAGE == "domains" ]]; then
+      POSTS_PAGE="products/${ert_product_id}/forms/$POSTS_PAGE"
     else
       POSTS_PAGE="products/${ert_product_id}/$POSTS_PAGE"
     fi
 
+    # Perform POST
     chk_push=$(fn_opsman_curl "POST" "$POSTS_PAGE" "${csrf_encoded_token}" "" "${post_data}" 2>&1 )
     echo ${chk_push}
 
