@@ -13,7 +13,7 @@ groups:
   jobs:
   - wipe-env
 
-- name: iaas_opsman
+- name: iaas
   jobs:
   - deploy-iaas
   - config-opsman
@@ -25,6 +25,8 @@ groups:
   - deploy-ert
 
 - name: cats
+  jobs:
+  - run-cats
 
 resource_types:
 
@@ -289,3 +291,13 @@ jobs:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
+
+- name: run-cats
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+      passed: [deploy-ert]
