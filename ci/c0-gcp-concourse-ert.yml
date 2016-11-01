@@ -8,6 +8,7 @@ groups:
   - deploy-director
   - upload-ert
   - deploy-ert
+  - run-cats
 
 - name: wipe
   jobs:
