@@ -95,6 +95,9 @@
       "autoscaling-tests": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
       "acceptance-tests": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
       "push-pivotal-account": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
-      "mysql-rejoin-unsafe": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false}
+      "mysql-rejoin-unsafe": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "autoscaling": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "bootstrap": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "notifications": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false}
   }
 }

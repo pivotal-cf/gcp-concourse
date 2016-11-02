@@ -55,7 +55,7 @@ resources:
 
 - name: pivnet-opsmgr
   type: pivnet
-  check_every: 2h
+  check_every: 4h
   source:
     api_token: {{pcf_pivnet_token}}
     product_slug: ops-manager
@@ -64,7 +64,7 @@ resources:
 
 - name: pivnet-elastic-runtime
   type: pivnet
-  check_every: 2h
+  check_every: 4h
   source:
     api_token: {{pcf_pivnet_token}}
     product_slug: elastic-runtime
@@ -82,6 +82,13 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
+    - get: pivnet-opsmgr
+      trigger: true
+    - get: pivnet-elastic-runtime
+      trigger: true
+      params:
+        globs:
+        - "*pivotal"
   - task: wipe-env
     config:
       platform: linux
@@ -113,6 +120,7 @@ jobs:
       passed: [wipe-env]
     - get: pivnet-opsmgr
       trigger: false
+      passed: [wipe-env]
       params:
         globs:
         - "*GCP*"
@@ -244,9 +252,7 @@ jobs:
       passed: [deploy-director]
     - get: pivnet-elastic-runtime
       trigger: false
-      params:
-        globs:
-        - "*pivotal"
+      passed: [wipe-env]
     - get: tool-om
       params:
         globs:
@@ -274,7 +280,7 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: true
-#      passed: [upload-ert]
+      passed: [upload-ert]
     - get: tool-om
       params:
         globs:
