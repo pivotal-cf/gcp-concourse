@@ -19,11 +19,6 @@ if [[ ! -f ${json_file} ]]; then
   exit 1
 fi
 
-echo "=============================================================================================="
-echo "Deploying ERT @ https://opsman.$pcf_ert_domain ..."
-echo "=============================================================================================="
-
-
 function fn_om_linux_curl {
 
     local curl_method=${1}
@@ -48,12 +43,15 @@ function fn_om_linux_curl {
     if [[ $(cat /tmp/rqst_stderr.log | grep "Status:" | awk '{print$2}') != "200" ]]; then
       echo "Error Call Failed ...."
       echo $(cat /tmp/rqst_stderr.log)
-      exit 1
+      #exit 1
     else
       echo $(cat /tmp/rqst_stdout.log)
     fi
 }
 
+echo "=============================================================================================="
+echo "Deploying ERT @ https://opsman.$pcf_ert_domain ..."
+echo "=============================================================================================="
 # Get cf Product Guid
 guid_cf=$(fn_om_linux_curl "GET" "/api/v0/staged/products" \
             | jq '.[] | select(.type == "cf") | .guid' | tr -d '"' | grep "cf-.*")
@@ -89,7 +87,8 @@ for job in $(echo ${json_jobs_configs} | jq . | jq 'keys' | jq .[] | tr -d '"');
 
  json_job_guid_cmd="echo \${json_job_guids} | jq '.jobs[] | select(.name == \"${job}\") | .guid' | tr -d '\"'"
  json_job_guid=$(eval ${json_job_guid_cmd})
- json_job_config=$(echo ${json_jobs} | jq .${job})
+ json_job_config=$(echo ${json_jobs_configs} | jq .${job})
+ echo "---------------------------------------------------------------------------------------------"
  echo "Setting ${json_job_guid} with -d=${json_job_config}..."
  fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/jobs/${json_job_guid}/resource_config" "${json_job_config}"
 
