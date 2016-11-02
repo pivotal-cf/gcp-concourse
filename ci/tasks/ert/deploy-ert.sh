@@ -49,6 +49,8 @@ function fn_om_linux_curl {
     fi
 }
 
+
+
 echo "=============================================================================================="
 echo "Deploying ERT @ https://opsman.$pcf_ert_domain ..."
 echo "=============================================================================================="
@@ -86,8 +88,11 @@ json_job_guids=$(fn_om_linux_curl "GET" "/api/v0/staged/products/${guid_cf}/jobs
 for job in $(echo ${json_jobs_configs} | jq . | jq 'keys' | jq .[] | tr -d '"'); do
 
  json_job_guid_cmd="echo \${json_job_guids} | jq '.jobs[] | select(.name == \"${job}\") | .guid' | tr -d '\"'"
+ echo "DEBUG1:"$json_job_guid_cmd
  json_job_guid=$(eval ${json_job_guid_cmd})
+ echo "DEBUG2:"$json_job_guid
  json_job_config=$(echo ${json_jobs_configs} | jq .${job})
+ echo "DEBUG3:"$json_job_config
  echo "---------------------------------------------------------------------------------------------"
  echo "Setting ${json_job_guid} with -d=${json_job_config}..."
  fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/jobs/${json_job_guid}/resource_config" "${json_job_config}"
