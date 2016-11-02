@@ -83,9 +83,9 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-opsmgr
-      #trigger: true
+      trigger: true
     - get: pivnet-elastic-runtime
-      #trigger: true
+      trigger: true
       params:
         globs:
         - "*pivotal"
@@ -279,8 +279,8 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      #trigger: true
-      #passed: [upload-ert]
+      trigger: true
+      passed: [upload-ert]
     - get: tool-om
       params:
         globs:
