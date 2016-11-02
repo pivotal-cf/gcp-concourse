@@ -38,7 +38,7 @@ function fn_om_linux_curl {
     if [[ $(cat /tmp/rqst_stderr.log | grep "Status:" | awk '{print$2}') != "200" ]]; then
       echo "Error Call Failed ...."
       echo $(cat /tmp/rqst_stderr.log)
-      #exit 1
+      exit 1
     else
       echo $(cat /tmp/rqst_stdout.log)
     fi
@@ -68,9 +68,5 @@ echo "==========================================================================
 json_properties=$(cat gcp-concourse/json-opsman/c0-gcp-base/ert-api.json | jq .properties)
 fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/properties" "${json_properties}"
 
-#om-linux --target https://opsman.$pcf_ert_domain -k \
-#       --username "$pcf_opsman_admin" \
-#       --password "$pcf_opsman_admin_passwd" \
-#  curl \
-#       --path /api/v0/staged/products \
-#       --request GET
+# Added to debug job configs
+exit 1
