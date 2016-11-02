@@ -9,6 +9,16 @@ sudo chmod 755 /usr/local/bin/om-linux
 sudo wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 -O /usr/bin/jq
 sudo chmod 755 /usr/bin/jq
 
+# Set Vars
+
+json_file_path="gcp-concourse/json-opsman/${gcp_pcf_terraform_template}"
+json_file="${json_file_path}/ert.json"
+
+if [[ ! -f ${json_file} ]]; then
+  echo "Error: cant find file=[${json_file}]"
+  exit 1
+fi
+
 echo "=============================================================================================="
 echo "Deploying ERT @ https://opsman.$pcf_ert_domain ..."
 echo "=============================================================================================="
@@ -57,7 +67,7 @@ echo "==========================================================================
 echo "Setting Availability Zones & Networks for: ${guid_cf}"
 echo "=============================================================================================="
 
-json_net_and_az=$(cat gcp-concourse/json-opsman/c0-gcp-base/ert-api.json | jq .networks_and_azs)
+json_net_and_az=$(cat ${json_file} | jq .networks_and_azs)
 fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/networks_and_azs" "${json_net_and_az}"
 
 # Set ERT Properties
@@ -65,13 +75,24 @@ echo "==========================================================================
 echo "Setting Properties for: ${guid_cf}"
 echo "=============================================================================================="
 
-json_properties=$(cat gcp-concourse/json-opsman/c0-gcp-base/ert-api.json | jq .properties)
+json_properties=$(cat ${json_file} | jq .properties)
 fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/properties" "${json_properties}"
 
 # Set Resource Configs
 echo "=============================================================================================="
 echo "Setting Resource Job Properties for: ${guid_cf}"
 echo "=============================================================================================="
-json_jobs=$(cat gcp-concourse/json-opsman/c0-gcp-base/ert-api.json | jq .jobs)
+json_jobs_configs=$(cat ${json_file} | jq .jobs )
+json_job_guids=$(fn_om_linux_curl "GET" "/api/v0/staged/products/${guid_cf}/jobs" | jq .)
+
+for job in $(echo ${json_jobs_configs} | jq . | jq 'keys' | jq .[] | tr -d '"'); do
+
+ json_job_guid_cmd="echo \${json_job_guids} | jq '.jobs[] | select(.name == \"${job}\") | .guid' | tr -d '\"'"
+ json_job_guid=$(eval ${json_job_guid_cmd})
+ json_job_config=$(echo ${json_jobs} | jq .${job})
+ echo "Setting ${json_job_guid} with -d=${json_job_config}..."
+ fn_om_linux_curl "GET" "/api/v0/staged/products/${guid_cf}/jobs/${json_job_guid}/resource_config"
+
+done
 
 exit 1
