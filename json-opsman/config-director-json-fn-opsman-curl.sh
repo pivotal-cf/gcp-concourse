@@ -12,9 +12,7 @@ function fn_opsman_curl() {
 
   ####### Curl Core Command Flags #######
 
-              #curl_cmd="curl -k -v -v -i --cookie mycookiejar --cookie-jar mycookiejar -X $1 "
               curl_cmd="curl -k -s -i ${6} --cookie mycookiejar --cookie-jar mycookiejar -X $1 "
-
 
   ####### Headers #######
 
