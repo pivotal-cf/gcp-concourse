@@ -309,3 +309,16 @@ jobs:
     - get: gcp-concourse
       trigger: false
       passed: [deploy-ert]
+  - task: deploy-ert
+    config:
+      platform: linux
+      image: docker:///virtmerlin/pcf-gcp-worker
+      inputs:
+        - name: gcp-concourse
+      run:
+        path: gcp-concourse/ci/tasks/cats/run-cats.sh
+      params:
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        gcp_terraform_prefix: {{gcp_terraform_prefix}}
