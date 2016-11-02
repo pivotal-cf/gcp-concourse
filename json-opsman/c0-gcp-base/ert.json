@@ -75,6 +75,7 @@
       "ha_proxy": {"instance_type": {"id": "automatic"},"instances": 0,"elb_names": [],"internet_connected": false},
       "router": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": ["http:c0-opsman-validation-http-lb-backend","tcp:c0-opsman-validation-wss-logs"],"internet_connected": false},
       "mysql_monitor": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "clock_global": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
       "cloud_controller_worker": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false},
       "collector": {"instance_type": {"id": "automatic"},"instances": 0,"elb_names": [],"internet_connected": false},
       "diego_database": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false,"persistent_disk":{"size_mb":"automatic"}},
@@ -83,6 +84,17 @@
       "doppler": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false},
       "loggregator_trafficcontroller": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false},
       "tcp_router": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false,"persistent_disk":{"size_mb":"automatic"}},
-      "backup-prepare": {"instance_type": {"id": "automatic"},"instances": 0,"elb_names": [],"internet_connected": false,"persistent_disk":{"size_mb":"automatic"}}
+      "backup-prepare": {"instance_type": {"id": "automatic"},"instances": 0,"elb_names": [],"internet_connected": false,"persistent_disk":{"size_mb":"automatic"}},
+      "push-apps-manager": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "smoke-tests": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "notifications-tests": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "notifications-ui": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "notifications-ui-tests": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "autoscaling-register-broker": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "autoscaling-destroy-broker": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "autoscaling-tests": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "acceptance-tests": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "push-pivotal-account": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "mysql-rejoin-unsafe": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false}
   }
 }

@@ -92,7 +92,15 @@ for job in $(echo ${json_jobs_configs} | jq . | jq 'keys' | jq .[] | tr -d '"');
  json_job_config_cmd="echo \${json_jobs_configs} | jq '.[\"${job}\"]' "
  json_job_config=$(eval ${json_job_config_cmd})
  echo "---------------------------------------------------------------------------------------------"
- echo "Setting ${json_job_guid} with -d=${json_job_config}..."
+ echo "Setting ${json_job_guid} with --data=${json_job_config}..."
  fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/jobs/${json_job_guid}/resource_config" "${json_job_config}"
 
 done
+
+
+# Apply Changes in Opsman
+
+om-linux --target https://opsman.$pcf_ert_domain -k \
+       --username "$pcf_opsman_admin" \
+       --password "$pcf_opsman_admin_passwd" \
+  apply-changes
