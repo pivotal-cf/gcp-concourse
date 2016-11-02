@@ -91,7 +91,7 @@ for job in $(echo ${json_jobs_configs} | jq . | jq 'keys' | jq .[] | tr -d '"');
  json_job_guid=$(eval ${json_job_guid_cmd})
  json_job_config=$(echo ${json_jobs} | jq .${job})
  echo "Setting ${json_job_guid} with -d=${json_job_config}..."
- fn_om_linux_curl "GET" "/api/v0/staged/products/${guid_cf}/jobs/${json_job_guid}/resource_config"
+ fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/jobs/${json_job_guid}/resource_config" "${json_job_config}"
 
 done
 
