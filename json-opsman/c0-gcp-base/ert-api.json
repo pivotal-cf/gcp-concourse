@@ -59,5 +59,84 @@
         "value": "customer0-gcp"
       }
     }
+  },
+  "jobs": {
+      "consul_server": {
+        "instances": 3
+      },
+      "nats": {
+        "instances": 3
+      },
+      "etcd_server": {
+        "instances": 3
+      },
+      "nfs_server": {
+        "instances": 1
+      },
+      "mysql_proxy": {
+        "instances": 3
+      },
+      "mysql": {
+        "instances": 3
+      },
+      "backup-prepare": {
+        "instances": 0
+      },
+      "consoledb": {
+        "instances": 0
+      },
+      "ccdb": {
+        "instances": 0
+      },
+      "uaadb": {
+        "instances": 0
+      },
+      "uaa": {
+        "instances": 3
+      },
+      "cloud_controller": {
+        "instances": 3
+      },
+      "ha_proxy": {
+        "instances": 0
+      },
+      "router": {
+        "instances": 2,
+        "elb_names": ["http:c0-opsman-validation-http-lb-backend","tcp:c0-opsman-validation-wss-logs"]
+      },
+      "mysql_monitor": {
+        "instances": 1
+      },
+      "clock_global": {
+        "instances": 1
+      },
+      "cloud_controller_worker": {
+        "instances": 3
+      },
+      "collector": {
+        "instances": 0
+      },
+      "diego_database": {
+        "instances": 1
+      },
+      "diego_brain": {
+        "instances": 3,
+        "elb_names": ["tcp:c0-opsman-validation-ssh-proxy"]
+      },
+      "diego_cell": {
+        "instances": 12
+      },
+      "doppler": {
+        "instances": 3
+      },
+      "loggregator_trafficcontroller": {
+        "instances": 3
+      },
+      "tcp_router": {
+        "instances": 0
+      },
+      "mysql-rejoin-unsafe": {
+        "instances": 1
+      }
   }
 }

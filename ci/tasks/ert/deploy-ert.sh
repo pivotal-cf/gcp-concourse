@@ -68,5 +68,10 @@ echo "==========================================================================
 json_properties=$(cat gcp-concourse/json-opsman/c0-gcp-base/ert-api.json | jq .properties)
 fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/properties" "${json_properties}"
 
-# Added to debug job configs
+# Set Resource Configs
+echo "=============================================================================================="
+echo "Setting Resource Job Properties for: ${guid_cf}"
+echo "=============================================================================================="
+json_jobs=$(cat gcp-concourse/json-opsman/c0-gcp-base/ert-api.json | jq .jobs)
+
 exit 1
