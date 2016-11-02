@@ -12,6 +12,9 @@ sudo chmod 755 /usr/bin/jq
 # Exec bash scripts to config Opsman Director Tile
 ./gcp-concourse/json-opsman/config-director-json.sh gcp ert
 
+
+exit 1
+
 # Apply Changes in Opsman
 
 #om-linux --target https://opsman.$pcf_ert_domain -k \
