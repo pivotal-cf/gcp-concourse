@@ -279,8 +279,8 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: true
-      passed: [upload-ert]
+      #trigger: true
+      #passed: [upload-ert]
     - get: tool-om
       params:
         globs:
