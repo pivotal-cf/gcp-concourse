@@ -47,15 +47,23 @@ function fn_om_linux_curl {
 # Get cf Product Guid
 guid_cf=$(fn_om_linux_curl "GET" "/api/v0/staged/products" \
             | jq '.[] | select(.type == "cf") | .guid' | tr -d '"' | grep "cf-.*")
+echo "=============================================================================================="
+echo "Found ERT Deployment with guid of ${guid_cf}"
+echo "=============================================================================================="
 
+# Set Networks & AZs
+echo "=============================================================================================="
+echo "Setting Availability Zones & Networks for: ${guid_cf}"
+echo "=============================================================================================="
+json_net_and_az=$(cat gcp-concourse/json-opsman/c0-gcp-base/ert-api.json | jq .networks_and_azs)
+fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/networks_and_azs" "${json_net_and_az}"
 
-exit 1
-
-# Assign Networks & AZs
-#fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/networks_and_azs" "${my_json}"
-
-#list properties
-#fn_om_linux_curl "GET" "/api/v0/staged/products/${guid_cf}/properties"
+# Set ERT Properties
+echo "=============================================================================================="
+echo "Setting Properties for: ${guid_cf}"
+echo "=============================================================================================="
+json_properties=$(cat gcp-concourse/json-opsman/c0-gcp-base/ert-api.json | jq .properties)
+fn_om_linux_curl "PUT" "/api/v0/staged/products/${guid_cf}/properties" "${json_properties}"
 
 #om-linux --target https://opsman.$pcf_ert_domain -k \
 #       --username "$pcf_opsman_admin" \

@@ -1,7 +1,8 @@
 {
   "networks_and_azs":{
+    "networks_and_azs": {
       "singleton_availability_zone": {
-        "name": "us-east1-c"
+        "name": "us-east1-b"
       },
       "other_availability_zones": [
         { "name": "us-east1-b" },
@@ -11,1147 +12,1150 @@
       "network": {
         "name": "ert"
       }
+    }
   },
   "properties": {
-    ".properties.garden_disk_cleanup": {
-      "type": "selector",
-      "configurable": true,
-      "credential": false,
-      "value": "routine",
-      "optional": false
-    },
-    ".properties.garden_disk_cleanup.threshold.cleanup_threshold_in_mb": {
-      "type": "integer",
-      "configurable": false,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.logger_endpoint_port": {
-      "type": "port",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.syslog_host": {
-      "type": "network_address",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.syslog_port": {
-      "type": "port",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.syslog_protocol": {
-      "type": "dropdown_select",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true,
-      "options": [
-        {
-          "label": "TCP protocol",
-          "value": "tcp"
-        },
-        {
-          "label": "RELP protocol",
-          "value": "relp"
-        },
-        {
-          "label": "UDP protocol",
-          "value": "udp"
-        }
-      ]
-    },
-    ".properties.networking_point_of_entry": {
-      "type": "selector",
-      "configurable": true,
-      "credential": false,
-      "value": "external_ssl",
-      "optional": false
-    },
-    ".properties.networking_point_of_entry.external_ssl.ssl_rsa_certificate": {
-      "type": "rsa_cert_credentials",
-      "configurable": true,
-      "credential": true,
-      "value": {
-        "cert_pem": "-----BEGIN CERTIFICATE-----\r\nMIIDmTCCAoGgAwIBAgIJAPzvcCUn+iUDMA0GCSqGSIb3DQEBBQUAMEExIDAeBgNV\r\nBAMMFyouc3lzLmdjcC5jdXN0b21lcjAubmV0MRAwDgYDVQQKDAdQaXZvdGFsMQsw\r\nCQYDVQQGEwJVUzAeFw0xNjEwMTcyMDQ3MDFaFw0yNjEwMTUyMDQ3MDFaMEExIDAe\r\nBgNVBAMMFyouc3lzLmdjcC5jdXN0b21lcjAubmV0MRAwDgYDVQQKDAdQaXZvdGFs\r\nMQswCQYDVQQGEwJVUzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOqZ\r\nMAsLRwxkrYoJJtYKqyZXIIRzCnj44G5OwoN9xIUZdBe+C9jwz3XNtGS60VHAG4KA\r\nRKZ+U+lh6RwPQGJacwcKpfczPH1k+PdCud/IUL1/MVK0tvW0eaIH8y0gC+mlPBls\r\nadb0gH+ABgf0DYgZQ4NcX535K0pOm2w17NU+yfkKcRFL+Stkt5oJVrkzWwSKxjbf\r\nOMet0PnHNvvNKn97qs5ouMMwlXnmnVDgX79D7nSm2r6GXn3otOL0MXASgX3VSuKb\r\nxNGBpPxRskPXTRrVW2uyz/BomYWFG4yhoKsLjo72ZEcDzURnLlG8Ldi4yUF6lbcZ\r\nBUEIU30MlD1rTu/09h0CAwEAAaOBkzCBkDAJBgNVHRMEAjAAMAsGA1UdDwQEAwIF\r\n4DB2BgNVHREEbzBtghcqLnN5cy5nY3AuY3VzdG9tZXIwLm5ldIIdKi5sb2dpbi5z\r\neXMuZ2NwLmN1c3RvbWVyMC5uZXSCGyoudWFhLnN5cy5nY3AuY3VzdG9tZXIwLm5l\r\ndIIWKi5jZmFwcHMuY3VzdG9tZXIwLm5ldDANBgkqhkiG9w0BAQUFAAOCAQEAzWDy\r\nMZ0wgsIH0FZC/i5uQosU21JcxMlk5nCj6Ehhba9/qbxbSiFOY2xX7UZeR0Y56o6w\r\nwbRffWv2zrrmHFwhAXOgiXeyXltfGpMlwbDbcUTz/mDDD/Ltpy/8Y723NF4klJsG\r\n6E+kgZrLsQuk26ay8LnP5cIHsce9suiePEdcp9v+c7kta0u5W0VVTAino7r1Sal6\r\nDweqaVJKwL/DQ1rCofL+jObcum5hGAWj/ojMYOT6v4kq18yJMGgNEfmzm7uySl6w\r\nGG6ltLP/RrzjiiT+CF1dik0BV1d6+OHsgesNLyVYJMdYtKxArA/ucgKGB0OFuemN\r\nIP7lFx56fVFCOWQ5dw==\r\n-----END CERTIFICATE-----",
-        "private_key_pem": "-----BEGIN RSA PRIVATE KEY-----\r\nMIIEowIBAAKCAQEA6pkwCwtHDGStigkm1gqrJlcghHMKePjgbk7Cg33EhRl0F74L\r\n2PDPdc20ZLrRUcAbgoBEpn5T6WHpHA9AYlpzBwql9zM8fWT490K538hQvX8xUrS2\r\n9bR5ogfzLSAL6aU8GWxp1vSAf4AGB/QNiBlDg1xfnfkrSk6bbDXs1T7J+QpxEUv5\r\nK2S3mglWuTNbBIrGNt84x63Q+cc2+80qf3uqzmi4wzCVeeadUOBfv0PudKbavoZe\r\nfei04vQxcBKBfdVK4pvE0YGk/FGyQ9dNGtVba7LP8GiZhYUbjKGgqwuOjvZkRwPN\r\nRGcuUbwt2LjJQXqVtxkFQQhTfQyUPWtO7/T2HQIDAQABAoIBACOOdj6mRe118OuD\r\n+ZPlaA1WlUId4Y92QSXW4Bpn3HpD4lma31bRINB9DgNaYVFfqYu8/yqw6OztfxRW\r\np26AwQBnN8JgzKFAxY9MWLm3Na2S8pnTdAuHgAvz4oKLYeLWvWYpDV2cD0HD2KYp\r\n8kcXdSkavg9Gba5EfcAH6E5lxtzs0uKCF+HeFlxbf64/0yHlwQMuoB79Nhy0CaCS\r\nmqdik4yEcAzNNthieV7JBX91ITsg+PKN/+MeoE6QiCGe5vCynr9/nigHgwO8av+U\r\n27y4mOBy0Ca+neYHnOqDVJhiTPxB0r6GMuG5CK1NPLDaWYhmxjJTWU4EYKoF+jPu\r\nbbZArg0CgYEA/gn5JHDd85DwfN3tD1EtIcBkTVxe+3KZCEyfVd0Z83Hdbz/n4EBB\r\nF078EDcXiRNfXXbxldMoKVKoQcjBPFmrP2BXZ4AjTzcS1kAnFYnmyv4O0X29Bs9L\r\nr5SxeZb49tTxfJX6ojgMxnJAwNcVtqYzIopQ9tJeRRrhcR1avWF3K38CgYEA7GjL\r\n4As4scbqnSSB7IDn469ReCXeJ0FiVnYp9XgOmeAJYNS4B3njvrnzQGQZ7M8KMzIC\r\nxS9DEqIirpLaZFy/IN8Qpcy5nuguoSZOA9NQTfWZdpX1f5JjGPosiQWd6QZqEBGB\r\nISdQRExL7Uzq/ok69eQxCbtzA5MK8PlWf8GC3GMCgYA4n+B4zu+qKtRwAMemcmGs\r\n9EVnOP+y7IhP4URizzXJncfN1GDLC4d2upRUyPLmCvtmyexviPGaxGHcx/LKkPIq\r\n3j6dQ2KbdZstRn9vvZ1EAf0rlOtdaTdlm68zewNjgXOSYZvMLNIsKatlUIv2enVL\r\nbak+WwXIQYWewPxI2kDF4QKBgCNsYIAlrk0VHTqGqeEiP5ziPDbglbUUGwQRmJ/r\r\naWStKTqVJS4ZmYKOomBXn3rYWxLov3mEZ2x3VvMJlifLrefjBL+TOY0SBUqoTrBM\r\nDZBg6KnYNnzzFl47vkiZytuL1oCp3st09JYHSKk6CUwyi98kXiSzLbyvX8hT1B44\r\nhL85AoGBAKxYfpRQ42e7yKIeWMWt58dtTDhFNuzv+HTrde0g0PQO8rDhUJsyNBLa\r\n/a55/yGdDxWiCNCuvFKcDRwJ/H5n+Ez6KNQW+TKGHgFU389pHAwWsXGvpbnF9mkJ\r\n0jE2kA3xLfHIVCzQrZykaDZtfMTnMwZWk6Ud48CG5+Cs1FzaM6Lr\r\n-----END RSA PRIVATE KEY-----"
+    "properties": {
+      ".properties.garden_disk_cleanup": {
+        "type": "selector",
+        "configurable": true,
+        "credential": false,
+        "value": "routine",
+        "optional": false
       },
-      "optional": false
-    },
-    ".properties.networking_point_of_entry.external_ssl.ssl_ciphers": {
-      "type": "text",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.networking_point_of_entry.haproxy.ssl_rsa_certificate": {
-      "type": "rsa_cert_credentials",
-      "configurable": true,
-      "credential": true,
-      "value": {
-        "private_key_pem": "***"
+      ".properties.garden_disk_cleanup.threshold.cleanup_threshold_in_mb": {
+        "type": "integer",
+        "configurable": false,
+        "credential": false,
+        "value": null,
+        "optional": false
       },
-      "optional": false
-    },
-    ".properties.networking_point_of_entry.haproxy.disable_http": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": false,
-      "optional": false
-    },
-    ".properties.networking_point_of_entry.haproxy.ssl_ciphers": {
-      "type": "text",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.tcp_routing": {
-      "type": "selector",
-      "configurable": true,
-      "credential": false,
-      "value": "disable",
-      "optional": false
-    },
-    ".properties.tcp_routing.enable.reservable_ports": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.route_services": {
-      "type": "selector",
-      "configurable": true,
-      "credential": false,
-      "value": "enable",
-      "optional": false
-    },
-    ".properties.route_services.enable.ignore_ssl_cert_verification": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": true,
-      "optional": false
-    },
-    ".properties.security_acknowledgement": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "X",
-      "optional": false
-    },
-    ".properties.smoke_tests": {
-      "type": "selector",
-      "configurable": true,
-      "credential": false,
-      "value": "on_demand",
-      "optional": false
-    },
-    ".properties.smoke_tests.specified.org_name": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.smoke_tests.specified.space_name": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.smoke_tests.specified.apps_domain": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.smtp_from": {
-      "type": "email",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.smtp_address": {
-      "type": "network_address",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.smtp_port": {
-      "type": "port",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.smtp_credentials": {
-      "type": "simple_credentials",
-      "configurable": true,
-      "credential": true,
-      "value": {
-        "password": null
+      ".properties.logger_endpoint_port": {
+        "type": "port",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
       },
-      "optional": true
-    },
-    ".properties.smtp_enable_starttls_auto": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": false,
-      "optional": false
-    },
-    ".properties.smtp_auth_mechanism": {
-      "type": "dropdown_select",
-      "configurable": true,
-      "credential": false,
-      "value": "plain",
-      "optional": false,
-      "options": [
-        {
-          "label": "None",
-          "value": "none"
-        },
-        {
-          "label": "Plain",
-          "value": "plain"
-        },
-        {
-          "label": "CRAMMD5",
-          "value": "cram-md5"
-        }
-      ]
-    },
-    ".properties.smtp_crammd5_secret": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.system_blobstore": {
-      "type": "selector",
-      "configurable": true,
-      "credential": false,
-      "value": "internal",
-      "optional": false
-    },
-    ".properties.system_blobstore.external_gcs.buildpacks_bucket": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_blobstore.external_gcs.droplets_bucket": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_blobstore.external_gcs.packages_bucket": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_blobstore.external_gcs.resources_bucket": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_blobstore.external_gcs.access_key": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_blobstore.external_gcs.secret_key": {
-      "type": "secret",
-      "configurable": true,
-      "credential": true,
-      "value": {
-        "secret": "***"
+      ".properties.syslog_host": {
+        "type": "network_address",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
       },
-      "optional": false
-    },
-    ".properties.system_blobstore.external.endpoint": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "https://s3.amazonaws.com",
-      "optional": false
-    },
-    ".properties.system_blobstore.external.buildpacks_bucket": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_blobstore.external.droplets_bucket": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_blobstore.external.packages_bucket": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_blobstore.external.resources_bucket": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_blobstore.external.access_key": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_blobstore.external.secret_key": {
-      "type": "secret",
-      "configurable": true,
-      "credential": true,
-      "value": {
-        "secret": "***"
+      ".properties.syslog_port": {
+        "type": "port",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
       },
-      "optional": false
-    },
-    ".properties.system_blobstore.external.signature_version": {
-      "type": "dropdown_select",
-      "configurable": true,
-      "credential": false,
-      "value": 2,
-      "optional": false,
-      "options": [
-        {
-          "label": "V2 Signature",
-          "value": 2
-        },
-        {
-          "label": "V4 Signature",
-          "value": 4
-        }
-      ]
-    },
-    ".properties.system_blobstore.external.region": {
-      "type": "dropdown_select",
-      "configurable": true,
-      "credential": false,
-      "value": "''",
-      "optional": false,
-      "options": [
-        {
-          "label": "V2 Signature - N/A",
-          "value": "''"
-        },
-        {
-          "label": "US East (N. Virginia)",
-          "value": "us-east-1"
-        },
-        {
-          "label": "US West (N. California)",
-          "value": "us-west-1"
-        },
-        {
-          "label": "US West (Oregon)",
-          "value": "us-west-2"
-        },
-        {
-          "label": "EU (Ireland)",
-          "value": "eu-west-1"
-        },
-        {
-          "label": "Asia Pacific (Singapore)",
-          "value": "ap-southeast-1"
-        },
-        {
-          "label": "Asia Pacific (Tokyo)",
-          "value": "ap-northeast-1"
-        },
-        {
-          "label": "Asia Pacific (Sydney)",
-          "value": "ap-southeast-2"
-        },
-        {
-          "label": "South America (São Paulo)",
-          "value": "sa-east-1"
-        },
-        {
-          "label": "V4 Signature Only - GovCloud Region (US)",
-          "value": "us-gov-west-1"
-        },
-        {
-          "label": "V4 Signature Only - China Region (Beijing)",
-          "value": "cn-north-1"
-        },
-        {
-          "label": "V4 Signature Only - EU Region (Frankfurt)",
-          "value": "eu-central-1"
-        },
-        {
-          "label": "V4 Signature Only - Asia Pacific (Seoul)",
-          "value": "ap-northeast-2"
-        }
-      ]
-    },
-    ".properties.system_blobstore.external.encryption": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": false,
-      "optional": false
-    },
-    ".properties.system_database.external.port": {
-      "type": "port",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_database.external.host": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_database.external.username": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.system_database.external.password": {
-      "type": "secret",
-      "configurable": true,
-      "credential": true,
-      "value": {
-        "secret": "***"
+      ".properties.syslog_protocol": {
+        "type": "dropdown_select",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true,
+        "options": [
+          {
+            "label": "TCP protocol",
+            "value": "tcp"
+          },
+          {
+            "label": "RELP protocol",
+            "value": "relp"
+          },
+          {
+            "label": "UDP protocol",
+            "value": "udp"
+          }
+        ]
       },
-      "optional": false
-    },
-    ".properties.mysql_backups": {
-      "type": "selector",
-      "configurable": true,
-      "credential": false,
-      "value": "disable",
-      "optional": false
-    },
-    ".properties.mysql_backups.s3.endpoint_url": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "https://s3.amazonaws.com",
-      "optional": false
-    },
-    ".properties.mysql_backups.s3.bucket_name": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.mysql_backups.s3.bucket_path": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.mysql_backups.s3.access_key_id": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.mysql_backups.s3.secret_access_key": {
-      "type": "secret",
-      "configurable": true,
-      "credential": true,
-      "value": {
-        "secret": "***"
+      ".properties.networking_point_of_entry": {
+        "type": "selector",
+        "configurable": true,
+        "credential": false,
+        "value": "external_ssl",
+        "optional": false
       },
-      "optional": false
-    },
-    ".properties.mysql_backups.s3.cron_schedule": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.mysql_backups.s3.backup_all_masters": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": true,
-      "optional": false
-    },
-    ".properties.mysql_backups.scp.server": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.mysql_backups.scp.port": {
-      "type": "port",
-      "configurable": true,
-      "credential": false,
-      "value": 22,
-      "optional": false
-    },
-    ".properties.mysql_backups.scp.user": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.mysql_backups.scp.key": {
-      "type": "text",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.mysql_backups.scp.destination": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.mysql_backups.scp.cron_schedule": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.mysql_backups.scp.backup_all_masters": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": true,
-      "optional": false
-    },
-    ".properties.uaa": {
-      "type": "selector",
-      "configurable": true,
-      "credential": false,
-      "value": "internal",
-      "optional": false
-    },
-    ".properties.uaa.internal.password_min_length": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 0,
-      "optional": false
-    },
-    ".properties.uaa.internal.password_min_uppercase": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 0,
-      "optional": false
-    },
-    ".properties.uaa.internal.password_min_lowercase": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 0,
-      "optional": false
-    },
-    ".properties.uaa.internal.password_min_numeric": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 0,
-      "optional": false
-    },
-    ".properties.uaa.internal.password_min_special": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 0,
-      "optional": false
-    },
-    ".properties.uaa.internal.password_expires_after_months": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 0,
-      "optional": false
-    },
-    ".properties.uaa.internal.password_max_retry": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 5,
-      "optional": false
-    },
-    ".properties.uaa.saml.sso_name": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.uaa.saml.display_name": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.uaa.saml.sso_url": {
-      "type": "http_url",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.saml.name_id_format": {
-      "type": "dropdown_select",
-      "configurable": true,
-      "credential": false,
-      "value": "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
-      "optional": false,
-      "options": [
-        {
-          "label": "Email Address",
-          "value": "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
+      ".properties.networking_point_of_entry.external_ssl.ssl_rsa_certificate": {
+        "type": "rsa_cert_credentials",
+        "configurable": true,
+        "credential": true,
+        "value": {
+          "cert_pem": "-----BEGIN CERTIFICATE-----\r\nMIIDmTCCAoGgAwIBAgIJAPzvcCUn+iUDMA0GCSqGSIb3DQEBBQUAMEExIDAeBgNV\r\nBAMMFyouc3lzLmdjcC5jdXN0b21lcjAubmV0MRAwDgYDVQQKDAdQaXZvdGFsMQsw\r\nCQYDVQQGEwJVUzAeFw0xNjEwMTcyMDQ3MDFaFw0yNjEwMTUyMDQ3MDFaMEExIDAe\r\nBgNVBAMMFyouc3lzLmdjcC5jdXN0b21lcjAubmV0MRAwDgYDVQQKDAdQaXZvdGFs\r\nMQswCQYDVQQGEwJVUzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOqZ\r\nMAsLRwxkrYoJJtYKqyZXIIRzCnj44G5OwoN9xIUZdBe+C9jwz3XNtGS60VHAG4KA\r\nRKZ+U+lh6RwPQGJacwcKpfczPH1k+PdCud/IUL1/MVK0tvW0eaIH8y0gC+mlPBls\r\nadb0gH+ABgf0DYgZQ4NcX535K0pOm2w17NU+yfkKcRFL+Stkt5oJVrkzWwSKxjbf\r\nOMet0PnHNvvNKn97qs5ouMMwlXnmnVDgX79D7nSm2r6GXn3otOL0MXASgX3VSuKb\r\nxNGBpPxRskPXTRrVW2uyz/BomYWFG4yhoKsLjo72ZEcDzURnLlG8Ldi4yUF6lbcZ\r\nBUEIU30MlD1rTu/09h0CAwEAAaOBkzCBkDAJBgNVHRMEAjAAMAsGA1UdDwQEAwIF\r\n4DB2BgNVHREEbzBtghcqLnN5cy5nY3AuY3VzdG9tZXIwLm5ldIIdKi5sb2dpbi5z\r\neXMuZ2NwLmN1c3RvbWVyMC5uZXSCGyoudWFhLnN5cy5nY3AuY3VzdG9tZXIwLm5l\r\ndIIWKi5jZmFwcHMuY3VzdG9tZXIwLm5ldDANBgkqhkiG9w0BAQUFAAOCAQEAzWDy\r\nMZ0wgsIH0FZC/i5uQosU21JcxMlk5nCj6Ehhba9/qbxbSiFOY2xX7UZeR0Y56o6w\r\nwbRffWv2zrrmHFwhAXOgiXeyXltfGpMlwbDbcUTz/mDDD/Ltpy/8Y723NF4klJsG\r\n6E+kgZrLsQuk26ay8LnP5cIHsce9suiePEdcp9v+c7kta0u5W0VVTAino7r1Sal6\r\nDweqaVJKwL/DQ1rCofL+jObcum5hGAWj/ojMYOT6v4kq18yJMGgNEfmzm7uySl6w\r\nGG6ltLP/RrzjiiT+CF1dik0BV1d6+OHsgesNLyVYJMdYtKxArA/ucgKGB0OFuemN\r\nIP7lFx56fVFCOWQ5dw==\r\n-----END CERTIFICATE-----",
+          "private_key_pem": "-----BEGIN RSA PRIVATE KEY-----\r\nMIIEowIBAAKCAQEA6pkwCwtHDGStigkm1gqrJlcghHMKePjgbk7Cg33EhRl0F74L\r\n2PDPdc20ZLrRUcAbgoBEpn5T6WHpHA9AYlpzBwql9zM8fWT490K538hQvX8xUrS2\r\n9bR5ogfzLSAL6aU8GWxp1vSAf4AGB/QNiBlDg1xfnfkrSk6bbDXs1T7J+QpxEUv5\r\nK2S3mglWuTNbBIrGNt84x63Q+cc2+80qf3uqzmi4wzCVeeadUOBfv0PudKbavoZe\r\nfei04vQxcBKBfdVK4pvE0YGk/FGyQ9dNGtVba7LP8GiZhYUbjKGgqwuOjvZkRwPN\r\nRGcuUbwt2LjJQXqVtxkFQQhTfQyUPWtO7/T2HQIDAQABAoIBACOOdj6mRe118OuD\r\n+ZPlaA1WlUId4Y92QSXW4Bpn3HpD4lma31bRINB9DgNaYVFfqYu8/yqw6OztfxRW\r\np26AwQBnN8JgzKFAxY9MWLm3Na2S8pnTdAuHgAvz4oKLYeLWvWYpDV2cD0HD2KYp\r\n8kcXdSkavg9Gba5EfcAH6E5lxtzs0uKCF+HeFlxbf64/0yHlwQMuoB79Nhy0CaCS\r\nmqdik4yEcAzNNthieV7JBX91ITsg+PKN/+MeoE6QiCGe5vCynr9/nigHgwO8av+U\r\n27y4mOBy0Ca+neYHnOqDVJhiTPxB0r6GMuG5CK1NPLDaWYhmxjJTWU4EYKoF+jPu\r\nbbZArg0CgYEA/gn5JHDd85DwfN3tD1EtIcBkTVxe+3KZCEyfVd0Z83Hdbz/n4EBB\r\nF078EDcXiRNfXXbxldMoKVKoQcjBPFmrP2BXZ4AjTzcS1kAnFYnmyv4O0X29Bs9L\r\nr5SxeZb49tTxfJX6ojgMxnJAwNcVtqYzIopQ9tJeRRrhcR1avWF3K38CgYEA7GjL\r\n4As4scbqnSSB7IDn469ReCXeJ0FiVnYp9XgOmeAJYNS4B3njvrnzQGQZ7M8KMzIC\r\nxS9DEqIirpLaZFy/IN8Qpcy5nuguoSZOA9NQTfWZdpX1f5JjGPosiQWd6QZqEBGB\r\nISdQRExL7Uzq/ok69eQxCbtzA5MK8PlWf8GC3GMCgYA4n+B4zu+qKtRwAMemcmGs\r\n9EVnOP+y7IhP4URizzXJncfN1GDLC4d2upRUyPLmCvtmyexviPGaxGHcx/LKkPIq\r\n3j6dQ2KbdZstRn9vvZ1EAf0rlOtdaTdlm68zewNjgXOSYZvMLNIsKatlUIv2enVL\r\nbak+WwXIQYWewPxI2kDF4QKBgCNsYIAlrk0VHTqGqeEiP5ziPDbglbUUGwQRmJ/r\r\naWStKTqVJS4ZmYKOomBXn3rYWxLov3mEZ2x3VvMJlifLrefjBL+TOY0SBUqoTrBM\r\nDZBg6KnYNnzzFl47vkiZytuL1oCp3st09JYHSKk6CUwyi98kXiSzLbyvX8hT1B44\r\nhL85AoGBAKxYfpRQ42e7yKIeWMWt58dtTDhFNuzv+HTrde0g0PQO8rDhUJsyNBLa\r\n/a55/yGdDxWiCNCuvFKcDRwJ/H5n+Ez6KNQW+TKGHgFU389pHAwWsXGvpbnF9mkJ\r\n0jE2kA3xLfHIVCzQrZykaDZtfMTnMwZWk6Ud48CG5+Cs1FzaM6Lr\r\n-----END RSA PRIVATE KEY-----"
         },
-        {
-          "label": "Unspecified",
-          "value": "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
+        "optional": false
+      },
+      ".properties.networking_point_of_entry.external_ssl.ssl_ciphers": {
+        "type": "text",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.networking_point_of_entry.haproxy.ssl_rsa_certificate": {
+        "type": "rsa_cert_credentials",
+        "configurable": true,
+        "credential": true,
+        "value": {
+          "private_key_pem": "***"
         },
-        {
-          "label": "Persistent",
-          "value": "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent"
-        }
-      ]
-    },
-    ".properties.uaa.saml.sso_xml": {
-      "type": "text",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.saml.sign_auth_requests": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": true,
-      "optional": false
-    },
-    ".properties.uaa.saml.require_signed_assertions": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": false,
-      "optional": false
-    },
-    ".properties.uaa.saml.email_domains": {
-      "type": "string_list",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.saml.first_name_attribute": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.saml.last_name_attribute": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.saml.email_attribute": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.saml.external_groups_attribute": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.ldap.url": {
-      "type": "ldap_url",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.uaa.ldap.credentials": {
-      "type": "simple_credentials",
-      "configurable": true,
-      "credential": true,
-      "value": {
-        "password": "***"
+        "optional": false
       },
-      "optional": false
-    },
-    ".properties.uaa.ldap.search_base": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": false
-    },
-    ".properties.uaa.ldap.search_filter": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "cn={0}",
-      "optional": false
-    },
-    ".properties.uaa.ldap.group_search_base": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.ldap.group_search_filter": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "member={0}",
-      "optional": false
-    },
-    ".properties.uaa.ldap.server_ssl_cert": {
-      "type": "text",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.ldap.server_ssl_cert_alias": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.ldap.mail_attribute_name": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "mail",
-      "optional": false
-    },
-    ".properties.uaa.ldap.email_domains": {
-      "type": "string_list",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.ldap.first_name_attribute": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".properties.uaa.ldap.last_name_attribute": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".mysql_proxy.static_ips": {
-      "type": "ip_ranges",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".mysql_proxy.service_hostname": {
-      "type": "network_address",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".uaa.customize_username_label": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "Email",
-      "optional": false
-    },
-    ".uaa.customize_password_label": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "Password",
-      "optional": false
-    },
-    ".cloud_controller.encrypt_key": {
-      "type": "secret",
-      "configurable": true,
-      "credential": true,
-      "value": {
-        "secret": null
+      ".properties.networking_point_of_entry.haproxy.disable_http": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": false,
+        "optional": false
       },
-      "optional": true
-    },
-    ".cloud_controller.max_file_size": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 1024,
-      "optional": false
-    },
-    ".cloud_controller.default_app_memory": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 1024,
-      "optional": false
-    },
-    ".cloud_controller.max_disk_quota_app": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 2048,
-      "optional": false
-    },
-    ".cloud_controller.default_disk_quota_app": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 1024,
-      "optional": false
-    },
-    ".cloud_controller.enable_custom_buildpacks": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": true,
-      "optional": false
-    },
-    ".cloud_controller.system_domain": {
-      "type": "wildcard_domain",
-      "configurable": true,
-      "credential": false,
-      "value": "sys.gcp.customer0.net",
-      "optional": false
-    },
-    ".cloud_controller.apps_domain": {
-      "type": "wildcard_domain",
-      "configurable": true,
-      "credential": false,
-      "value": "cfapps.gcp.customer0.net",
-      "optional": false
-    },
-    ".cloud_controller.default_quota_memory_limit_mb": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 10240,
-      "optional": false
-    },
-    ".cloud_controller.default_quota_max_number_services": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 100,
-      "optional": false
-    },
-    ".cloud_controller.allow_app_ssh_access": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": true,
-      "optional": false
-    },
-    ".cloud_controller.security_event_logging_enabled": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": true,
-      "optional": false
-    },
-    ".ha_proxy.static_ips": {
-      "type": "ip_ranges",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".ha_proxy.skip_cert_verify": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": false,
-      "optional": false
-    },
-    ".router.static_ips": {
-      "type": "ip_ranges",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".router.disable_insecure_cookies": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": false,
-      "optional": false
-    },
-    ".router.request_timeout_in_seconds": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 900,
-      "optional": false
-    },
-    ".router.drain_wait": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 0,
-      "optional": false
-    },
-    ".router.lb_healthy_threshold": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 20,
-      "optional": false
-    },
-    ".mysql_monitor.poll_frequency": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 30,
-      "optional": false
-    },
-    ".mysql_monitor.write_read_delay": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 20,
-      "optional": false
-    },
-    ".mysql_monitor.recipient_email": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "Fill in your desired email address",
-      "optional": false
-    },
-    ".diego_brain.static_ips": {
-      "type": "ip_ranges",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".diego_brain.disable_privileged_containers": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": false,
-      "optional": false
-    },
-    ".diego_cell.executor_disk_capacity": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".diego_cell.executor_memory_capacity": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".diego_cell.garden_network_pool": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "10.254.0.0/22",
-      "optional": false
-    },
-    ".diego_cell.insecure_docker_registry_list": {
-      "type": "string_list",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".diego_cell.garden_network_mtu": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 1454,
-      "optional": false
-    },
-    ".doppler.message_drain_buffer_size": {
-      "type": "integer",
-      "configurable": true,
-      "credential": false,
-      "value": 10000,
-      "optional": false
-    },
-    ".tcp_router.static_ips": {
-      "type": "ip_ranges",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.company_name": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.accent_color": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.global_wrapper_bg_color": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.global_wrapper_text_color": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.global_wrapper_header_content": {
-      "type": "text",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.global_wrapper_footer_content": {
-      "type": "text",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.logo": {
-      "type": "text",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.square_logo": {
-      "type": "text",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.footer_text": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.footer_links": {
-      "type": "collection",
-      "configurable": true,
-      "credential": false,
-      "value": [],
-      "optional": true
-    },
-    ".push-apps-manager.product_name": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.marketplace_name": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": null,
-      "optional": true
-    },
-    ".push-apps-manager.display_plan_prices": {
-      "type": "boolean",
-      "configurable": true,
-      "credential": false,
-      "value": false,
-      "optional": false
-    },
-    ".push-apps-manager.currency_lookup": {
-      "type": "string",
-      "configurable": true,
-      "credential": false,
-      "value": "{ \"usd\": \"$\", \"eur\": \"€\" }",
-      "optional": false
+      ".properties.networking_point_of_entry.haproxy.ssl_ciphers": {
+        "type": "text",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.tcp_routing": {
+        "type": "selector",
+        "configurable": true,
+        "credential": false,
+        "value": "disable",
+        "optional": false
+      },
+      ".properties.tcp_routing.enable.reservable_ports": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.route_services": {
+        "type": "selector",
+        "configurable": true,
+        "credential": false,
+        "value": "enable",
+        "optional": false
+      },
+      ".properties.route_services.enable.ignore_ssl_cert_verification": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": true,
+        "optional": false
+      },
+      ".properties.security_acknowledgement": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "X",
+        "optional": false
+      },
+      ".properties.smoke_tests": {
+        "type": "selector",
+        "configurable": true,
+        "credential": false,
+        "value": "on_demand",
+        "optional": false
+      },
+      ".properties.smoke_tests.specified.org_name": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.smoke_tests.specified.space_name": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.smoke_tests.specified.apps_domain": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.smtp_from": {
+        "type": "email",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.smtp_address": {
+        "type": "network_address",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.smtp_port": {
+        "type": "port",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.smtp_credentials": {
+        "type": "simple_credentials",
+        "configurable": true,
+        "credential": true,
+        "value": {
+          "password": null
+        },
+        "optional": true
+      },
+      ".properties.smtp_enable_starttls_auto": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": false,
+        "optional": false
+      },
+      ".properties.smtp_auth_mechanism": {
+        "type": "dropdown_select",
+        "configurable": true,
+        "credential": false,
+        "value": "plain",
+        "optional": false,
+        "options": [
+          {
+            "label": "None",
+            "value": "none"
+          },
+          {
+            "label": "Plain",
+            "value": "plain"
+          },
+          {
+            "label": "CRAMMD5",
+            "value": "cram-md5"
+          }
+        ]
+      },
+      ".properties.smtp_crammd5_secret": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.system_blobstore": {
+        "type": "selector",
+        "configurable": true,
+        "credential": false,
+        "value": "internal",
+        "optional": false
+      },
+      ".properties.system_blobstore.external_gcs.buildpacks_bucket": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_blobstore.external_gcs.droplets_bucket": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_blobstore.external_gcs.packages_bucket": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_blobstore.external_gcs.resources_bucket": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_blobstore.external_gcs.access_key": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_blobstore.external_gcs.secret_key": {
+        "type": "secret",
+        "configurable": true,
+        "credential": true,
+        "value": {
+          "secret": "***"
+        },
+        "optional": false
+      },
+      ".properties.system_blobstore.external.endpoint": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "https://s3.amazonaws.com",
+        "optional": false
+      },
+      ".properties.system_blobstore.external.buildpacks_bucket": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_blobstore.external.droplets_bucket": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_blobstore.external.packages_bucket": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_blobstore.external.resources_bucket": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_blobstore.external.access_key": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_blobstore.external.secret_key": {
+        "type": "secret",
+        "configurable": true,
+        "credential": true,
+        "value": {
+          "secret": "***"
+        },
+        "optional": false
+      },
+      ".properties.system_blobstore.external.signature_version": {
+        "type": "dropdown_select",
+        "configurable": true,
+        "credential": false,
+        "value": 2,
+        "optional": false,
+        "options": [
+          {
+            "label": "V2 Signature",
+            "value": 2
+          },
+          {
+            "label": "V4 Signature",
+            "value": 4
+          }
+        ]
+      },
+      ".properties.system_blobstore.external.region": {
+        "type": "dropdown_select",
+        "configurable": true,
+        "credential": false,
+        "value": "''",
+        "optional": false,
+        "options": [
+          {
+            "label": "V2 Signature - N/A",
+            "value": "''"
+          },
+          {
+            "label": "US East (N. Virginia)",
+            "value": "us-east-1"
+          },
+          {
+            "label": "US West (N. California)",
+            "value": "us-west-1"
+          },
+          {
+            "label": "US West (Oregon)",
+            "value": "us-west-2"
+          },
+          {
+            "label": "EU (Ireland)",
+            "value": "eu-west-1"
+          },
+          {
+            "label": "Asia Pacific (Singapore)",
+            "value": "ap-southeast-1"
+          },
+          {
+            "label": "Asia Pacific (Tokyo)",
+            "value": "ap-northeast-1"
+          },
+          {
+            "label": "Asia Pacific (Sydney)",
+            "value": "ap-southeast-2"
+          },
+          {
+            "label": "South America (São Paulo)",
+            "value": "sa-east-1"
+          },
+          {
+            "label": "V4 Signature Only - GovCloud Region (US)",
+            "value": "us-gov-west-1"
+          },
+          {
+            "label": "V4 Signature Only - China Region (Beijing)",
+            "value": "cn-north-1"
+          },
+          {
+            "label": "V4 Signature Only - EU Region (Frankfurt)",
+            "value": "eu-central-1"
+          },
+          {
+            "label": "V4 Signature Only - Asia Pacific (Seoul)",
+            "value": "ap-northeast-2"
+          }
+        ]
+      },
+      ".properties.system_blobstore.external.encryption": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": false,
+        "optional": false
+      },
+      ".properties.system_database.external.port": {
+        "type": "port",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_database.external.host": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_database.external.username": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.system_database.external.password": {
+        "type": "secret",
+        "configurable": true,
+        "credential": true,
+        "value": {
+          "secret": "***"
+        },
+        "optional": false
+      },
+      ".properties.mysql_backups": {
+        "type": "selector",
+        "configurable": true,
+        "credential": false,
+        "value": "disable",
+        "optional": false
+      },
+      ".properties.mysql_backups.s3.endpoint_url": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "https://s3.amazonaws.com",
+        "optional": false
+      },
+      ".properties.mysql_backups.s3.bucket_name": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.mysql_backups.s3.bucket_path": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.mysql_backups.s3.access_key_id": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.mysql_backups.s3.secret_access_key": {
+        "type": "secret",
+        "configurable": true,
+        "credential": true,
+        "value": {
+          "secret": "***"
+        },
+        "optional": false
+      },
+      ".properties.mysql_backups.s3.cron_schedule": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.mysql_backups.s3.backup_all_masters": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": true,
+        "optional": false
+      },
+      ".properties.mysql_backups.scp.server": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.mysql_backups.scp.port": {
+        "type": "port",
+        "configurable": true,
+        "credential": false,
+        "value": 22,
+        "optional": false
+      },
+      ".properties.mysql_backups.scp.user": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.mysql_backups.scp.key": {
+        "type": "text",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.mysql_backups.scp.destination": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.mysql_backups.scp.cron_schedule": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.mysql_backups.scp.backup_all_masters": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": true,
+        "optional": false
+      },
+      ".properties.uaa": {
+        "type": "selector",
+        "configurable": true,
+        "credential": false,
+        "value": "internal",
+        "optional": false
+      },
+      ".properties.uaa.internal.password_min_length": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 0,
+        "optional": false
+      },
+      ".properties.uaa.internal.password_min_uppercase": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 0,
+        "optional": false
+      },
+      ".properties.uaa.internal.password_min_lowercase": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 0,
+        "optional": false
+      },
+      ".properties.uaa.internal.password_min_numeric": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 0,
+        "optional": false
+      },
+      ".properties.uaa.internal.password_min_special": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 0,
+        "optional": false
+      },
+      ".properties.uaa.internal.password_expires_after_months": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 0,
+        "optional": false
+      },
+      ".properties.uaa.internal.password_max_retry": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 5,
+        "optional": false
+      },
+      ".properties.uaa.saml.sso_name": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.uaa.saml.display_name": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.uaa.saml.sso_url": {
+        "type": "http_url",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.saml.name_id_format": {
+        "type": "dropdown_select",
+        "configurable": true,
+        "credential": false,
+        "value": "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
+        "optional": false,
+        "options": [
+          {
+            "label": "Email Address",
+            "value": "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
+          },
+          {
+            "label": "Unspecified",
+            "value": "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
+          },
+          {
+            "label": "Persistent",
+            "value": "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent"
+          }
+        ]
+      },
+      ".properties.uaa.saml.sso_xml": {
+        "type": "text",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.saml.sign_auth_requests": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": true,
+        "optional": false
+      },
+      ".properties.uaa.saml.require_signed_assertions": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": false,
+        "optional": false
+      },
+      ".properties.uaa.saml.email_domains": {
+        "type": "string_list",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.saml.first_name_attribute": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.saml.last_name_attribute": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.saml.email_attribute": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.saml.external_groups_attribute": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.ldap.url": {
+        "type": "ldap_url",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.uaa.ldap.credentials": {
+        "type": "simple_credentials",
+        "configurable": true,
+        "credential": true,
+        "value": {
+          "password": "***"
+        },
+        "optional": false
+      },
+      ".properties.uaa.ldap.search_base": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": false
+      },
+      ".properties.uaa.ldap.search_filter": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "cn={0}",
+        "optional": false
+      },
+      ".properties.uaa.ldap.group_search_base": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.ldap.group_search_filter": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "member={0}",
+        "optional": false
+      },
+      ".properties.uaa.ldap.server_ssl_cert": {
+        "type": "text",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.ldap.server_ssl_cert_alias": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.ldap.mail_attribute_name": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "mail",
+        "optional": false
+      },
+      ".properties.uaa.ldap.email_domains": {
+        "type": "string_list",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.ldap.first_name_attribute": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".properties.uaa.ldap.last_name_attribute": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".mysql_proxy.static_ips": {
+        "type": "ip_ranges",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".mysql_proxy.service_hostname": {
+        "type": "network_address",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".uaa.customize_username_label": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "Email",
+        "optional": false
+      },
+      ".uaa.customize_password_label": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "Password",
+        "optional": false
+      },
+      ".cloud_controller.encrypt_key": {
+        "type": "secret",
+        "configurable": true,
+        "credential": true,
+        "value": {
+          "secret": null
+        },
+        "optional": true
+      },
+      ".cloud_controller.max_file_size": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 1024,
+        "optional": false
+      },
+      ".cloud_controller.default_app_memory": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 1024,
+        "optional": false
+      },
+      ".cloud_controller.max_disk_quota_app": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 2048,
+        "optional": false
+      },
+      ".cloud_controller.default_disk_quota_app": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 1024,
+        "optional": false
+      },
+      ".cloud_controller.enable_custom_buildpacks": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": true,
+        "optional": false
+      },
+      ".cloud_controller.system_domain": {
+        "type": "wildcard_domain",
+        "configurable": true,
+        "credential": false,
+        "value": "sys.gcp.customer0.net",
+        "optional": false
+      },
+      ".cloud_controller.apps_domain": {
+        "type": "wildcard_domain",
+        "configurable": true,
+        "credential": false,
+        "value": "cfapps.gcp.customer0.net",
+        "optional": false
+      },
+      ".cloud_controller.default_quota_memory_limit_mb": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 10240,
+        "optional": false
+      },
+      ".cloud_controller.default_quota_max_number_services": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 100,
+        "optional": false
+      },
+      ".cloud_controller.allow_app_ssh_access": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": true,
+        "optional": false
+      },
+      ".cloud_controller.security_event_logging_enabled": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": true,
+        "optional": false
+      },
+      ".ha_proxy.static_ips": {
+        "type": "ip_ranges",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".ha_proxy.skip_cert_verify": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": false,
+        "optional": false
+      },
+      ".router.static_ips": {
+        "type": "ip_ranges",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".router.disable_insecure_cookies": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": false,
+        "optional": false
+      },
+      ".router.request_timeout_in_seconds": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 900,
+        "optional": false
+      },
+      ".router.drain_wait": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 0,
+        "optional": false
+      },
+      ".router.lb_healthy_threshold": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 20,
+        "optional": false
+      },
+      ".mysql_monitor.poll_frequency": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 30,
+        "optional": false
+      },
+      ".mysql_monitor.write_read_delay": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 20,
+        "optional": false
+      },
+      ".mysql_monitor.recipient_email": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "Fill in your desired email address",
+        "optional": false
+      },
+      ".diego_brain.static_ips": {
+        "type": "ip_ranges",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".diego_brain.disable_privileged_containers": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": false,
+        "optional": false
+      },
+      ".diego_cell.executor_disk_capacity": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".diego_cell.executor_memory_capacity": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".diego_cell.garden_network_pool": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "10.254.0.0/22",
+        "optional": false
+      },
+      ".diego_cell.insecure_docker_registry_list": {
+        "type": "string_list",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".diego_cell.garden_network_mtu": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 1454,
+        "optional": false
+      },
+      ".doppler.message_drain_buffer_size": {
+        "type": "integer",
+        "configurable": true,
+        "credential": false,
+        "value": 10000,
+        "optional": false
+      },
+      ".tcp_router.static_ips": {
+        "type": "ip_ranges",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.company_name": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.accent_color": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.global_wrapper_bg_color": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.global_wrapper_text_color": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.global_wrapper_header_content": {
+        "type": "text",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.global_wrapper_footer_content": {
+        "type": "text",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.logo": {
+        "type": "text",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.square_logo": {
+        "type": "text",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.footer_text": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.footer_links": {
+        "type": "collection",
+        "configurable": true,
+        "credential": false,
+        "value": [],
+        "optional": true
+      },
+      ".push-apps-manager.product_name": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.marketplace_name": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": null,
+        "optional": true
+      },
+      ".push-apps-manager.display_plan_prices": {
+        "type": "boolean",
+        "configurable": true,
+        "credential": false,
+        "value": false,
+        "optional": false
+      },
+      ".push-apps-manager.currency_lookup": {
+        "type": "string",
+        "configurable": true,
+        "credential": false,
+        "value": "{ \"usd\": \"$\", \"eur\": \"€\" }",
+        "optional": false
+      }
     }
   }
 }
