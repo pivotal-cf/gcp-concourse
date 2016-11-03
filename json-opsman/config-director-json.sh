@@ -48,7 +48,6 @@ source ${exec_mode_root}/config-director-json-fn-opsman-auth.sh
 source ${exec_mode_root}/config-director-json-fn-opsman-json-to-post-data.sh
 source ${exec_mode_root}/config-director-json-fn-opsman-extensions.sh
 source ${exec_mode_root}/config-director-json-fn-opsman-config-director.sh
-source ${exec_mode_root}/config-director-json-fn-opsman-config-ert.sh
 
 
 
