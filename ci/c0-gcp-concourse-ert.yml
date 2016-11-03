@@ -405,7 +405,8 @@ jobs:
       inputs:
         - name: gcp-concourse
         - name: tool-om
-        - name: opsman-metadata
+      outputs:
+        - name: pieline-metadata
       run:
         path: gcp-concourse/ci/tasks/cats/run-cats.sh
       params:

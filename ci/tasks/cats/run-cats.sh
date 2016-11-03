@@ -12,11 +12,6 @@ function fn_compile_cats {
   # Set Golang Path
   export PATH=$PATH:/usr/local/go/bin
 
-  # Install cf latest cli
-  cf_cli_latest_ver=$(curl -s https://api.github.com/repos/cloudfoundry/cli/releases/latest | jq .tag_name | tr -d '"')
-  wget -O cfcli.deb https://cli.run.pivotal.io/stable?release=debian64&version=${cf_cli_latest_ver}&source=github-rel
-  sudo dpkg --install cfcli.deb
-
   # Go Get CATs repo
   root_path=$(pwd)
   export GOPATH="${root_path}/goroot"
