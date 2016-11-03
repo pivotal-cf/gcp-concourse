@@ -316,6 +316,15 @@ jobs:
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
         gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
+      on_success:
+        put: slack-c0-coreteam
+        params:
+          text: |
+            'concourse-SUCCESS:-> ERT Has Deployed and SmokeTests Have Succeeded {{fly_url}}/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME'
+      on_failure:
+        put: slack-c0-coreteam
+        params:
+          text: 'concourse-failure:-> {{fly_url}}/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or {{fly_url}}/$BUILD_ID for more details'
 
 - name: run-cats
   #serial: false
