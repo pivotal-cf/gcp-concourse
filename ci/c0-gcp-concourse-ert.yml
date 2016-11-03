@@ -84,6 +84,9 @@ jobs:
       trigger: false
     - get: pivnet-opsmgr
       trigger: true
+      params:
+        globs:
+        - "*GCP*"
     - get: pivnet-elastic-runtime
       trigger: true
       params:
