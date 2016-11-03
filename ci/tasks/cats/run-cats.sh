@@ -16,6 +16,7 @@ function fn_compile_cats {
   root_path=$(pwd)
   export GOPATH="${root_path}/goroot"
   mkdir -p goroot/src
+  go get -d github.com/cloudfoundry/cf-acceptance-tests
   cd ${GOPATH}/src/github.com/cloudfoundry/cf-acceptance-tests
   ./bin/update_submodules
 
