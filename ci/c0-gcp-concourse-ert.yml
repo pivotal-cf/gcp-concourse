@@ -318,9 +318,9 @@ jobs:
         gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
 
 - name: run-cats
-  serial: true
-  max_in_flight: 1
-  serial_groups: [full]
+  #serial: false
+  #max_in_flight: 1
+  #serial_groups: [full]
   plan:
   - aggregate:
     - get: gcp-concourse
@@ -339,4 +339,4 @@ jobs:
     on_failure:
       put: slack-c0-coreteam
       params:
-        text: "Test Fail Alert"
+        text: 'concourse-failure:-> {{fly_url}}/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or {{fly_url}}/$BUILD_ID for more details'
