@@ -126,12 +126,12 @@ jobs:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-success:-> GCP pipeline run has started https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME
+          concourse-success:-> {{pcf_iaas}} pipeline run has started https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME
     on_failure:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-fail:-> https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
+          concourse-fail:-> {{pcf_iaas}} https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
 
 - name: deploy-iaas
   serial: true
@@ -373,17 +373,17 @@ jobs:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-success:-> GCP ERT Has Deployed & Smoketests have completed https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
+          concourse-success:-> {{pcf_iaas}} ERT Has Deployed & Smoketests have completed https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
     on_failure:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-fail:-> https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
+          concourse-fail:-> {{pcf_iaas}} https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
 
 - name: run-cats
-  #serial: false
-  #max_in_flight: 1
-  #serial_groups: [full]
+  serial: false
+  max_in_flight: 1
+  serial_groups: [full]
   plan:
   - aggregate:
     - get: gcp-concourse
@@ -392,12 +392,18 @@ jobs:
       params:
         globs:
         - "om-linux"
-    #- get: pivnet-opsmgr
-    #  trigger: false
-    #  passed: [deploy-director]
-    #  params:
-    #    globs:
-    #    - "*GCP*"
+    - get: pivnet-opsmgr
+      trigger: true
+      passed: [deploy-ert]
+      params:
+        globs:
+        - "*GCP*"
+    - get: pivnet-elastic-runtime
+      trigger: true
+      passed: [deploy-ert]
+      params:
+        globs:
+        - "*pivotal"
   - task: run-cats
     config:
       platform: linux
@@ -414,8 +420,8 @@ jobs:
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
         gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
-    #on_failure:
-    #  put: slack-c0-coreteam
-    #  params:
-    #    text: |
-    #      concourse-fail:-> https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
+    on_failure:
+      put: slack-c0-coreteam
+      params:
+        text: |
+          concourse-fail:-> {{pcf_iaas}} https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
