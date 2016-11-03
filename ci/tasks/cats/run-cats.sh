@@ -1,9 +1,11 @@
 #!/bin/bash
 set -e
 
-### Function(s) ###
+# Prep om tool
+sudo cp tool-om/om-linux /usr/local/bin
+sudo chmod 755 /usr/local/bin/om-linux
 
-exit 1
+### Function(s) ###
 
 function fn_compile_cats {
 
@@ -50,8 +52,14 @@ function fn_compile_cats {
 }
 EOF
   export CONFIG=$PWD/integration_config.json
+}
+
+### Main Logic ###
+
+ # Prep CATs
+ fn_compile_cats
 
  # Run CATs
- ./bin/test
+ #./bin/test
 
-}
+exit 1

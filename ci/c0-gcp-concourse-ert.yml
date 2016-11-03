@@ -388,7 +388,10 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
-      #passed: [deploy-ert]
+    - get: tool-om
+      params:
+        globs:
+        - "om-linux"
     #- get: pivnet-opsmgr
     #  trigger: false
     #  passed: [deploy-director]
@@ -401,12 +404,14 @@ jobs:
       image: docker:///virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
+        - name: tool-om
+        - name: opsman-metadata
       run:
         path: gcp-concourse/ci/tasks/cats/run-cats.sh
       params:
         pcf_ert_domain: {{pcf_ert_domain}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          concourse-fail:-> https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
+    #on_failure:
+    #  put: slack-c0-coreteam
+    #  params:
+    #    text: |
+    #      concourse-fail:-> https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
