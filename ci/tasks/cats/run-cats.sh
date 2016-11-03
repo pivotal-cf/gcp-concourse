@@ -3,6 +3,7 @@ set -e
 
 ### Function(s) ###
 
+exit 1
 
 function fn_compile_cats {
 
@@ -57,6 +58,3 @@ EOF
  ./bin/test
 
 }
-
-
-exit 1

@@ -37,6 +37,12 @@ resource_types:
     repository: pivotalcf/pivnet-resource
     tag: latest-final
 
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
+
 resources:
 
 - name: gcp-concourse
@@ -71,6 +77,11 @@ resources:
     product_version: 1\.8\..*
     sort_by: semver
 
+- name: slack-c0-coreteam
+  type: slack-notification
+  source:
+    url: {{slack-c0-coreteam}}
+    insecure: true
 
 jobs:
 
@@ -122,7 +133,7 @@ jobs:
       trigger: true
       passed: [wipe-env]
     - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [wipe-env]
       params:
         globs:
@@ -256,6 +267,9 @@ jobs:
     - get: pivnet-elastic-runtime
       trigger: false
       passed: [wipe-env]
+      params:
+        globs:
+        - "*pivotal"
     - get: tool-om
       params:
         globs:
@@ -312,7 +326,7 @@ jobs:
     - get: gcp-concourse
       trigger: false
       #passed: [deploy-ert]
-  - task: deploy-ert
+  - task: run-cats
     config:
       platform: linux
       image: docker:///virtmerlin/pcf-gcp-worker
@@ -322,3 +336,7 @@ jobs:
         path: gcp-concourse/ci/tasks/cats/run-cats.sh
       params:
         pcf_ert_domain: {{pcf_ert_domain}}
+    on_failure:
+      put: slack-c0-coreteam
+      params:
+        text: "Test Fail Alert"
