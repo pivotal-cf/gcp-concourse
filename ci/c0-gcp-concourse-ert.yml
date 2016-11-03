@@ -122,16 +122,16 @@ jobs:
         gcp_zone_3: {{gcp_zone_3}}
         gcp_svc_acct_key: {{gcp_svc_acct_key}}
         gcp_terraform_prefix: {{gcp_terraform_prefix}}
-    #on_success:
-    #  put: slack-c0-coreteam
-    #  params:
-    #    text: |
-    #      concourse-success:-> GCP pipeline run has started https://fly.customer0.net/$BUILD_PIPELINE_NAME
-    #on_failure:
-    #  put: slack-c0-coreteam
-    #  params:
-    #    text: |
-    #      concourse-fail:-> https://fly.customer0.net/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/$BUILD_ID for more details
+    on_success:
+      put: slack-c0-coreteam
+      params:
+        text: |
+          concourse-success:-> GCP pipeline run has started https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME
+    on_failure:
+      put: slack-c0-coreteam
+      params:
+        text: |
+          concourse-fail:-> https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
 
 - name: deploy-iaas
   serial: true
@@ -140,8 +140,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: true
-      passed: [wipe-env]
+      trigger: false
     - get: pivnet-opsmgr
       trigger: true
       passed: [wipe-env]
@@ -213,8 +212,13 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
+      trigger: false
+    - get: pivnet-opsmgr
       trigger: true
       passed: [deploy-iaas]
+      params:
+        globs:
+        - "*GCP*"
     - get: tool-om
       params:
         globs:
@@ -241,8 +245,13 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
+      trigger: false
+    - get: pivnet-opsmgr
       trigger: true
       passed: [config-opsman]
+      params:
+        globs:
+        - "*GCP*"
     - get: tool-om
       params:
         globs:
@@ -272,10 +281,15 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
+      trigger: false
+    - get: pivnet-opsmgr
       trigger: true
       passed: [deploy-director]
+      params:
+        globs:
+        - "*GCP*"
     - get: pivnet-elastic-runtime
-      trigger: false
+      trigger: true
       passed: [wipe-env]
       params:
         globs:
@@ -306,8 +320,13 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
+      trigger: false
+    - get: pivnet-opsmgr
       trigger: true
       passed: [upload-ert]
+      params:
+        globs:
+        - "*GCP*"
     - get: tool-om
       params:
         globs:
@@ -330,12 +349,12 @@ jobs:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-success:-> GCP ERT Has Deployed & Smoketests have completed https://fly.customer0.net/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
+          concourse-success:-> GCP ERT Has Deployed & Smoketests have completed https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
     on_failure:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-fail:-> https://fly.customer0.net/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/$BUILD_ID for more details
+          concourse-fail:-> https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
 
 - name: run-cats
   #serial: false
@@ -346,6 +365,12 @@ jobs:
     - get: gcp-concourse
       trigger: false
       #passed: [deploy-ert]
+    #- get: pivnet-opsmgr
+    #  trigger: false
+    #  passed: [deploy-director]
+    #  params:
+    #    globs:
+    #    - "*GCP*"
   - task: run-cats
     config:
       platform: linux
@@ -360,4 +385,4 @@ jobs:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-fail:-> https://fly.customer0.net/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/$BUILD_ID for more details
+          concourse-fail:-> https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
