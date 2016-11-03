@@ -106,7 +106,7 @@ jobs:
   - task: wipe-env
     config:
       platform: linux
-      image: docker:///virtmerlin/pcf-gcp-worker
+      image: docker:///virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
       outputs:
@@ -122,6 +122,16 @@ jobs:
         gcp_zone_3: {{gcp_zone_3}}
         gcp_svc_acct_key: {{gcp_svc_acct_key}}
         gcp_terraform_prefix: {{gcp_terraform_prefix}}
+    #on_success:
+    #  put: slack-c0-coreteam
+    #  params:
+    #    text: |
+    #      concourse-success:-> GCP pipeline run has started https://fly.customer0.net/$BUILD_PIPELINE_NAME
+    #on_failure:
+    #  put: slack-c0-coreteam
+    #  params:
+    #    text: |
+    #      concourse-fail:-> https://fly.customer0.net/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/$BUILD_ID for more details
 
 - name: deploy-iaas
   serial: true
@@ -141,7 +151,7 @@ jobs:
   - task: upload-opsman
     config:
       platform: linux
-      image: docker:///virtmerlin/pcf-gcp-worker
+      image: docker:///virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: pivnet-opsmgr
@@ -156,7 +166,7 @@ jobs:
   - task: deploy-iaas
     config:
       platform: linux
-      image: docker:///virtmerlin/pcf-gcp-worker
+      image: docker:///virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: opsman-metadata
@@ -180,7 +190,7 @@ jobs:
   - task: c0-set-dns.sh
     config:
       platform: linux
-      image: docker:///virtmerlin/pcf-gcp-worker
+      image: docker:///virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: opsman-metadata
@@ -212,7 +222,7 @@ jobs:
   - task: config-opsman
     config:
       platform: linux
-      image: docker:///virtmerlin/pcf-gcp-worker
+      image: docker:///virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: tool-om
@@ -240,7 +250,7 @@ jobs:
   - task: deploy-director
     config:
       platform: linux
-      image: docker:///virtmerlin/pcf-gcp-worker
+      image: docker:///virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: tool-om
@@ -277,7 +287,7 @@ jobs:
   - task: upload-ert
     config:
       platform: linux
-      image: docker:///virtmerlin/pcf-gcp-worker
+      image: docker:///virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: tool-om
@@ -305,7 +315,7 @@ jobs:
   - task: deploy-ert
     config:
       platform: linux
-      image: docker:///virtmerlin/pcf-gcp-worker
+      image: docker:///virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: tool-om
@@ -320,11 +330,12 @@ jobs:
       put: slack-c0-coreteam
       params:
         text: |
-          'concourse-SUCCESS:-> ERT Has Deployed and SmokeTests Have Succeeded {{fly_url}}/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME'
+          concourse-success:-> GCP ERT Has Deployed & Smoketests have completed https://fly.customer0.net/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
     on_failure:
       put: slack-c0-coreteam
       params:
-        text: 'concourse-failure:-> {{fly_url}}/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or {{fly_url}}/$BUILD_ID for more details'
+        text: |
+          concourse-fail:-> https://fly.customer0.net/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/$BUILD_ID for more details
 
 - name: run-cats
   #serial: false
@@ -338,7 +349,7 @@ jobs:
   - task: run-cats
     config:
       platform: linux
-      image: docker:///virtmerlin/pcf-gcp-worker
+      image: docker:///virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
       run:
@@ -348,4 +359,5 @@ jobs:
     on_failure:
       put: slack-c0-coreteam
       params:
-        text: 'concourse-failure:-> {{fly_url}}/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or {{fly_url}}/$BUILD_ID for more details'
+        text: |
+          concourse-fail:-> https://fly.customer0.net/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/$BUILD_ID for more details

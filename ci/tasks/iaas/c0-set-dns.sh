@@ -52,7 +52,7 @@ echo "--------------------------------------------------------------------------
 echo "Sleeping until DNS Cache updates..."
 echo "----------------------------------------------------------------------------------------------"
 
-sudo apt-get -y install dnsutils
+
 let dns_retries=20
 let dns_sleep_seconds=15
 for (( z=1; z<${dns_retries}; z++ )); do

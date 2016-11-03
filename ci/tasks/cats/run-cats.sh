@@ -7,13 +7,10 @@ exit 1
 
 function fn_compile_cats {
 
-  # Install Golang
-  sudo curl -O https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz
-  sudo tar -xvf go1.6.linux-amd64.tar.gz
-  sudo mv go /usr/local
+  # Set Golang Path
   export PATH=$PATH:/usr/local/go/bin
 
-  # Install cf cli
+  # Install cf latest cli
   cf_cli_latest_ver=$(curl -s https://api.github.com/repos/cloudfoundry/cli/releases/latest | jq .tag_name | tr -d '"')
   wget -O cfcli.deb https://cli.run.pivotal.io/stable?release=debian64&version=${cf_cli_latest_ver}&source=github-rel
   sudo dpkg --install cfcli.deb

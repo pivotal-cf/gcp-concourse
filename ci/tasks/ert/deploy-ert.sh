@@ -5,10 +5,6 @@ set -e
 sudo cp tool-om/om-linux /usr/local/bin
 sudo chmod 755 /usr/local/bin/om-linux
 
-# Get jq 1.5
-sudo wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 -O /usr/bin/jq
-sudo chmod 755 /usr/bin/jq
-
 # Set Vars
 
 json_file_path="gcp-concourse/json-opsman/${gcp_pcf_terraform_template}"
