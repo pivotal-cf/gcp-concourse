@@ -147,6 +147,12 @@ jobs:
       params:
         globs:
         - "*GCP*"
+    - get: pivnet-elastic-runtime
+      trigger: true
+      passed: [wipe-env]
+      params:
+        globs:
+        - "*pivotal"
   - task: upload-opsman
     config:
       platform: linux
@@ -219,6 +225,12 @@ jobs:
       params:
         globs:
         - "*GCP*"
+    - get: pivnet-elastic-runtime
+      trigger: true
+      passed: [deploy-iaas]
+      params:
+        globs:
+        - "*pivotal"
     - get: tool-om
       params:
         globs:
@@ -252,6 +264,12 @@ jobs:
       params:
         globs:
         - "*GCP*"
+    - get: pivnet-elastic-runtime
+      trigger: true
+      passed: [config-opsman]
+      params:
+        globs:
+        - "*pivotal"
     - get: tool-om
       params:
         globs:
@@ -290,7 +308,7 @@ jobs:
         - "*GCP*"
     - get: pivnet-elastic-runtime
       trigger: true
-      passed: [wipe-env]
+      passed: [deploy-director]
       params:
         globs:
         - "*pivotal"
@@ -327,6 +345,12 @@ jobs:
       params:
         globs:
         - "*GCP*"
+    - get: pivnet-elastic-runtime
+      trigger: true
+      passed: [upload-ert]
+      params:
+        globs:
+        - "*pivotal"
     - get: tool-om
       params:
         globs:
