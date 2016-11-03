@@ -49,6 +49,9 @@ function fn_get_uaa_admin_creds {
 
 function fn_compile_cats {
 
+  local admin_user=${1}
+  local admin_password=${2}
+
   # Set Golang Path
   export PATH=$PATH:/usr/local/go/bin
 
@@ -61,32 +64,30 @@ function fn_compile_cats {
   ./bin/update_submodules
 
   # Setup CATs Config
-  # MG Note : need to write code to grab creds from OpsMan
-  cat > integration_config.json <<EOF
-{
-  "api": "api.sys.gcp.customer0.net",
-  "apps_domain": "cfapps.gcp.customer0.net",
-  "admin_user": "admin",
-  "admin_password": "vOvW7S-SHuq7dXpL4Dffr16_atMOIchG",
-  "skip_ssl_validation": true,
-  "use_http": true,
-  "include_apps": true,
-  "include_backend_compatibility": true,
-  "include_detect": true,
-  "include_docker": true,
-  "include_internet_dependent": true,
-  "include_privileged_container_support": true,
-  "include_route_services": true,
-  "include_routing": true,
-  "include_zipkin": true,
-  "include_security_groups": true,
-  "include_services": true,
-  "include_ssh": true,
-  "include_sso": true,
-  "include_tasks": true,
-  "include_v3": true
-}
-EOF
+  echo "{
+    \"api\": \"api.sys.${pcf_ert_domain}\",
+    \"apps_domain\": \"cfapps.${pcf_ert_domain}\",
+    \"admin_user\": \"${admin_user}\",
+    \"admin_password\": \"${admin_password}\",
+    \"skip_ssl_validation\": true,
+    \"use_http\": true,
+    \"include_apps\": true,
+    \"include_backend_compatibility\": true,
+    \"include_detect\": true,
+    \"include_docker\": true,
+    \"include_internet_dependent\": true,
+    \"include_privileged_container_support\": true,
+    \"include_route_services\": true,
+    \"include_routing\": true,
+    \"include_zipkin\": true,
+    \"include_security_groups\": true,
+    \"include_services\": true,
+    \"include_ssh\": true,
+    \"include_sso\": true,
+    \"include_tasks\": true,
+    \"include_v3\": true
+  }" > integration_config.json
+
   export CONFIG=$PWD/integration_config.json
 
   echo "CATs CONFIG="
@@ -96,10 +97,10 @@ EOF
 ### Main Logic ###
 
  # Prep CATs
- fn_compile_cats
- fn_get_uaa_admin_creds
- 
- # Run CATs
- #./bin/test
+ uaa_admin_user=$(fn_get_uaa_admin_creds | jq .credential.value.identity | tr -d '"')
+ uaa_admin_password=$(fn_get_uaa_admin_creds | jq .credential.value.password | tr -d '"')
 
-exit 1
+ fn_compile_cats "${uaa_admin_user}" "${uaa_admin_password}"
+
+ # Run CATs
+ ./bin/test
