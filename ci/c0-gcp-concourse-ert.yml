@@ -369,6 +369,7 @@ jobs:
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
         gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
+
     on_success:
       put: slack-c0-coreteam
       params:
@@ -411,6 +412,8 @@ jobs:
       inputs:
         - name: gcp-concourse
         - name: tool-om
+        - name: pivnet-opsmgr
+        - name: pivnet-elastic-runtime
       outputs:
         - name: pipeline-metadata
       run:
