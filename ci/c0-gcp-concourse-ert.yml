@@ -211,7 +211,7 @@ jobs:
         dyn_token: {{dyn_token}}
         pcf_ert_domain: {{pcf_ert_domain}}
 
-- name: config-opsman
+- name: config-opsman-auth
   serial: true
   max_in_flight: 1
   serial_groups: [full]
@@ -260,13 +260,13 @@ jobs:
       trigger: false
     - get: pivnet-opsmgr
       trigger: true
-      passed: [config-opsman]
+      passed: [config-opsman-auth]
       params:
         globs:
         - "*GCP*"
     - get: pivnet-elastic-runtime
       trigger: true
-      passed: [config-opsman]
+      passed: [config-opsman-auth]
       params:
         globs:
         - "*pivotal"
