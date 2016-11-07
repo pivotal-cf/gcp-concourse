@@ -4,7 +4,7 @@ groups:
   jobs:
   - wipe-env
   - deploy-iaas
-  - config-opsman
+  - config-opsman-auth
   - deploy-director
   - upload-ert
   - deploy-ert
@@ -17,7 +17,7 @@ groups:
 - name: iaas
   jobs:
   - deploy-iaas
-  - config-opsman
+  - config-opsman-auth
   - deploy-director
 
 - name: ert

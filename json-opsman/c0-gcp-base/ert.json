@@ -62,16 +62,16 @@
         "value": "external_gcs"
       },
       ".properties.system_blobstore.external_gcs.buildpacks_bucket": {
-        "value": "gs://c0-opsman-validation-buildpacks"
+        "value": "c0-opsman-validation-buildpacks"
       },
       ".properties.system_blobstore.external_gcs.droplets_bucket": {
-        "value": "gs://c0-opsman-validation-droplets"
+        "value": "c0-opsman-validation-droplets"
       },
       ".properties.system_blobstore.external_gcs.packages_bucket": {
-        "value": "gs://c0-opsman-validation-packages"
+        "value": "c0-opsman-validation-packages"
       },
       ".properties.system_blobstore.external_gcs.resources_bucket": {
-        "value": "gs://c0-opsman-validation-resources"
+        "value": "c0-opsman-validation-resources"
       },
       ".properties.system_blobstore.external_gcs.access_key": {
         "value": "GOOGLTKH5FZTPPLSSSV2"
