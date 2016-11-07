@@ -177,7 +177,7 @@ for b in $(gsutil ls | grep $gcp_terraform_prefix); do
 	echo "----------------------------------------------------------------------------------------------"
 	echo "Will delete gcloud bucket $b with the prefix=$gcp_terraform_prefix"
 	echo "----------------------------------------------------------------------------------------------"
-  gsutil rb $b
+  gsutil rm -r $b
 done
 echo "=============================================================================================="
 echo "All buckets with the prefix=$gcp_terraform_prefix have been wiped"
