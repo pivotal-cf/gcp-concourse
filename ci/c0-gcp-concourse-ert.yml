@@ -35,7 +35,7 @@ resource_types:
   type: docker-image
   source:
     repository: pivotalcf/pivnet-resource
-    tag: latest-final
+    tag: v0.26.1
 
 - name: slack-notification
   type: docker-image
