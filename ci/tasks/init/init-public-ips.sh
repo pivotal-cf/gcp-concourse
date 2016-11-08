@@ -13,3 +13,9 @@ echo $gcp_svc_acct_key > /tmp/svc-acct.json
   -var "gcp_region=$gcp_region" \
   -var "gcp_terraform_prefix=$gcp_terraform_prefix" \
   gcp-concourse/terraform/$gcp_pcf_terraform_template/init
+
+/opt/terraform/terraform apply \
+  -var "gcp_proj_id=$gcp_proj_id" \
+  -var "gcp_region=$gcp_region" \
+  -var "gcp_terraform_prefix=$gcp_terraform_prefix" \
+  gcp-concourse/terraform/$gcp_pcf_terraform_template/init

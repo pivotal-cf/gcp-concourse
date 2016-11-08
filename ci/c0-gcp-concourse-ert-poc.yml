@@ -143,6 +143,12 @@ jobs:
         - name: gcp-concourse
       run:
         path: gcp-concourse/ci/tasks/init/init-public-ips.sh
+      params:
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
+        gcp_terraform_prefix: {{gcp_terraform_prefix}}
 #######################
 ## Job - Deploy-Iaas ##
 #######################
