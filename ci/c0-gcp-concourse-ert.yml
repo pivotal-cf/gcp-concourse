@@ -289,8 +289,25 @@ jobs:
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
         gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
         gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_zone_1: {{gcp_zone_1}}
+        gcp_zone_2: {{gcp_zone_2}}
+        gcp_zone_3: {{gcp_zone_3}}
         gcp_terraform_prefix: {{gcp_terraform_prefix}}
         gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        gcp_terraform_subnet_ops_manager: {{gcp_terraform_subnet_ops_manager}}
+        gcp_terraform_subnet_ops_manager_reserved: {{gcp_terraform_subnet_ops_manager_reserved}}
+        gcp_terraform_subnet_ops_manager_dns: {{gcp_terraform_subnet_ops_manager_dns}}
+        gcp_terraform_subnet_ops_manager_gw: {{gcp_terraform_subnet_ops_manager_gw}}
+        gcp_terraform_subnet_ert: {{gcp_terraform_subnet_ert}}
+        gcp_terraform_subnet_ert_reserved: {{gcp_terraform_subnet_ert_reserved}}
+        gcp_terraform_subnet_ert_dns: {{gcp_terraform_subnet_ert_dns}}
+        gcp_terraform_subnet_ert_gw: {{gcp_terraform_subnet_ert_gw}}
+        gcp_terraform_subnet_services_1: {{gcp_terraform_subnet_services_1}}
+        gcp_terraform_subnet_services_1_reserved: {{gcp_terraform_subnet_services_1_reserved}}
+        gcp_terraform_subnet_services_1_dns: {{gcp_terraform_subnet_services_1_dns}}
+        gcp_terraform_subnet_services_1_gw: {{gcp_terraform_subnet_services_1_gw}}
+
 
 - name: upload-ert
   serial: true
@@ -368,7 +385,18 @@ jobs:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
+        pcf_ert_ssl_cert: {{pcf_ert_ssl_cert}}
+        pcf_ert_ssl_key: {{pcf_ert_ssl_key}}
         gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_zone_1: {{gcp_zone_1}}
+        gcp_zone_2: {{gcp_zone_2}}
+        gcp_zone_3: {{gcp_zone_3}}
+        gcp_terraform_prefix: {{gcp_terraform_prefix}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        gcp_storage_access_key: {{gcp_storage_access_key}}
+        gcp_storage_secret_key: {{gcp_storage_secret_key}}
 
     on_success:
       put: slack-c0-coreteam

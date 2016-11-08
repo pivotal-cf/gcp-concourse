@@ -7,8 +7,23 @@ sudo chmod 755 /usr/local/bin/om-linux
 
 # Set Vars
 
+# Set JSON Config Template and inster Concourse Parameter Values
 json_file_path="gcp-concourse/json-opsman/${gcp_pcf_terraform_template}"
+json_file_template="${json_file_path}/ert-template.json"
 json_file="${json_file_path}/ert.json"
+
+cp ${json_file_template} ${json_file}
+
+perl -pi -e "s/{{gcp_region}}/${gcp_region}/g" ${json_file}
+perl -pi -e "s/{{gcp_zone_1}}/${gcp_zone_1}/g" ${json_file}
+perl -pi -e "s/{{gcp_zone_2}}/${gcp_zone_2}/g" ${json_file}
+perl -pi -e "s/{{gcp_zone_3}}/${gcp_zone_3}/g" ${json_file}
+perl -pi -e "s/{{gcp_terraform_prefix}}/${gcp_terraform_prefix}/g" ${json_file}
+perl -pi -e "s/{{pcf_ert_ssl_cert}}/${pcf_ert_ssl_cert}/g" ${json_file}
+perl -pi -e "s/{{pcf_ert_ssl_key}}/${pcf_ert_ssl_key}/g" ${json_file}
+perl -pi -e "s/{{pcf_ert_domain}}/${pcf_ert_domain}/g" ${json_file}
+
+exit 1
 
 if [[ ! -f ${json_file} ]]; then
   echo "Error: cant find file=[${json_file}]"
