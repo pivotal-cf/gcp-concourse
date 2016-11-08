@@ -62,7 +62,7 @@ resource "google_compute_forwarding_rule" "cf-gorouter" {
   target      = "${google_compute_target_pool.cf-gorouter.self_link}"
   port_range  = "443"
   ip_protocol = "TCP"
-  ip_address  = "${google_compute_address.ssh-and-doppler.address}"
+  ip_address  = "${var.pub_ip_ssh_and_doppler}"
 }
 
 // SSH Proxy forwarding rule
@@ -71,7 +71,7 @@ resource "google_compute_forwarding_rule" "cf-ssh" {
   target      = "${google_compute_target_pool.cf-ssh.self_link}"
   port_range  = "2222"
   ip_protocol = "TCP"
-  ip_address  = "${google_compute_address.ssh-and-doppler.address}"
+  ip_address  = "${var.pub_ip_ssh_and_doppler}"
 }
 
 // TCP forwarding rule
@@ -80,5 +80,5 @@ resource "google_compute_forwarding_rule" "cf-tcp" {
   target      = "${google_compute_target_pool.cf-tcp.self_link}"
   port_range  = "1024-65535"
   ip_protocol = "TCP"
-  ip_address  = "${google_compute_address.cf-tcp.address}"
+  ip_address  = "${var.pub_ip_ssh_tcp_lb}"
 }
