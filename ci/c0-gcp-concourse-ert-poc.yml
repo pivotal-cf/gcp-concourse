@@ -160,7 +160,6 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
-      passed: [init-public-ips]
     - get: pivnet-opsmgr
       trigger: false
       params:

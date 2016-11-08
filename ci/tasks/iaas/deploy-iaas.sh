@@ -11,10 +11,11 @@ export PATH=/opt/terraform/terraform:$PATH
 echo $gcp_svc_acct_key > /tmp/svc-acct.json
 
 # Test if a Template is using init process with pre-existing IPs
-if [[ -d /gcp-concourse/${gcp_pcf_terraform_template}/init ]]; then
+if [[ -d gcp-concourse/${gcp_pcf_terraform_template}/init ]]; then
   #############################################################
   #################### GCP Auth  & functions ##################
   #############################################################
+  echo "Grabbing Init-ed IP Addresses..."
   echo $gcp_svc_acct_key > /tmp/blah
   gcloud auth activate-service-account --key-file /tmp/blah
   rm -rf /tmp/blah
