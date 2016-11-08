@@ -19,11 +19,14 @@ perl -pi -e "s/{{gcp_zone_1}}/${gcp_zone_1}/g" ${json_file}
 perl -pi -e "s/{{gcp_zone_2}}/${gcp_zone_2}/g" ${json_file}
 perl -pi -e "s/{{gcp_zone_3}}/${gcp_zone_3}/g" ${json_file}
 perl -pi -e "s/{{gcp_terraform_prefix}}/${gcp_terraform_prefix}/g" ${json_file}
-perl -pi -e "s/{{pcf_ert_ssl_cert}}/${pcf_ert_ssl_cert}/g" ${json_file}
-perl -pi -e "s/{{pcf_ert_ssl_key}}/${pcf_ert_ssl_key}/g" ${json_file}
+if [[ ! ${pcf_ert_ssl_cert} == "generate" ]]; then
+   my_pcf_ert_ssl_cert=$(echo ${pcf_ert_ssl_cert} | sed 's/\s\+/\\\\r\\\\n/g' | sed 's/\\\\r\\\\nCERTIFICATE/ CERTIFICATE/g')
+   my_pcf_ert_ssl_key=$(echo ${pcf_ert_ssl_key} | sed 's/\s\+/\\\\r\\\\n/g' | sed 's/\\\\r\\\\nRSA\\\\r\\\\nPRIVATE\\\\r\\\\nKEY/ RSA PRIVATE KEY/g')
+   perl -pi -e "s|{{pcf_ert_ssl_cert}}|${my_pcf_ert_ssl_cert}|g" ${json_file}
+   perl -pi -e "s|{{pcf_ert_ssl_key}}|${my_pcf_ert_ssl_key}|g" ${json_file}
+fi
 perl -pi -e "s/{{pcf_ert_domain}}/${pcf_ert_domain}/g" ${json_file}
 
-exit 1
 
 if [[ ! -f ${json_file} ]]; then
   echo "Error: cant find file=[${json_file}]"
