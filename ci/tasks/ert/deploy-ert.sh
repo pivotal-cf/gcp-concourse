@@ -7,7 +7,7 @@ sudo chmod 755 /usr/local/bin/om-linux
 
 # Set Vars
 
-# Set JSON Config Template and inster Concourse Parameter Values
+# Set JSON Config Template and insert Concourse Parameter Values
 json_file_path="gcp-concourse/json-opsman/${gcp_pcf_terraform_template}"
 json_file_template="${json_file_path}/ert-template.json"
 json_file="${json_file_path}/ert.json"
@@ -26,6 +26,9 @@ if [[ ! ${pcf_ert_ssl_cert} == "generate" ]]; then
    perl -pi -e "s|{{pcf_ert_ssl_key}}|${my_pcf_ert_ssl_key}|g" ${json_file}
 fi
 perl -pi -e "s/{{pcf_ert_domain}}/${pcf_ert_domain}/g" ${json_file}
+perl -pi -e "s/{{gcp_storage_access_key}}/${gcp_storage_access_key}/g" ${json_file}
+perl -pi -e "s/{{gcp_storage_secret_key}}/${gcp_storage_secret_key}/g" ${json_file}
+
 
 
 if [[ ! -f ${json_file} ]]; then
