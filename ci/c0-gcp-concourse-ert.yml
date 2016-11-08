@@ -84,7 +84,9 @@ resources:
     insecure: true
 
 jobs:
-
+#####################
+## Job - Wipe Proj ##
+#####################
 - name: wipe-env
   serial: true
   max_in_flight: 1
@@ -132,7 +134,9 @@ jobs:
       params:
         text: |
           concourse-fail:-> {{pcf_iaas}} https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/builds/$BUILD_ID for more details
-
+#######################
+## Job - Deploy-Iaas ##
+#######################
 - name: deploy-iaas
   serial: true
   max_in_flight: 1
@@ -210,7 +214,9 @@ jobs:
         dyn_user: {{dyn_user}}
         dyn_token: {{dyn_token}}
         pcf_ert_domain: {{pcf_ert_domain}}
-
+##############################
+## Job - Config OpsMan Auth ##
+##############################
 - name: config-opsman-auth
   serial: true
   max_in_flight: 1
@@ -248,8 +254,9 @@ jobs:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
-
-
+###########################
+## Job - Deploy-Director ##
+###########################
 - name: deploy-director
   serial: true
   max_in_flight: 1
@@ -307,8 +314,9 @@ jobs:
         gcp_terraform_subnet_services_1_reserved: {{gcp_terraform_subnet_services_1_reserved}}
         gcp_terraform_subnet_services_1_dns: {{gcp_terraform_subnet_services_1_dns}}
         gcp_terraform_subnet_services_1_gw: {{gcp_terraform_subnet_services_1_gw}}
-
-
+###########################
+## Job - Upload ERT      ##
+###########################
 - name: upload-ert
   serial: true
   max_in_flight: 1
@@ -347,7 +355,9 @@ jobs:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
-
+###########################
+## Job - Deploy ERT      ##
+###########################
 - name: deploy-ert
   serial: true
   max_in_flight: 1
@@ -397,7 +407,6 @@ jobs:
         gcp_svc_acct_key: {{gcp_svc_acct_key}}
         gcp_storage_access_key: {{gcp_storage_access_key}}
         gcp_storage_secret_key: {{gcp_storage_secret_key}}
-
     on_success:
       put: slack-c0-coreteam
       params:
@@ -408,7 +417,9 @@ jobs:
       params:
         text: |
           concourse-fail:-> {{pcf_iaas}} https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/builds/$BUILD_ID for more details
-
+###########################
+## Job - Run Cats        ##
+###########################
 - name: run-cats
   serial: false
   max_in_flight: 1
