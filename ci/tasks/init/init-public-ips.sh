@@ -5,8 +5,6 @@ echo "==========================================================================
 echo "Executing Terraform ...."
 echo "=============================================================================================="
 
-pcf_opsman_image_name=$(cat opsman-metadata/name)
-
 export PATH=/opt/terraform/terraform:$PATH
 echo $gcp_svc_acct_key > /tmp/svc-acct.json
 

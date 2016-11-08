@@ -82,12 +82,6 @@ resources:
     product_version: 1\.8\..*
     sort_by: semver
 
-- name: slack-c0-coreteam
-  type: slack-notification
-  source:
-    url: {{slack-c0-coreteam}}
-    insecure: true
-
 jobs:
 #####################
 ## Job - Wipe Proj ##
@@ -160,9 +154,9 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
+      passed: [init-public-ips]
     - get: pivnet-opsmgr
       trigger: false
-      passed: [init-public-ips]
       params:
         globs:
         - "*GCP*"
