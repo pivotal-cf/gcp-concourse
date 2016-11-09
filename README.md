@@ -1,7 +1,7 @@
 # Customer0 PCF+GCP Concourse Pipeline
 
 
-### Pre_Reps for POC Deployment
+### Pre_Reqs & Instructions for POC Deployment via Concourse
 
 1. Create a Service Account with "Editor" Role on the target GCP Project
 2. Create a Concourse instance with public access for downloads.  Look [here](http://concourse.ci/vagrant.html) for `vagrant` instructions if an ephemeral concourse instance is desired
