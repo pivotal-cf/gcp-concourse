@@ -69,24 +69,26 @@ echo $gcp_svc_acct_key > /tmp/svc-acct.json
   -var "ert_sql_db_password=${pcf_opsman_admin_passwd}" \
   gcp-concourse/terraform/$gcp_pcf_terraform_template
 
-exit 1
 
-#/opt/terraform/terraform apply \
-#  -var "gcp_proj_id=${gcp_proj_id}" \
-#  -var "gcp_region=${gcp_region}" \
-#  -var "gcp_zone_1=${gcp_zone_1}" \
-#  -var "gcp_zone_3=${gcp_zone_3}" \
-#  -var "gcp_terraform_prefix=${gcp_terraform_prefix}" \
-#  -var "gcp_terraform_subnet_ops_manager=${gcp_terraform_subnet_ops_manager}" \
-#  -var "gcp_terraform_subnet_ert=${gcp_terraform_subnet_ert}" \
-#  -var "gcp_terraform_subnet_services_1=${gcp_terraform_subnet_services_1}" \
-#  -var "pcf_opsman_image_name=${pcf_opsman_image_name}" \
-#  -var "pcf_ert_domain=${pcf_ert_domain}" \
-#  -var "pcf_ert_ssl_cert=${pcf_ert_ssl_cert}" \
-#  -var "pcf_ert_ssl_key=${pcf_ert_ssl_key}" \
-#  -var "pub_ip_global_pcf=${pub_ip_global_pcf}" \
-#  -var "pub_ip_ssh_tcp_lb=${pub_ip_ssh_tcp_lb}" \
-#  -var "pub_ip_ssh_and_doppler=${pub_ip_ssh_and_doppler}" \
-#  -var "pub_ip_jumpbox=${pub_ip_jumpbox}" \
-#  -var "pub_ip_opsman=${pub_ip_opsman}" \
-#  gcp-concourse/terraform/$gcp_pcf_terraform_template
+/opt/terraform/terraform apply \
+  -var "gcp_proj_id=${gcp_proj_id}" \
+  -var "gcp_region=${gcp_region}" \
+  -var "gcp_zone_1=${gcp_zone_1}" \
+  -var "gcp_zone_2=${gcp_zone_2}" \
+  -var "gcp_zone_3=${gcp_zone_3}" \
+  -var "gcp_terraform_prefix=${gcp_terraform_prefix}" \
+  -var "gcp_terraform_subnet_ops_manager=${gcp_terraform_subnet_ops_manager}" \
+  -var "gcp_terraform_subnet_ert=${gcp_terraform_subnet_ert}" \
+  -var "gcp_terraform_subnet_services_1=${gcp_terraform_subnet_services_1}" \
+  -var "pcf_opsman_image_name=${pcf_opsman_image_name}" \
+  -var "pcf_ert_domain=${pcf_ert_domain}" \
+  -var "pcf_ert_ssl_cert=${pcf_ert_ssl_cert}" \
+  -var "pcf_ert_ssl_key=${pcf_ert_ssl_key}" \
+  -var "pub_ip_global_pcf=${pub_ip_global_pcf}" \
+  -var "pub_ip_ssh_tcp_lb=${pub_ip_ssh_tcp_lb}" \
+  -var "pub_ip_ssh_and_doppler=${pub_ip_ssh_and_doppler}" \
+  -var "pub_ip_jumpbox=${pub_ip_jumpbox}" \
+  -var "pub_ip_opsman=${pub_ip_opsman}" \
+  -var "ert_sql_db_username=${pcf_opsman_admin}" \
+  -var "ert_sql_db_password=${pcf_opsman_admin_passwd}" \
+  gcp-concourse/terraform/$gcp_pcf_terraform_template

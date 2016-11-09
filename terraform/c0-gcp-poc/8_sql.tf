@@ -15,8 +15,16 @@ resource "google_sql_database_instance" "master" {
 
       authorized_networks = [
         {
-          name  = "ert"
-          value = "${var.gcp_terraform_subnet_ert}"
+          name  = "nat-1"
+          value = "${google_compute_instance.nat-gateway-pri.nat_ip}"
+        },
+        {
+          name  = "nat-2"
+          value = "${google_compute_instance.nat-gateway-sec.nat_ip}"
+        },
+        {
+          name  = "nat-3"
+          value = "${google_compute_instance.nat-gateway-ter.nat_ip}"
         },
       ]
     }

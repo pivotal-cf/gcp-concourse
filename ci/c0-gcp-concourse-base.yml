@@ -198,7 +198,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: true
+      trigger: false
       passed: [deploy-iaas]
     - get: tool-om
       params:
@@ -230,7 +230,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: true
+      trigger: false
       passed: [config-opsman-auth]
     - get: tool-om
       params:
@@ -282,7 +282,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: true
+      trigger: false
       passed: [deploy-director]
     - get: pivnet-elastic-runtime
       trigger: false
@@ -320,7 +320,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: true
+      trigger: false
       passed: [upload-ert]
     - get: tool-om
       params:
