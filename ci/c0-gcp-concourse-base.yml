@@ -183,6 +183,8 @@ jobs:
         gcp_terraform_subnet_ops_manager: {{gcp_terraform_subnet_ops_manager}}
         gcp_terraform_subnet_ert: {{gcp_terraform_subnet_ert}}
         gcp_terraform_subnet_services_1: {{gcp_terraform_subnet_services_1}}
+        pcf_opsman_admin: {{pcf_opsman_admin}}
+        pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_ert_ssl_cert: {{pcf_ert_ssl_cert}}
         pcf_ert_ssl_key: {{pcf_ert_ssl_key}}

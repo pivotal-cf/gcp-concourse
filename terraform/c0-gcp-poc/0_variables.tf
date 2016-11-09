@@ -21,3 +21,5 @@ variable "pub_ip_jumpbox" {}
 variable "pub_ip_global_pcf" {}
 variable "pub_ip_ssh_and_doppler" {}
 variable "pub_ip_ssh_tcp_lb" {}
+variable "ert_sql_db_username" {}
+variable "ert_sql_db_password" {}
