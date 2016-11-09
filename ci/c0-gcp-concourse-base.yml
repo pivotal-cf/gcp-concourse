@@ -98,7 +98,7 @@ jobs:
       outputs:
         - name: opsman-metadata
       run:
-        path: gcp-concourse/ci/tasks/wipe/wipe-env.sh
+        path: gcp-concourse/ci/tasks/init/wipe-env.sh
       params:
         arg_wipe: {{arg_wipe}}
         gcp_proj_id: {{gcp_proj_id}}
