@@ -43,17 +43,13 @@ pub_ip_jumpbox=$(fn_get_ip "jumpbox")
 pub_ip_opsman=$(fn_get_ip "opsman")
 
 echo "You have now deployed Public IPs to GCP that must be resolvable to:"
-echo ""
-read -r -d '' dns_map << EOM
-*.sys.${pcf_ert_domain} == ${pub_ip_global_pcf} \r\n
-*.cfapps.${pcf_ert_domain} == ${pub_ip_global_pcf}
-ssh.sys.${pcf_ert_domain} == ${pub_ip_ssh_and_doppler}
-doppler.sys.${pcf_ert_domain} == ${pub_ip_ssh_and_doppler}
-loggregator.sys.${pcf_ert_domain} == ${pub_ip_ssh_and_doppler}
-tcp.${pcf_ert_domain} == ${pub_ip_ssh_tcp_lb}
-opsman.${pcf_ert_domain} == ${pub_ip_opsman}
-EOM
-
-printf %s "${dns_map[@]}"
-echo ""
+echo "----------------------------------------------------------------------------------------------"
+echo "*.sys.${pcf_ert_domain} == ${pub_ip_global_pcf}"
+echo "*.cfapps.${pcf_ert_domain} == ${pub_ip_global_pcf}"
+echo "ssh.sys.${pcf_ert_domain} == ${pub_ip_ssh_and_doppler}"
+echo "doppler.sys.${pcf_ert_domain} == ${pub_ip_ssh_and_doppler}"
+echo "loggregator.sys.${pcf_ert_domain} == ${pub_ip_ssh_and_doppler}"
+echo "tcp.${pcf_ert_domain} == ${pub_ip_ssh_tcp_lb}"
+echo "opsman.${pcf_ert_domain} == ${pub_ip_opsman}"
+echo "----------------------------------------------------------------------------------------------"
 echo "DO Not Start the 'deploy-iaas' Concourse Job of this Pipeline until you have confirmed that DNS is reolving correctly.  Failure to do so will result in a FAIL!!!!"
