@@ -7,7 +7,7 @@ pcf_opsman_image_name=$(cat opsman-metadata/name)
 # Test if a GCP_Terraform_Template is using 'Init' folder to process with pre-existing IPs
 if [[ -d gcp-concourse/terraform/${gcp_pcf_terraform_template}/init ]]; then
   echo "=============================================================================================="
-  echo "This gcp_pcf_terraform_template has and 'Init' set of terraform that has pre-created IPs..."
+  echo "This gcp_pcf_terraform_template has an 'Init' set of terraform that has pre-created IPs..."
   echo "=============================================================================================="
   echo $gcp_svc_acct_key > /tmp/blah
   gcloud auth activate-service-account --key-file /tmp/blah
@@ -27,14 +27,13 @@ if [[ -d gcp-concourse/terraform/${gcp_pcf_terraform_template}/init ]]; then
   pub_ip_ssh_and_doppler=$(fn_get_ip "ssh-and-doppler")
   pub_ip_jumpbox=$(fn_get_ip "jumpbox")
   pub_ip_opsman=$(fn_get_ip "opsman")
-
 fi
 
+# Test if the ssl cert var from concourse is set to 'genrate'.  If so, script will gen a self signed, otherwise will assume its a cert
 if [[ ${pcf_ert_ssl_cert} == "generate" ]]; then
-
-  gcp-concourse/scripts/ssl/gen_ssl_certs.ssh "sys.${pcf_ert_domain}" "cfapps.${pcf_ert_domain}"
-  
-
+  gcp-concourse/scripts/ssl/gen_ssl_certs.sh "sys.${pcf_ert_domain}" "cfapps.${pcf_ert_domain}"
+  export pcf_ert_ssl_cert=$(cat sys.${pcf_ert_domain}.crt)
+  export pcf_ert_ssl_key=$(cat sys.${pcf_ert_domain}.key)
 fi
 
 exit 1
