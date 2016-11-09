@@ -1,0 +1,416 @@
+groups:
+
+- name: all
+  jobs:
+  - init-env
+  - deploy-iaas
+  - config-opsman-auth
+  - deploy-director
+  - upload-ert
+  - deploy-ert
+  - run-cats
+
+- name: init
+  jobs:
+  - init-env
+
+- name: iaas
+  jobs:
+  - deploy-iaas
+  - config-opsman-auth
+  - deploy-director
+
+- name: ert
+  jobs:
+  - upload-ert
+  - deploy-ert
+
+- name: cats
+  jobs:
+  - run-cats
+
+resource_types:
+
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: v0.26.1
+
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
+
+resources:
+
+- name: gcp-concourse
+  type: git
+  source:
+    uri: git@github.com:c0-ops/gcp-concourse.git
+    branch: master
+    private_key: {{githubsshkey}}
+
+- name: tool-om
+  type: github-release
+  source:
+    user: pivotal-cf
+    repository: om
+    access_token: {{githubtoken}}
+
+- name: pivnet-opsmgr
+  type: pivnet
+  check_every: 4h
+  source:
+    api_token: {{pcf_pivnet_token}}
+    product_slug: ops-manager
+    product_version: 1\.8\..*
+    sort_by: semver
+
+- name: pivnet-elastic-runtime
+  type: pivnet
+  check_every: 4h
+  source:
+    api_token: {{pcf_pivnet_token}}
+    product_slug: elastic-runtime
+    product_version: 1\.8\..*
+    sort_by: semver
+
+jobs:
+#####################
+## Job - Init Env  ##
+#####################
+- name: init-env
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+  - task: wipe-env
+    config:
+      platform: linux
+      image: docker:///virtmerlin/c0-worker-gcp
+      inputs:
+        - name: gcp-concourse
+      outputs:
+        - name: opsman-metadata
+      run:
+        path: gcp-concourse/ci/tasks/wipe/wipe-env.sh
+      params:
+        arg_wipe: {{arg_wipe}}
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_zone_1: {{gcp_zone_1}}
+        gcp_zone_2: {{gcp_zone_2}}
+        gcp_zone_3: {{gcp_zone_3}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        gcp_terraform_prefix: {{gcp_terraform_prefix}}
+  - task: init-public-ips
+    config:
+      platform: linux
+      image: docker:///virtmerlin/c0-worker-gcp
+      inputs:
+        - name: gcp-concourse
+      run:
+        path: gcp-concourse/ci/tasks/init/init-public-ips.sh
+      params:
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
+        gcp_terraform_prefix: {{gcp_terraform_prefix}}
+        pcf_ert_domain: {{pcf_ert_domain}}
+#######################
+## Job - Deploy-Iaas ##
+#######################
+- name: deploy-iaas
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+    - get: pivnet-opsmgr
+      trigger: false
+      params:
+        globs:
+        - "*GCP*"
+  - task: upload-opsman
+    config:
+      platform: linux
+      image: docker:///virtmerlin/c0-worker-gcp
+      inputs:
+        - name: gcp-concourse
+        - name: pivnet-opsmgr
+      outputs:
+        - name: opsman-metadata
+      run:
+        path: gcp-concourse/ci/tasks/iaas/upload-opsman.sh
+      params:
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+  - task: deploy-iaas
+    config:
+      platform: linux
+      image: docker:///virtmerlin/c0-worker-gcp
+      inputs:
+        - name: gcp-concourse
+        - name: opsman-metadata
+      run:
+        path: gcp-concourse/ci/tasks/iaas/deploy-iaas.sh
+      params:
+        gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_zone_1: {{gcp_zone_1}}
+        gcp_zone_2: {{gcp_zone_2}}
+        gcp_zone_3: {{gcp_zone_3}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        gcp_terraform_prefix: {{gcp_terraform_prefix}}
+        gcp_terraform_subnet_ops_manager: {{gcp_terraform_subnet_ops_manager}}
+        gcp_terraform_subnet_ert: {{gcp_terraform_subnet_ert}}
+        gcp_terraform_subnet_services_1: {{gcp_terraform_subnet_services_1}}
+        pcf_ert_domain: {{pcf_ert_domain}}
+        pcf_ert_ssl_cert: {{pcf_ert_ssl_cert}}
+        pcf_ert_ssl_key: {{pcf_ert_ssl_key}}
+##############################
+## Job - Config OpsMan Auth ##
+##############################
+- name: config-opsman-auth
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+    - get: pivnet-opsmgr
+      trigger: false
+      params:
+        globs:
+        - "*GCP*"
+    - get: pivnet-elastic-runtime
+      trigger: false
+      params:
+        globs:
+        - "*pivotal"
+    - get: tool-om
+      params:
+        globs:
+        - "om-linux"
+  - task: config-opsman
+    config:
+      platform: linux
+      image: docker:///virtmerlin/c0-worker-gcp
+      inputs:
+        - name: gcp-concourse
+        - name: tool-om
+      run:
+        path: gcp-concourse/ci/tasks/iaas/config-opsman.sh
+      params:
+        pcf_ert_domain: {{pcf_ert_domain}}
+        pcf_opsman_admin: {{pcf_opsman_admin}}
+        pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
+###########################
+## Job - Deploy-Director ##
+###########################
+- name: deploy-director
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+    - get: pivnet-opsmgr
+      trigger: false
+      passed: [config-opsman-auth]
+      params:
+        globs:
+        - "*GCP*"
+    - get: pivnet-elastic-runtime
+      trigger: false
+      passed: [config-opsman-auth]
+      params:
+        globs:
+        - "*pivotal"
+    - get: tool-om
+      params:
+        globs:
+        - "om-linux"
+  - task: deploy-director
+    config:
+      platform: linux
+      image: docker:///virtmerlin/c0-worker-gcp
+      inputs:
+        - name: gcp-concourse
+        - name: tool-om
+      run:
+        path: gcp-concourse/ci/tasks/iaas/deploy-director.sh
+      params:
+        pcf_ert_domain: {{pcf_ert_domain}}
+        pcf_opsman_admin: {{pcf_opsman_admin}}
+        pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
+        gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_zone_1: {{gcp_zone_1}}
+        gcp_zone_2: {{gcp_zone_2}}
+        gcp_zone_3: {{gcp_zone_3}}
+        gcp_terraform_prefix: {{gcp_terraform_prefix}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        gcp_terraform_subnet_ops_manager: {{gcp_terraform_subnet_ops_manager}}
+        gcp_terraform_subnet_ops_manager_reserved: {{gcp_terraform_subnet_ops_manager_reserved}}
+        gcp_terraform_subnet_ops_manager_dns: {{gcp_terraform_subnet_ops_manager_dns}}
+        gcp_terraform_subnet_ops_manager_gw: {{gcp_terraform_subnet_ops_manager_gw}}
+        gcp_terraform_subnet_ert: {{gcp_terraform_subnet_ert}}
+        gcp_terraform_subnet_ert_reserved: {{gcp_terraform_subnet_ert_reserved}}
+        gcp_terraform_subnet_ert_dns: {{gcp_terraform_subnet_ert_dns}}
+        gcp_terraform_subnet_ert_gw: {{gcp_terraform_subnet_ert_gw}}
+        gcp_terraform_subnet_services_1: {{gcp_terraform_subnet_services_1}}
+        gcp_terraform_subnet_services_1_reserved: {{gcp_terraform_subnet_services_1_reserved}}
+        gcp_terraform_subnet_services_1_dns: {{gcp_terraform_subnet_services_1_dns}}
+        gcp_terraform_subnet_services_1_gw: {{gcp_terraform_subnet_services_1_gw}}
+###########################
+## Job - Upload ERT      ##
+###########################
+- name: upload-ert
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+    - get: pivnet-opsmgr
+      trigger: false
+      passed: [deploy-director]
+      params:
+        globs:
+        - "*GCP*"
+    - get: pivnet-elastic-runtime
+      trigger: false
+      passed: [deploy-director]
+      params:
+        globs:
+        - "*pivotal"
+    - get: tool-om
+      params:
+        globs:
+        - "om-linux"
+  - task: upload-ert
+    config:
+      platform: linux
+      image: docker:///virtmerlin/c0-worker-gcp
+      inputs:
+        - name: gcp-concourse
+        - name: tool-om
+        - name: pivnet-elastic-runtime
+      run:
+        path: gcp-concourse/ci/tasks/ert/upload-ert.sh
+      params:
+        pcf_ert_domain: {{pcf_ert_domain}}
+        pcf_opsman_admin: {{pcf_opsman_admin}}
+        pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
+###########################
+## Job - Deploy ERT      ##
+###########################
+- name: deploy-ert
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+    - get: pivnet-opsmgr
+      trigger: false
+      passed: [upload-ert]
+      params:
+        globs:
+        - "*GCP*"
+    - get: pivnet-elastic-runtime
+      trigger: false
+      passed: [upload-ert]
+      params:
+        globs:
+        - "*pivotal"
+    - get: tool-om
+      params:
+        globs:
+        - "om-linux"
+  - task: deploy-ert
+    config:
+      platform: linux
+      image: docker:///virtmerlin/c0-worker-gcp
+      inputs:
+        - name: gcp-concourse
+        - name: tool-om
+      run:
+        path: gcp-concourse/ci/tasks/ert/deploy-ert.sh
+      params:
+        pcf_ert_domain: {{pcf_ert_domain}}
+        pcf_opsman_admin: {{pcf_opsman_admin}}
+        pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
+        pcf_ert_ssl_cert: {{pcf_ert_ssl_cert}}
+        pcf_ert_ssl_key: {{pcf_ert_ssl_key}}
+        gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_zone_1: {{gcp_zone_1}}
+        gcp_zone_2: {{gcp_zone_2}}
+        gcp_zone_3: {{gcp_zone_3}}
+        gcp_terraform_prefix: {{gcp_terraform_prefix}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        gcp_storage_access_key: {{gcp_storage_access_key}}
+        gcp_storage_secret_key: {{gcp_storage_secret_key}}
+###########################
+## Job - Run Cats        ##
+###########################
+- name: run-cats
+  serial: false
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+      trigger: false
+    - get: tool-om
+      params:
+        globs:
+        - "om-linux"
+    - get: pivnet-opsmgr
+      trigger: false
+      passed: [deploy-ert]
+      params:
+        globs:
+        - "*GCP*"
+    - get: pivnet-elastic-runtime
+      trigger: false
+      passed: [deploy-ert]
+      params:
+        globs:
+        - "*pivotal"
+  - task: run-cats
+    config:
+      platform: linux
+      image: docker:///virtmerlin/c0-worker-gcp
+      inputs:
+        - name: gcp-concourse
+        - name: tool-om
+        - name: pivnet-opsmgr
+        - name: pivnet-elastic-runtime
+      outputs:
+        - name: pipeline-metadata
+      run:
+        path: gcp-concourse/ci/tasks/cats/run-cats.sh
+      params:
+        pcf_ert_domain: {{pcf_ert_domain}}
+        pcf_opsman_admin: {{pcf_opsman_admin}}
+        pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
+        gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
