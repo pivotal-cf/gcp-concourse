@@ -16,15 +16,15 @@ resource "google_sql_database_instance" "master" {
       authorized_networks = [
         {
           name  = "nat-1"
-          value = "${google_compute_instance.nat-gateway-pri.nat_ip}"
+          value = "${google_compute_instance.nat-gateway-pri.network_interface.0.access_config.0.assigned_nat_ip}"
         },
         {
           name  = "nat-2"
-          value = "${google_compute_instance.nat-gateway-sec.nat_ip}"
+          value = "${google_compute_instance.nat-gateway-sec.network_interface.0.access_config.0.assigned_nat_ip}"
         },
         {
           name  = "nat-3"
-          value = "${google_compute_instance.nat-gateway-ter.nat_ip}"
+          value = "${google_compute_instance.nat-gateway-ter.network_interface.0.access_config.0.assigned_nat_ip}"
         },
       ]
     }
