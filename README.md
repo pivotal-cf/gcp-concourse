@@ -31,4 +31,5 @@ tcp.gcp-poc.customer0.net == 104.198.241.71
 opsman.gcp-poc.customer0.net == 104.154.98.48
 ----------------------------------------------------------------------------------------------
 ```
+
 8. **AFTER!!!** Completing Step 7 above ... Run the **`deploy-iaas`** Job manually, if valid values were passed, a successful ERT deployment on GCP will be the result.
