@@ -24,6 +24,7 @@ groups:
   - upload-ert
   - deploy-ert
 
+- name: services
 
 resource_types:
 
@@ -196,17 +197,8 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: false
-    - get: pivnet-opsmgr
-      trigger: false
-      params:
-        globs:
-        - "*GCP*"
-    - get: pivnet-elastic-runtime
-      trigger: false
-      params:
-        globs:
-        - "*pivotal"
+      trigger: true
+      passed: [deploy-iaas]
     - get: tool-om
       params:
         globs:
@@ -237,19 +229,8 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: false
-    - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [config-opsman-auth]
-      params:
-        globs:
-        - "*GCP*"
-    - get: pivnet-elastic-runtime
-      trigger: false
-      passed: [config-opsman-auth]
-      params:
-        globs:
-        - "*pivotal"
     - get: tool-om
       params:
         globs:
@@ -300,16 +281,10 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: false
-    - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [deploy-director]
-      params:
-        globs:
-        - "*GCP*"
     - get: pivnet-elastic-runtime
       trigger: false
-      passed: [deploy-director]
       params:
         globs:
         - "*pivotal"
@@ -344,19 +319,8 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: false
-    - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [upload-ert]
-      params:
-        globs:
-        - "*GCP*"
-    - get: pivnet-elastic-runtime
-      trigger: false
-      passed: [upload-ert]
-      params:
-        globs:
-        - "*pivotal"
     - get: tool-om
       params:
         globs:
