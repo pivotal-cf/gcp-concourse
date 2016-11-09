@@ -1,21 +1,14 @@
 #!/bin/bash
 set -e
 
-echo "=============================================================================================="
-echo "Executing Terraform ...."
-echo "=============================================================================================="
-
+# Getting Opsmanager Image name in use from previous task upload-opsman.sh
 pcf_opsman_image_name=$(cat opsman-metadata/name)
 
-export PATH=/opt/terraform/terraform:$PATH
-echo $gcp_svc_acct_key > /tmp/svc-acct.json
-
-# Test if a Template is using init process with pre-existing IPs
+# Test if a GCP_Terraform_Template is using 'Init' folder to process with pre-existing IPs
 if [[ -d gcp-concourse/terraform/${gcp_pcf_terraform_template}/init ]]; then
-  #############################################################
-  #################### GCP Auth  & functions ##################
-  #############################################################
-  echo "Grabbing Init-ed IP Addresses..."
+  echo "=============================================================================================="
+  echo "This gcp_pcf_terraform_template has and 'Init' set of terraform that has pre-created IPs..."
+  echo "=============================================================================================="
   echo $gcp_svc_acct_key > /tmp/blah
   gcloud auth activate-service-account --key-file /tmp/blah
   rm -rf /tmp/blah
@@ -36,6 +29,20 @@ if [[ -d gcp-concourse/terraform/${gcp_pcf_terraform_template}/init ]]; then
   pub_ip_opsman=$(fn_get_ip "opsman")
 
 fi
+
+if [[ ${pcf_ert_ssl_cert} == "generate" ]]; then
+
+  gcp-concourse/scripts/ssl/gen_ssl_certs.ssh "sys.${pcf_ert_domain}" "cfapps.${pcf_ert_domain}"
+  
+
+fi
+
+exit 1
+echo "=============================================================================================="
+echo "Executing Terraform of GCP IaaS ..."
+echo "=============================================================================================="
+export PATH=/opt/terraform/terraform:$PATH
+echo $gcp_svc_acct_key > /tmp/svc-acct.json
 
 /opt/terraform/terraform plan \
   -var "gcp_proj_id=${gcp_proj_id}" \
