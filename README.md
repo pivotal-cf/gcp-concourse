@@ -7,7 +7,7 @@
 2. Create a Concourse instance with public access for downloads.  Look [here](http://concourse.ci/vagrant.html) for `vagrant` instructions if an ephemeral concourse instance is desired
 3. `git clone` this repo
 4. **EDIT!!!** `ci/pipeline-parameters/c0-gcp-concourse-base.yml` and replace all variables/parameters you will want for your concourse individual pipeline run
-5. **AFTER!!!** Completing Step 4 above ... log into concourse & create the pipeline
+5. **AFTER!!!** Completing Step 4 above ... log into concourse & create the pipeline (this command syntz assumes you are at the root of repo assumes you are in the root.
   - `fly -t [YOUR CONCOURSE TARGET] set-pipeline -p c0-gcp-concourse-base -c ci/c0-gcp-concourse-base.yml -l ci/pipeline-parameters/c0-gcp-concourse-base.yml` 
 6. Unpause the pipeline
 7. Run  **`init-env`** Job manually,  you will need to review the output and record for the DNS records that must now be made resolvable **BEFORE!!!** continuing to the next step:

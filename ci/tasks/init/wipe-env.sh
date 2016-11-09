@@ -190,8 +190,8 @@ echo "Will delete all compute/images stemcell objects where project=$gcp_proj_id
 echo "----------------------------------------------------------------------------------------------"
   for x in $(gcloud compute images list | grep $gcp_proj_id | grep stemcell | awk '{print $1}'); do
 
-  	 echo "Deleting Image:$x ..."
-  	 gcloud compute images delete $x --quiet
+  	 echo "Not Deleting Image:$x ..."
+  	 #gcloud compute images delete $x --quiet
 
   done
 echo "=============================================================================================="
