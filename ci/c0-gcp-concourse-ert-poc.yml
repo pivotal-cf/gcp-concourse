@@ -107,7 +107,10 @@ jobs:
   - task: wipe-env
     config:
       platform: linux
-      image: docker:///virtmerlin/c0-worker-gcp
+      image_resource:
+        type: docker-image
+        source:
+          repository: virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
       outputs:
@@ -138,7 +141,10 @@ jobs:
   - task: init-public-ips
     config:
       platform: linux
-      image: docker:///virtmerlin/c0-worker-gcp
+      image_resource:
+        type: docker-image
+        source:
+          repository: virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
       run:
@@ -174,7 +180,10 @@ jobs:
   - task: upload-opsman
     config:
       platform: linux
-      image: docker:///virtmerlin/c0-worker-gcp
+      image_resource:
+        type: docker-image
+        source:
+          repository: virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: pivnet-opsmgr
@@ -189,7 +198,10 @@ jobs:
   - task: deploy-iaas
     config:
       platform: linux
-      image: docker:///virtmerlin/c0-worker-gcp
+      image_resource:
+        type: docker-image
+        source:
+          repository: virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: opsman-metadata
@@ -240,7 +252,11 @@ jobs:
   - task: config-opsman
     config:
       platform: linux
-      image: docker:///virtmerlin/c0-worker-gcp
+      image_resource:
+        type: docker-image
+        source:
+          repository: virtmerlin/c0-worker-gcp
+
       inputs:
         - name: gcp-concourse
         - name: tool-om
@@ -280,7 +296,10 @@ jobs:
   - task: deploy-director
     config:
       platform: linux
-      image: docker:///virtmerlin/c0-worker-gcp
+      image_resource:
+        type: docker-image
+        source:
+          repository: virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: tool-om
@@ -340,7 +359,10 @@ jobs:
   - task: upload-ert
     config:
       platform: linux
-      image: docker:///virtmerlin/c0-worker-gcp
+      image_resource:
+        type: docker-image
+        source:
+          repository: virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: tool-om
@@ -381,7 +403,10 @@ jobs:
   - task: deploy-ert
     config:
       platform: linux
-      image: docker:///virtmerlin/c0-worker-gcp
+      image_resource:
+        type: docker-image
+        source:
+          repository: virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: tool-om
@@ -433,7 +458,10 @@ jobs:
   - task: run-cats
     config:
       platform: linux
-      image: docker:///virtmerlin/c0-worker-gcp
+      image_resource:
+        type: docker-image
+        source:
+          repository: virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
         - name: tool-om
