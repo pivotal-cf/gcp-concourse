@@ -19,12 +19,21 @@ perl -pi -e "s/{{gcp_zone_1}}/${gcp_zone_1}/g" ${json_file}
 perl -pi -e "s/{{gcp_zone_2}}/${gcp_zone_2}/g" ${json_file}
 perl -pi -e "s/{{gcp_zone_3}}/${gcp_zone_3}/g" ${json_file}
 perl -pi -e "s/{{gcp_terraform_prefix}}/${gcp_terraform_prefix}/g" ${json_file}
+
+# Test if the ssl cert var from concourse is set to 'genrate'.  If so, script will gen a self signed, otherwise will assume its a cert
 if [[ ! ${pcf_ert_ssl_cert} == "generate" ]]; then
-   my_pcf_ert_ssl_cert=$(echo ${pcf_ert_ssl_cert} | sed 's/\s\+/\\\\r\\\\n/g' | sed 's/\\\\r\\\\nCERTIFICATE/ CERTIFICATE/g')
-   my_pcf_ert_ssl_key=$(echo ${pcf_ert_ssl_key} | sed 's/\s\+/\\\\r\\\\n/g' | sed 's/\\\\r\\\\nRSA\\\\r\\\\nPRIVATE\\\\r\\\\nKEY/ RSA PRIVATE KEY/g')
-   perl -pi -e "s|{{pcf_ert_ssl_cert}}|${my_pcf_ert_ssl_cert}|g" ${json_file}
-   perl -pi -e "s|{{pcf_ert_ssl_key}}|${my_pcf_ert_ssl_key}|g" ${json_file}
+  echo "=============================================================================================="
+  echo "Generating Self Signed Certs for sys.${pcf_ert_domain} & cfapps.${pcf_ert_domain} ..."
+  echo "=============================================================================================="
+  gcp-concourse/scripts/ssl/gen_ssl_certs.sh "sys.${pcf_ert_domain}" "cfapps.${pcf_ert_domain}"
+  export pcf_ert_ssl_cert=$(cat sys.${pcf_ert_domain}.crt)
+  export pcf_ert_ssl_key=$(cat sys.${pcf_ert_domain}.key)
 fi
+
+my_pcf_ert_ssl_cert=$(echo ${pcf_ert_ssl_cert} | sed 's/\s\+/\\\\r\\\\n/g' | sed 's/\\\\r\\\\nCERTIFICATE/ CERTIFICATE/g')
+my_pcf_ert_ssl_key=$(echo ${pcf_ert_ssl_key} | sed 's/\s\+/\\\\r\\\\n/g' | sed 's/\\\\r\\\\nRSA\\\\r\\\\nPRIVATE\\\\r\\\\nKEY/ RSA PRIVATE KEY/g')
+perl -pi -e "s|{{pcf_ert_ssl_cert}}|${my_pcf_ert_ssl_cert}|g" ${json_file}
+perl -pi -e "s|{{pcf_ert_ssl_key}}|${my_pcf_ert_ssl_key}|g" ${json_file}
 perl -pi -e "s/{{pcf_ert_domain}}/${pcf_ert_domain}/g" ${json_file}
 perl -pi -e "s/{{gcp_storage_access_key}}/${gcp_storage_access_key}/g" ${json_file}
 perl -pi -e "s/{{gcp_storage_secret_key}}/${gcp_storage_secret_key}/g" ${json_file}
