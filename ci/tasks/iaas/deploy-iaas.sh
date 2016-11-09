@@ -32,7 +32,7 @@ fi
 # Test if the ssl cert var from concourse is set to 'genrate'.  If so, script will gen a self signed, otherwise will assume its a cert
 if [[ ${pcf_ert_ssl_cert} == "generate" ]]; then
   echo "=============================================================================================="
-  echo "Generating Self Signed Certs for sys.${pcf_ert_domain} & cfapps.${pcf_ert_domain} ...""
+  echo "Generating Self Signed Certs for sys.${pcf_ert_domain} & cfapps.${pcf_ert_domain} ..."
   echo "=============================================================================================="
   gcp-concourse/scripts/ssl/gen_ssl_certs.sh "sys.${pcf_ert_domain}" "cfapps.${pcf_ert_domain}"
   export pcf_ert_ssl_cert=$(cat sys.${pcf_ert_domain}.crt)
