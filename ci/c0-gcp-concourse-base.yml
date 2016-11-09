@@ -8,7 +8,6 @@ groups:
   - deploy-director
   - upload-ert
   - deploy-ert
-  - run-cats
 
 - name: init
   jobs:
@@ -25,9 +24,6 @@ groups:
   - upload-ert
   - deploy-ert
 
-- name: cats
-  jobs:
-  - run-cats
 
 resource_types:
 

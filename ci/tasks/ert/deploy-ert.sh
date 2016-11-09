@@ -21,7 +21,7 @@ perl -pi -e "s/{{gcp_zone_3}}/${gcp_zone_3}/g" ${json_file}
 perl -pi -e "s/{{gcp_terraform_prefix}}/${gcp_terraform_prefix}/g" ${json_file}
 
 # Test if the ssl cert var from concourse is set to 'genrate'.  If so, script will gen a self signed, otherwise will assume its a cert
-if [[ ! ${pcf_ert_ssl_cert} == "generate" ]]; then
+if [[ ${pcf_ert_ssl_cert} == "generate" ]]; then
   echo "=============================================================================================="
   echo "Generating Self Signed Certs for sys.${pcf_ert_domain} & cfapps.${pcf_ert_domain} ..."
   echo "=============================================================================================="
@@ -69,7 +69,7 @@ function fn_om_linux_curl {
     if [[ $(cat /tmp/rqst_stderr.log | grep "Status:" | awk '{print$2}') != "200" ]]; then
       echo "Error Call Failed ...."
       echo $(cat /tmp/rqst_stderr.log)
-      #exit 1
+      exit 1
     else
       echo $(cat /tmp/rqst_stdout.log)
     fi
