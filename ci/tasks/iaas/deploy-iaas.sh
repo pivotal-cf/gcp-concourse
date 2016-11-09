@@ -36,7 +36,7 @@ if [[ ${pcf_ert_ssl_cert} == "generate" ]]; then
   export pcf_ert_ssl_key=$(cat sys.${pcf_ert_domain}.key)
 fi
 
-exit 1
+
 echo "=============================================================================================="
 echo "Executing Terraform of GCP IaaS ..."
 echo "=============================================================================================="
