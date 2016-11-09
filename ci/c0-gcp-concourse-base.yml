@@ -46,7 +46,7 @@ resources:
   type: git
   source:
     uri: https://github.com/c0-ops/gcp-concourse.git
-    branch: master
+    branch: mglynn-dev
 
 - name: tool-om
   type: github-release
