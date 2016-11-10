@@ -19,7 +19,7 @@ resource "google_compute_instance" "ops-manager" {
     subnetwork = "${google_compute_subnetwork.subnet-ops-manager.name}"
 
     access_config {
-      nat_ip = "${var.pub_ip_opsman}"
+      # Empty for ephemeral external IP allocation
     }
   }
 }

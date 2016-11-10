@@ -4,6 +4,11 @@ set -e
 # Getting Opsmanager Image name in use from previous task upload-opsman.sh
 pcf_opsman_image_name=$(cat opsman-metadata/name)
 
+# Copy base template with no clobber if not using the base template
+if [[ ! ${gcp_pcf_terraform_template} == "c0-gcp-base" ]]; then
+  cp -rn gcp-concourse/terraform/c0-gcp-base/* gcp-concourse/terraform/${gcp_pcf_terraform_template}/
+fi
+
 # Test if a GCP_Terraform_Template is using 'Init' folder to process with pre-existing IPs
 if [[ -d gcp-concourse/terraform/${gcp_pcf_terraform_template}/init ]]; then
   echo "=============================================================================================="
@@ -39,6 +44,10 @@ if [[ ${pcf_ert_ssl_cert} == "generate" ]]; then
   export pcf_ert_ssl_key=$(cat sys.${pcf_ert_domain}.key)
 fi
 
+# Test if SQL exists and inculdes terraform actions, if true generate a unique name
+if [[ $(cat gcp-concourse/terraform/c0-gcp-base/8_sql.tf | wc -c) -gt 0 ]]; then
+  ert_sql_instance_name="${gcp_terraform_prefix}-sql-$(cat /proc/sys/kernel/random/uuid)"
+fi
 
 echo "=============================================================================================="
 echo "Executing Terraform of GCP IaaS ..."
@@ -65,6 +74,7 @@ echo $gcp_svc_acct_key > /tmp/svc-acct.json
   -var "pub_ip_ssh_and_doppler=${pub_ip_ssh_and_doppler}" \
   -var "pub_ip_jumpbox=${pub_ip_jumpbox}" \
   -var "pub_ip_opsman=${pub_ip_opsman}" \
+  -var "ert_sql_instance_name=${ert_sql_instance_name}" \
   -var "ert_sql_db_username=${pcf_opsman_admin}" \
   -var "ert_sql_db_password=${pcf_opsman_admin_passwd}" \
   gcp-concourse/terraform/$gcp_pcf_terraform_template
@@ -89,6 +99,7 @@ echo $gcp_svc_acct_key > /tmp/svc-acct.json
   -var "pub_ip_ssh_and_doppler=${pub_ip_ssh_and_doppler}" \
   -var "pub_ip_jumpbox=${pub_ip_jumpbox}" \
   -var "pub_ip_opsman=${pub_ip_opsman}" \
+  -var "ert_sql_instance_name=${ert_sql_instance_name}" \
   -var "ert_sql_db_username=${pcf_opsman_admin}" \
   -var "ert_sql_db_password=${pcf_opsman_admin_passwd}" \
   gcp-concourse/terraform/$gcp_pcf_terraform_template

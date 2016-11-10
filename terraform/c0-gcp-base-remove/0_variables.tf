@@ -16,10 +16,3 @@ variable "pcf_opsman_image_name" {}
 variable "pcf_ert_domain" {}
 variable "pcf_ert_ssl_cert" {}
 variable "pcf_ert_ssl_key" {}
-variable "pub_ip_opsman" {}
-variable "pub_ip_jumpbox" {}
-variable "pub_ip_global_pcf" {}
-variable "pub_ip_ssh_and_doppler" {}
-variable "pub_ip_ssh_tcp_lb" {}
-variable "ert_sql_db_username" {}
-variable "ert_sql_db_password" {}

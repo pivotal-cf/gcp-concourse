@@ -33,3 +33,22 @@
     ip_cidr_range = "${var.gcp_terraform_subnet_services_1}"
     network       = "${google_compute_network.pcf-virt-net.self_link}"
   }
+
+///////////======================//////////////
+//// Addresses      =============//////////////
+///////////======================//////////////
+
+  // Global IP for PCF API & Apps
+  resource "google_compute_global_address" "pcf" {
+    name = "${var.gcp_terraform_prefix}-global-pcf"
+  }
+
+  // Static IP address for forwarding rule for tcp LB
+  resource "google_compute_address" "cf-tcp" {
+    name = "${var.gcp_terraform_prefix}-tcp-lb"
+  }
+
+  // Static IP address for forwarding rule for sshproxy & doppler
+  resource "google_compute_address" "ssh-and-doppler" {
+    name = "${var.gcp_terraform_prefix}-ssh-and-doppler"
+  }

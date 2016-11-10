@@ -95,14 +95,14 @@ resource "google_compute_http_health_check" "cf" {
 
 resource "google_compute_global_forwarding_rule" "cf-http" {
   name       = "${var.gcp_terraform_prefix}-cf-lb-http"
-  ip_address = "${var.pub_ip_global_pcf}"
+  ip_address = "${google_compute_global_address.pcf.address}"
   target     = "${google_compute_target_http_proxy.http_lb_proxy.self_link}"
   port_range = "80"
 }
 
 resource "google_compute_global_forwarding_rule" "cf-https" {
   name       = "${var.gcp_terraform_prefix}-cf-lb-https"
-  ip_address = "${var.pub_ip_global_pcf}"
+  ip_address = "${google_compute_global_address.pcf.address}"
   target     = "${google_compute_target_https_proxy.https_lb_proxy.self_link}"
   port_range = "443"
 }
