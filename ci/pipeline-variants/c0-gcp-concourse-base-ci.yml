@@ -85,6 +85,16 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
+    - get: pivnet-elastic-runtime
+      trigger: false
+      params:
+        globs:
+        - "*pivotal"
+    - get: pivnet-opsmgr
+      trigger: false
+      params:
+        globs:
+        - "*GCP*"
   - task: wipe-env
     config:
       platform: linux
@@ -125,6 +135,25 @@ jobs:
         gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
         gcp_terraform_prefix: {{gcp_terraform_prefix}}
         pcf_ert_domain: {{pcf_ert_domain}}
+  - task: init-set-dyn-dns
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: virtmerlin/c0-worker-gcp
+      inputs:
+        - name: gcp-concourse
+      run:
+        path: gcp-concourse/ci/tasks/init/init-set-dyn-dns.sh
+      params:
+        dyn_enabled: {{dyn_enabled}}
+        dyn_user: {{dyn_user}}
+        dyn_token: {{dyn_token}}
+        gcp_proj_id: {{gcp_proj_id}}
+        gcp_region: {{gcp_region}}
+        gcp_svc_acct_key: {{gcp_svc_acct_key}}
+        pcf_ert_domain: {{pcf_ert_domain}}
 #######################
 ## Job - Deploy-Iaas ##
 #######################
@@ -136,8 +165,15 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
+    - get: pivnet-elastic-runtime
+      trigger: false
+      passed: [init-env]
+      params:
+        globs:
+        - "*pivotal"
     - get: pivnet-opsmgr
       trigger: false
+      passed: [init-env]
       params:
         globs:
         - "*GCP*"
@@ -199,11 +235,22 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
-      passed: [deploy-iaas]
     - get: tool-om
       params:
         globs:
         - "om-linux"
+    - get: pivnet-elastic-runtime
+      trigger: false
+      passed: [deploy-iaas]
+      params:
+        globs:
+        - "*pivotal"
+    - get: pivnet-opsmgr
+      trigger: false
+      passed: [deploy-iaas]
+      params:
+        globs:
+        - "*GCP*"
   - task: config-opsman
     config:
       platform: linux
@@ -231,11 +278,22 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
-      passed: [config-opsman-auth]
     - get: tool-om
       params:
         globs:
         - "om-linux"
+    - get: pivnet-elastic-runtime
+      trigger: false
+      passed: [config-opsman-auth]
+      params:
+        globs:
+        - "*pivotal"
+    - get: pivnet-opsmgr
+      trigger: false
+      passed: [config-opsman-auth]
+      params:
+        globs:
+        - "*GCP*"
   - task: deploy-director
     config:
       platform: linux
@@ -283,16 +341,22 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
-      passed: [deploy-director]
-    - get: pivnet-elastic-runtime
-      trigger: false
-      params:
-        globs:
-        - "*pivotal"
     - get: tool-om
       params:
         globs:
         - "om-linux"
+    - get: pivnet-elastic-runtime
+      trigger: false
+      passed: [deploy-director]
+      params:
+        globs:
+        - "*pivotal"
+    - get: pivnet-opsmgr
+      trigger: false
+      passed: [deploy-director]
+      params:
+        globs:
+        - "*GCP*"
   - task: upload-ert
     config:
       platform: linux
@@ -321,11 +385,22 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
-      passed: [upload-ert]
     - get: tool-om
       params:
         globs:
         - "om-linux"
+    - get: pivnet-elastic-runtime
+      trigger: false
+      passed: [upload-ert]
+      params:
+        globs:
+        - "*pivotal"
+    - get: pivnet-opsmgr
+      trigger: false
+      passed: [upload-ert]
+      params:
+        globs:
+        - "*GCP*"
   - task: deploy-ert
     config:
       platform: linux

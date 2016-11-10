@@ -5,6 +5,11 @@ echo "==========================================================================
 echo "Executing Terraform ...."
 echo "=============================================================================================="
 
+# Copy base template with no clobber if not using the base template
+if [[ ! ${gcp_pcf_terraform_template} == "c0-gcp-base" ]]; then
+  cp -rn gcp-concourse/terraform/c0-gcp-base/* gcp-concourse/terraform/${gcp_pcf_terraform_template}/
+fi
+
 export PATH=/opt/terraform/terraform:$PATH
 echo $gcp_svc_acct_key > /tmp/svc-acct.json
 
