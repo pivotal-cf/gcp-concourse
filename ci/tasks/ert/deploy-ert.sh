@@ -1,6 +1,16 @@
 #!/bin/bash
 set -e
 
+#############################################################
+#################### GCP Auth  & functions ##################
+#############################################################
+echo $gcp_svc_acct_key > /tmp/blah
+gcloud auth activate-service-account --key-file /tmp/blah
+rm -rf /tmp/blah
+
+gcloud config set project $gcp_proj_id
+gcloud config set compute/region $gcp_region
+
 # Setup OM Tool
 sudo cp tool-om/om-linux /usr/local/bin
 sudo chmod 755 /usr/local/bin/om-linux
@@ -15,6 +25,8 @@ json_file="${json_file_path}/ert.json"
 # Set SQL Instance Name since we have to add a guid to it when its Created
 gcloud_sql_instance_cmd="gcloud sql instances list --format json | jq '.[] | select(.instance | startswith(\"${gcp_terraform_prefix}\")) | .instance' | tr -d '\"'"
 gcloud_sql_instance=$(eval ${gcloud_sql_instance_cmd})
+gcloud_sql_instance_ip=$(gcloud sql instances list | grep ${gcloud_sql_instance} | awk '{print$4}')
+
 
 cp ${json_file_template} ${json_file}
 
@@ -23,6 +35,10 @@ perl -pi -e "s/{{gcp_zone_1}}/${gcp_zone_1}/g" ${json_file}
 perl -pi -e "s/{{gcp_zone_2}}/${gcp_zone_2}/g" ${json_file}
 perl -pi -e "s/{{gcp_zone_3}}/${gcp_zone_3}/g" ${json_file}
 perl -pi -e "s/{{gcp_terraform_prefix}}/${gcp_terraform_prefix}/g" ${json_file}
+perl -pi -e "s/{{gcloud_sql_instance_ip}}/${gcloud_sql_instance_ip}/g" ${json_file}
+perl -pi -e "s/{{gcloud_sql_instance_username}}/${pcf_opsman_admin}/g" ${json_file}
+perl -pi -e "s/{{gcloud_sql_instance_password}}/${pcf_opsman_admin_passwd}/g" ${json_file}
+
 
 # Test if the ssl cert var from concourse is set to 'genrate'.  If so, script will gen a self signed, otherwise will assume its a cert
 if [[ ${pcf_ert_ssl_cert} == "generate" ]]; then
