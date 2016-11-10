@@ -6,7 +6,6 @@
 
 # github RSA private key for git resources
 githubtoken: ""  # Enter Your Github Token Here
-githubsshkey: # Enter your multi-line Github Private Key Here
 
 ##############################################
 ### PCF Object Params
