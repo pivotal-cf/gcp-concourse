@@ -12,6 +12,10 @@ json_file_path="gcp-concourse/json-opsman/${gcp_pcf_terraform_template}"
 json_file_template="${json_file_path}/ert-template.json"
 json_file="${json_file_path}/ert.json"
 
+# Set SQL Instance Name since we have to add a guid to it when its Created
+gcloud_sql_instance_cmd="gcloud sql instances list --format json | jq '.[] | select(.instance | startswith(\"${gcp_terraform_prefix}\")) | .instance' | tr -d '\"'"
+gcloud_sql_instance=$(eval ${gcloud_sql_instance_cmd})
+
 cp ${json_file_template} ${json_file}
 
 perl -pi -e "s/{{gcp_region}}/${gcp_region}/g" ${json_file}
@@ -123,12 +127,13 @@ for job in $(echo ${json_jobs_configs} | jq . | jq 'keys' | jq .[] | tr -d '"');
 
 done
 
+exit 1
 
 # Apply Changes in Opsman
-echo "=============================================================================================="
-echo "Applying OpsMan Changes to Deploy: ${guid_cf}"
-echo "=============================================================================================="
-om-linux --target https://opsman.$pcf_ert_domain -k \
-       --username "$pcf_opsman_admin" \
-       --password "$pcf_opsman_admin_passwd" \
-  apply-changes
+#echo "=============================================================================================="
+#echo "Applying OpsMan Changes to Deploy: ${guid_cf}"
+#echo "=============================================================================================="
+#om-linux --target https://opsman.$pcf_ert_domain -k \
+#       --username "$pcf_opsman_admin" \
+#       --password "$pcf_opsman_admin_passwd" \
+#  apply-changes

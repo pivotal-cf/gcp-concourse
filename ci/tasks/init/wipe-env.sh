@@ -172,6 +172,14 @@ for y in ${ZONE[@]}; do
   done
 done
 
+# Wipe SQL Instances
+echo "----------------------------------------------------------------------------------------------"
+echo "Will delete gcloud sql instances with the prefix=$gcp_terraform_prefix"
+echo "----------------------------------------------------------------------------------------------"
+
+gcloud_sql_instances_cmd="gcloud sql instances list --format json | jq '.[] | select(.instance | startswith(\"${gcp_terraform_prefix}\")) | .instance' | tr -d '\"'"
+gcloud_sql_instances=$(eval ${gcloud_sql_instances_cmd})
+
 #Wipe Buckets
 for b in $(gsutil ls | grep $gcp_terraform_prefix); do
 	echo "----------------------------------------------------------------------------------------------"
