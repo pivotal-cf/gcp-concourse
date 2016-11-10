@@ -43,6 +43,23 @@
       ".properties.mysql_backups": {
         "value": "disable"
       },
+      ".properties.system_database": {
+        "value": "external"
+      },
+      ".properties.system_database.external.port": {
+        "value": "3306"
+      },
+      ".properties.system_database.external.host": {
+        "value": "{{gcloud_sql_instance_ip}}"
+      },
+      ".properties.system_database.external.username": {
+        "value": "{{gcloud_sql_instance_username}}"
+      },
+      ".properties.system_database.external.password": {
+        "value": {
+          "secret": "{{gcloud_sql_instance_password}}"
+        }
+      },
       ".cloud_controller.system_domain": {
         "value": "sys.{{pcf_ert_domain}}"
       },
