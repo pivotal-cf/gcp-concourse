@@ -34,18 +34,18 @@ function fn_set_dyn_dns {
      eval $curl_cmd
 }
 
-dns_opsman_cmd="gcloud compute instances list --format json | jq ' .[] | select (.name == \"$gcp_terraform_prefix-ops-manager\") | .networkInterfaces[].accessConfigs[].natIP ' | tr -d '\"' "
-dns_opsman_ip=$(eval $dns_opsman_cmd)
-dns_api_ip=$(fn_get_ip "global-pcf")
-dns_tcp_ip=$(fn_get_ip "tcp-lb")
-dns_ssh_ip=$(fn_get_ip "ssh-and-doppler")
+pub_ip_global_pcf=$(fn_get_ip "global-pcf")
+pub_ip_ssh_tcp_lb=$(fn_get_ip "tcp-lb")
+pub_ip_ssh_and_doppler=$(fn_get_ip "ssh-and-doppler")
+pub_ip_jumpbox=$(fn_get_ip "jumpbox")
+pub_ip_opsman=$(fn_get_ip "opsman")
 
-fn_set_dyn_dns "api" "$dns_api_ip"
-fn_set_dyn_dns "opsman" "$dns_opsman_ip"
-fn_set_dyn_dns "ssh.sys" "$dns_ssh_ip"
-fn_set_dyn_dns "doppler.sys" "$dns_ssh_ip"
-fn_set_dyn_dns "loggregator.sys" "$dns_ssh_ip"
-fn_set_dyn_dns "tcp" "$dns_tcp_ip"
+fn_set_dyn_dns "api" "$pub_ip_global_pcf"
+fn_set_dyn_dns "opsman" "$pub_ip_opsman"
+fn_set_dyn_dns "ssh.sys" "$pub_ip_ssh_and_doppler"
+fn_set_dyn_dns "doppler.sys" "$pub_ip_ssh_and_doppler"
+fn_set_dyn_dns "loggregator.sys" "$pub_ip_ssh_and_doppler"
+fn_set_dyn_dns "tcp" "$pub_ip_ssh_tcp_lb"
 
 echo
 echo "----------------------------------------------------------------------------------------------"

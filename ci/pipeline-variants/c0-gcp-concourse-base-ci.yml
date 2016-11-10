@@ -154,6 +154,7 @@ jobs:
         gcp_region: {{gcp_region}}
         gcp_svc_acct_key: {{gcp_svc_acct_key}}
         pcf_ert_domain: {{pcf_ert_domain}}
+        gcp_terraform_prefix: {{gcp_terraform_prefix}}
 #######################
 ## Job - Deploy-Iaas ##
 #######################
