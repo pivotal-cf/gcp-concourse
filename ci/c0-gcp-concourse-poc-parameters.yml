@@ -31,6 +31,7 @@ pcf_ert_ssl_key: generate
 arg_wipe: null
 ### GCP Terraform & Opsman Input ###
 gcp_pcf_terraform_template: c0-gcp-poc # Must = a valid template in the pipeline
+gcp_terraform_prefix: c0-poc-pipeline # This will prefix to all Terrafrom created objects
 gcp_proj_id: google.com:pcf-demos
 gcp_region: us-central1
 gcp_zone_1: us-central1-a
@@ -49,6 +50,5 @@ gcp_terraform_subnet_services_1_reserved: "192.168.20.1-192.168.20.9"
 gcp_terraform_subnet_services_1_dns: "192.168.20.1,8.8.8.8"
 gcp_terraform_subnet_services_1_gw: "192.168.20.1"
 gcp_svc_acct_key: # Enter your multi-line GCP Service Account JSON Here
-gcp_storage_access_key: ""
-gcp_storage_secret_key: ""
-gcp_terraform_prefix: c0-poc-pipeline # This will prefix to all Terrafrom created objects
+gcp_storage_access_key: "" #
+gcp_storage_secret_key: "" #
