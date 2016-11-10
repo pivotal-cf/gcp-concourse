@@ -4,13 +4,22 @@
 ### Pre_Reqs & Instructions for POC Deployment via Concourse
 
 1. Create a Service Account with "Editor" Role on the target GCP Project
-2. Create a Concourse instance with public access for downloads.  Look [here](http://concourse.ci/vagrant.html) for `vagrant` instructions if an ephemeral concourse instance is desired
+  - Non POC versions of the pipeline will support sep Terraform & Opsman Service accounts
+  - ENABLE your GCP Compute API [here](https://console.cloud.google.com/apis/api/compute_component)
+  - ENABLE your GCP Storage API [here](https://console.cloud.google.com/apis/api/storage_component)
+  - ENABLE & Create GCP Storage Interoperability Tokens here [here](https://console.cloud.google.com/storage/settings)
+2. Create a Concourse instance with public access for downloads.  Look [here](http://concourse.ci/vagrant.html) for `vagrant` instructions if an ephemeral concourse instance is desired.
+
+
 3. `git clone` this repo
-4. **EDIT!!!** `ci/pipeline-parameters/c0-gcp-concourse-base.yml` and replace all variables/parameters you will want for your concourse individual pipeline run
-5. **AFTER!!!** Completing Step 4 above ... log into concourse & create the pipeline (this command syntz assumes you are at the root of repo assumes you are in the root.
-  - `fly -t [YOUR CONCOURSE TARGET] set-pipeline -p c0-gcp-concourse-base -c ci/c0-gcp-concourse-base.yml -l ci/pipeline-parameters/c0-gcp-concourse-base.yml` 
-6. Unpause the pipeline
-7. Run  **`init-env`** Job manually,  you will need to review the output and record for the DNS records that must now be made resolvable **BEFORE!!!** continuing to the next step:
+4. **EDIT!!!** `ci/c0-gcp-concourse-poc-params.yml` and replace all variables/parameters you will want for your concourse individual pipeline run
+5. **AFTER!!!** Completing Step 4 above ... log into concourse & create the pipeline.
+  
+  _(this command syntax assumes you are at the root of your repo)_
+  - `fly -t [YOUR CONCOURSE TARGET] set-pipeline -p c0-gcp-concourse-base -c ci/c0-gcp-concourse-poc.yml -l ci/c0-gcp-concourse-poc-params.yml` 
+  
+6. Un-pause the pipeline
+7. Run the **`init-env`** job manually,  you will need to review the output and record it for the DNS records that must then be made resolvable **BEFORE!!!** continuing to the next step:
   - Example:
 
 ```
@@ -32,4 +41,4 @@ opsman.gcp-poc.customer0.net == 104.154.98.48
 ----------------------------------------------------------------------------------------------
 ```
 
-8. **AFTER!!!** Completing Step 7 above ... Run the **`deploy-iaas`** Job manually, if valid values were passed, a successful ERT deployment on GCP will be the result.
+**[DEPLOY]**. **AFTER!!!** Completing Step 7 above ... Run the **`deploy-iaas`** job manually, if valid values were passed, a successful ERT deployment on GCP will be the result.

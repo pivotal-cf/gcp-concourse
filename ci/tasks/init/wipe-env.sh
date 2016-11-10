@@ -180,7 +180,7 @@ echo "--------------------------------------------------------------------------
 gcloud_sql_instances_cmd="gcloud sql instances list --format json | jq '.[] | select(.instance | startswith(\"${gcp_terraform_prefix}\")) | .instance' | tr -d '\"'"
 gcloud_sql_instances=$(eval ${gcloud_sql_instances_cmd})
 
-for slq in ${gcloud_sql_instances}; do
+for sql in ${gcloud_sql_instances}; do
  gcloud sql instances delete ${sql} --quiet
 done
 
