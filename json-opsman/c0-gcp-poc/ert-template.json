@@ -117,7 +117,7 @@
       "cloud_controller": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false,"persistent_disk":{"size_mb":"automatic"}},
       "ha_proxy": {"instance_type": {"id": "automatic"},"instances": 0,"elb_names": [],"internet_connected": false},
       "router": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": ["http:{{gcp_terraform_prefix}}-http-lb-backend","tcp:{{gcp_terraform_prefix}}-wss-logs"],"internet_connected": false},
-      "mysql_monitor": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "mysql_monitor": {"instance_type": {"id": "automatic"},"instances": 0,"elb_names": [],"internet_connected": false},
       "clock_global": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
       "cloud_controller_worker": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false},
       "collector": {"instance_type": {"id": "automatic"},"instances": 0,"elb_names": [],"internet_connected": false},
@@ -138,7 +138,7 @@
       "autoscaling-tests": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
       "acceptance-tests": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
       "push-pivotal-account": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
-      "mysql-rejoin-unsafe": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
+      "mysql-rejoin-unsafe": {"instance_type": {"id": "automatic"},"instances": 0,"elb_names": [],"internet_connected": false},
       "autoscaling": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
       "bootstrap": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false},
       "notifications": {"instance_type": {"id": "automatic"},"instances": 1,"elb_names": [],"internet_connected": false}
