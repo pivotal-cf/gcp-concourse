@@ -5,7 +5,7 @@
 resource "google_sql_database_instance" "master" {
   region           = "${var.gcp_region}"
   database_version = "MYSQL_5_6"
-  name             = "${var.gcp_terraform_prefix}-db-instance"
+  name             = "${var.ert_sql_instance_name}"
 
   settings {
     tier = "db-f1-micro"
