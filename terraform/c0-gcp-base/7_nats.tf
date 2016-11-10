@@ -6,7 +6,7 @@
 //// NAT Primary
 resource "google_compute_instance" "nat-gateway-pri" {
   name           = "${var.gcp_terraform_prefix}-nat-gateway-pri"
-  machine_type   = "n1-standard-1"
+  machine_type   = "n1-standard-4"
   zone           = "${var.gcp_zone_1}"
   can_ip_forward = true
   tags = ["${var.gcp_terraform_prefix}-nat-instance", "nat-traverse"]
@@ -33,7 +33,7 @@ EOF
 
 resource "google_compute_instance" "nat-gateway-sec" {
   name           = "${var.gcp_terraform_prefix}-nat-gateway-sec"
-  machine_type   = "n1-standard-1"
+  machine_type   = "n1-standard-4"
   zone           = "${var.gcp_zone_2}"
   can_ip_forward = true
   tags = ["${var.gcp_terraform_prefix}-nat-instance", "nat-traverse"]
@@ -58,7 +58,7 @@ resource "google_compute_instance" "nat-gateway-sec" {
 //// NAT Ter
 resource "google_compute_instance" "nat-gateway-ter" {
   name           = "${var.gcp_terraform_prefix}-nat-gateway-ter"
-  machine_type   = "n1-standard-1"
+  machine_type   = "n1-standard-4"
   zone           = "${var.gcp_zone_3}"
   can_ip_forward = true
   tags = ["${var.gcp_terraform_prefix}-nat-instance", "nat-traverse"]
