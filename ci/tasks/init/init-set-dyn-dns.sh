@@ -58,8 +58,8 @@ let dns_sleep_seconds=15
 for (( z=1; z<${dns_retries}; z++ )); do
 
     resolve_ip=$(dig opsman.${pcf_ert_domain} | grep -A 1 "ANSWER SECTION" | grep ^opsman | awk '{print$5}')
-    if [[ ! $resolve_ip == $dns_opsman_ip ]]; then
-      echo "dnsattempt_$z of $dns_retries:DNS not updated yet!!! I expected the new IP of $dns_opsman_ip but got this instead - $resolve_ip"
+    if [[ ! $resolve_ip == $pub_ip_opsman ]]; then
+      echo "dnsattempt_$z of $dns_retries:DNS not updated yet!!! I expected the new IP of $pub_ip_opsman but got this instead - $resolve_ip"
       sleep $dns_sleep_seconds
     else
       echo "SUCCESS!!! Standard Dyn DNS updated for  ${pcf_ert_domain}"
