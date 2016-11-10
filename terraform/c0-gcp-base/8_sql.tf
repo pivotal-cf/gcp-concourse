@@ -26,6 +26,10 @@ resource "google_sql_database_instance" "master" {
           name  = "nat-3"
           value = "${google_compute_instance.nat-gateway-ter.network_interface.0.access_config.0.assigned_nat_ip}"
         },
+        {
+          name  = "opsman"
+          value = "${google_compute_instance.ops-manager.network_interface.0.access_config.0.assigned_nat_ip}"
+        },
       ]
     }
   }
