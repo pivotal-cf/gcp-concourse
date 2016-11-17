@@ -47,7 +47,7 @@ pub_ip_ssh_and_doppler=$(fn_get_ip "ssh-and-doppler")
 pub_ip_jumpbox=$(fn_get_ip "jumpbox")
 pub_ip_opsman=$(fn_get_ip "opsman")
 
-echo "You have now deployed Public IPs to Azure that must be resolvable to:"
+echo "You have now deployed Public IPs to your IaaS that must be resolvable to:"
 echo "----------------------------------------------------------------------------------------------"
 echo "*.sys.${pcf_ert_domain} == ${pub_ip_global_pcf}"
 echo "*.cfapps.${pcf_ert_domain} == ${pub_ip_global_pcf}"
