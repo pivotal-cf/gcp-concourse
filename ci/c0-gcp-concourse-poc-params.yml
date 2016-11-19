@@ -5,19 +5,17 @@
 
 
 # github RSA private key for git resources
-githubtoken: ""  # Enter Your Github Token Here
+githubtoken: ""  # Enter Your Github Token Here, token must have all read perms enabled
 
 ##############################################
 ### PCF Object Params
 ##############################################
-pcf_iaas: "gcp"
-# Pivent Download token Required
-pcf_pivnet_token: ""
-# Opsman Credentials to be set
-pcf_opsman_admin: admin
-pcf_opsman_admin_passwd: "pivotal"
-# ERT Domain Name to be set
-pcf_ert_domain: "gcp-sample.customer0.net"
+pcf_iaas: "gcp" # Reserved for future use
+pcf_pivnet_token: "" # REQUIRED, Your Pivnet API Token
+pcf_opsman_admin: admin # Opsman Credentials to be set
+pcf_opsman_admin_passwd: "pivotal" # Opsman Credentials to be set
+pcf_ert_domain: "gcp-sample.customer0.net" # ERT Domain Name to be set, you will need functional DNS
+
 # ERT Cert & Key , if the string 'generate' is passed, pipeline will autogen self signed cert
 pcf_ert_ssl_cert: generate
 pcf_ert_ssl_key: generate
@@ -30,7 +28,7 @@ pcf_ert_ssl_key: generate
 arg_wipe: null
 ### GCP Terraform & Opsman Input ###
 gcp_pcf_terraform_template: c0-gcp-poc # Must = a valid template in the pipeline
-gcp_terraform_prefix: c0-poc-pipeline # This will prefix to all Terrafrom created objects
+gcp_terraform_prefix: "" # REQUIRED This will prefix to all Terrafrom created objects, must be globally unique
 gcp_proj_id: google.com:pcf-demos
 gcp_region: us-central1
 gcp_zone_1: us-central1-a
@@ -49,5 +47,5 @@ gcp_terraform_subnet_services_1_reserved: "192.168.20.1-192.168.20.9"
 gcp_terraform_subnet_services_1_dns: "192.168.20.1,8.8.8.8"
 gcp_terraform_subnet_services_1_gw: "192.168.20.1"
 gcp_svc_acct_key: # Enter your multi-line GCP Service Account JSON Here
-gcp_storage_access_key: "" #
-gcp_storage_secret_key: "" #
+gcp_storage_access_key: "" # REQUIRED https://console.cloud.google.com/storage/settings
+gcp_storage_secret_key: "" # REQUIRED https://console.cloud.google.com/storage/settings
