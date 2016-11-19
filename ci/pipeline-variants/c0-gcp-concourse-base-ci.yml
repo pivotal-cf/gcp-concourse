@@ -280,6 +280,7 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: tool-om
+      version: { tag: '0.8.0' }
       params:
         globs:
         - "om-linux"
@@ -387,6 +388,7 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: tool-om
+      version: { tag: '0.8.0' } 
       params:
         globs:
         - "om-linux"
