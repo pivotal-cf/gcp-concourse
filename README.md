@@ -7,6 +7,8 @@
   - Non POC versions of the pipeline will support sep Terraform & Opsman Service accounts
   - ENABLE your GCP Compute API [here](https://console.cloud.google.com/apis/api/compute_component)
   - ENABLE your GCP Storage API [here](https://console.cloud.google.com/apis/api/storage_component)
+  - ENABLE your GCP SQL API [here](https://console.cloud.google.com/apis/api/sql_component)
+  - ENABLE your GCP DNS API [here](https://console.cloud.google.com/apis/api/dns)
   - ENABLE & Create GCP Storage Interoperability Tokens here [here](https://console.cloud.google.com/storage/settings)
 2. Create a Concourse instance with public access for downloads.  Look [here](http://concourse.ci/vagrant.html) for `vagrant` instructions if an ephemeral concourse instance is desired.
 
