@@ -9,6 +9,7 @@
   - ENABLE your GCP Storage API [here](https://console.cloud.google.com/apis/api/storage_component)
   - ENABLE your GCP SQL API [here](https://console.cloud.google.com/apis/api/sql_component)
   - ENABLE your GCP DNS API [here](https://console.cloud.google.com/apis/api/dns)
+  - ENABLE your GCP Cloud Resource Manager API [here](https://console.cloud.google.com/apis/api/cloudresourcemanager.googleapis.com/overview)
   - ENABLE & Create GCP Storage Interoperability Tokens here [here](https://console.cloud.google.com/storage/settings)
 2. Create a Concourse instance with public access for downloads.  Look [here](http://concourse.ci/vagrant.html) for `vagrant` instructions if an ephemeral concourse instance is desired.
 
