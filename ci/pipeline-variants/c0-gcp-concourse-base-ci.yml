@@ -107,12 +107,12 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-elastic-runtime
-      trigger: false
+      trigger: true
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       params:
         globs:
         - "*GCP*"
@@ -216,13 +216,13 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-elastic-runtime
-      trigger: false
+      trigger: true
       passed: [init-env]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [init-env]
       params:
         globs:
@@ -305,13 +305,13 @@ jobs:
         globs:
         - "om-linux"
     - get: pivnet-elastic-runtime
-      trigger: false
+      trigger: true
       passed: [deploy-iaas]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [deploy-iaas]
       params:
         globs:
@@ -356,13 +356,13 @@ jobs:
         globs:
         - "om-linux"
     - get: pivnet-elastic-runtime
-      trigger: false
+      trigger: true
       passed: [config-opsman-auth]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [config-opsman-auth]
       params:
         globs:
@@ -427,13 +427,13 @@ jobs:
         globs:
         - "om-linux"
     - get: pivnet-elastic-runtime
-      trigger: false
+      trigger: true
       passed: [config-director]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [config-director]
       params:
         globs:
@@ -475,13 +475,13 @@ jobs:
     - get: ert-concourse
       trigger: false
     - get: pivnet-elastic-runtime
-      trigger: false
+      trigger: true
       passed: [deploy-director]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [deploy-director]
       params:
         globs:
@@ -516,13 +516,13 @@ jobs:
     - get: ert-concourse
       trigger: false
     - get: pivnet-elastic-runtime
-      trigger: false
+      trigger: true
       passed: [upload-ert]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [upload-ert]
       params:
         globs:
@@ -592,13 +592,13 @@ jobs:
     - get: ert-concourse
       trigger: false
     - get: pivnet-elastic-runtime
-      trigger: false
+      trigger: true
       passed: [configure-ert]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       passed: [configure-ert]
       params:
         globs:
