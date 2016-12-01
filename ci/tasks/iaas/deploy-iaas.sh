@@ -70,6 +70,8 @@ function fn_exec_tf {
     echo "Executing Terraform ${1} ..."
     echo "=============================================================================================="
 
+    echo $gcp_svc_acct_key > /tmp/svc-acct.json
+
     terraform ${1} \
       -var "gcp_proj_id=${gcp_proj_id}" \
       -var "gcp_region=${gcp_region}" \
