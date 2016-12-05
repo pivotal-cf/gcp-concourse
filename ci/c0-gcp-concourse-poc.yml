@@ -144,26 +144,6 @@ jobs:
         gcp_terraform_prefix: {{gcp_terraform_prefix}}
         pcf_ert_domain: {{pcf_ert_domain}}
 
-  - task: init-set-dyn-dns
-    config:
-      platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          repository: virtmerlin/c0-worker-gcp
-      inputs:
-        - name: gcp-concourse
-      run:
-        path: gcp-concourse/ci/tasks/init/init-set-dyn-dns.sh
-      params:
-        dyn_enabled: {{dyn_enabled}}
-        dyn_user: {{dyn_user}}
-        dyn_token: {{dyn_token}}
-        gcp_proj_id: {{gcp_proj_id}}
-        gcp_region: {{gcp_region}}
-        gcp_svc_acct_key: {{gcp_svc_acct_key}}
-        pcf_ert_domain: {{pcf_ert_domain}}
-        gcp_terraform_prefix: {{gcp_terraform_prefix}}
 
 #######################
 ## Job - Deploy-Iaas ##
