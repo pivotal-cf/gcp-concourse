@@ -156,6 +156,8 @@ jobs:
   - aggregate:
     - get: gcp-concourse
       trigger: false
+    - get: ert-concourse
+      trigger: false
     - get: pivnet-elastic-runtime
       trigger: false
       params:
@@ -176,6 +178,7 @@ jobs:
           repository: virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
+        - name: ert-concourse
         - name: pivnet-opsmgr
       outputs:
         - name: opsman-metadata
