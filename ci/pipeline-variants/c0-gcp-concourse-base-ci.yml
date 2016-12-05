@@ -55,7 +55,7 @@ resources:
   type: git
   source:
     uri: https://github.com/c0-ops/gcp-concourse.git
-    branch: mglynn-dev
+    branch: master
 
 - name: ert-concourse
   type: git
@@ -239,7 +239,6 @@ jobs:
           repository: virtmerlin/c0-worker-gcp
       inputs:
         - name: gcp-concourse
-        - name: ert-concourse
         - name: pivnet-opsmgr
       outputs:
         - name: opsman-metadata
@@ -266,6 +265,7 @@ jobs:
       inputs:
         - name: gcp-concourse
         - name: opsman-metadata
+        - name: ert-concourse
       run:
         path: gcp-concourse/ci/tasks/iaas/deploy-iaas.sh
       params:
