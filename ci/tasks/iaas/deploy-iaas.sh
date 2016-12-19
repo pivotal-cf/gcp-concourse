@@ -82,6 +82,7 @@ function fn_exec_tf {
       -var "gcp_terraform_subnet_ops_manager=${gcp_terraform_subnet_ops_manager}" \
       -var "gcp_terraform_subnet_ert=${gcp_terraform_subnet_ert}" \
       -var "gcp_terraform_subnet_services_1=${gcp_terraform_subnet_services_1}" \
+      -var "gcp_managed_zone=${gcp_managed_zone}" \
       -var "pcf_opsman_image_name=${pcf_opsman_image_name}" \
       -var "pcf_ert_domain=${pcf_ert_domain}" \
       -var "pcf_ert_ssl_cert=${pcf_ert_ssl_cert}" \
