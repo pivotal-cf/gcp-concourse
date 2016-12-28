@@ -37,19 +37,6 @@ resource "google_sql_database_instance" "master" {
 }
 
 ///////////////////////////////////////////////
-//////// SQL User /////////////////////////////
-///////////////////////////////////////////////
-
-resource "google_sql_user" "ert" {
-  name     = "${var.ert_sql_db_username}"
-  password = "${var.ert_sql_db_password}"
-  instance = "${google_sql_database_instance.master.name}"
-  host     = "%"
-
-  count = "1"
-}
-
-///////////////////////////////////////////////
 //////// SQL Databases ////////////////////////
 ///////////////////////////////////////////////
 
@@ -96,6 +83,20 @@ resource "google_sql_database" "console" {
   name     = "console"
   depends_on = ["google_sql_database.app_usage_service"]
   instance = "${google_sql_database_instance.master.name}"
+
+  count = "1"
+}
+
+///////////////////////////////////////////////
+//////// SQL User /////////////////////////////
+///////////////////////////////////////////////
+
+resource "google_sql_user" "ert" {
+  name     = "${var.ert_sql_db_username}"
+  depends_on = ["google_sql_database.console"]
+  password = "${var.ert_sql_db_password}"
+  instance = "${google_sql_database_instance.master.name}"
+  host     = "%"
 
   count = "1"
 }
