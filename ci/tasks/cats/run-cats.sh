@@ -74,7 +74,7 @@ function fn_compile_cats {
     \"skip_diego_unsupported_tests\": true,
     \"artifacts_directory\": \"${root_path/pipeline-metadata}/\",
     \"java_buildpack_name\": \"java_buildpack_offline\",
-    \"ruby_buildpack_name\": \"\",
+    \"ruby_buildpack_name\": \"ruby_buildpack\",
     \"backend\": \"diego\",
     \"use_http\": false,
     \"enable_color\": true,
