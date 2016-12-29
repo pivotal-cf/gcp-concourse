@@ -16,11 +16,17 @@
 
 3. `git clone` this repo
 4. **EDIT!!!** `ci/c0-gcp-concourse-poc-params.yml` and replace all variables/parameters you will want for your concourse individual pipeline run
+
+   - The sample pipeline params file includes 2 params that set the major/minor versions of OpsMan & ERT that will be pulled.  They will typically default to the latest RC/GA avail tiles.
+     ```
+     opsman_major_minor_version: '1\.9\..*'
+     ert_major_minor_version: '1\.9\..*'
+     ```
 5. **AFTER!!!** Completing Step 4 above ... log into concourse & create the pipeline.
-  
+
   _(this command syntax assumes you are at the root of your repo)_
-  - `fly -t [YOUR CONCOURSE TARGET] set-pipeline -p c0-gcp-concourse-base -c ci/c0-gcp-concourse-poc.yml -l ci/c0-gcp-concourse-poc-params.yml` 
-  
+  - `fly -t [YOUR CONCOURSE TARGET] set-pipeline -p c0-gcp-concourse-base -c ci/c0-gcp-concourse-poc.yml -l ci/c0-gcp-concourse-poc-params.yml`
+
 6. Un-pause the pipeline
 7. Run the **`init-env`** job manually,  you will need to review the output and record it for the DNS records that must then be made resolvable **BEFORE!!!** continuing to the next step:
   - Example:
