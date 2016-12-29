@@ -74,10 +74,18 @@ function fn_compile_cats {
     \"skip_diego_unsupported_tests\": true,
     \"artifacts_directory\": \"${root_path/pipeline-metadata}/\",
     \"java_buildpack_name\": \"java_buildpack_offline\",
+    \"ruby_buildpack_name\": \"\",
     \"backend\": \"diego\",
     \"use_http\": false,
     \"enable_color\": true,
-    \"include_${cats_include}\": true
+    \"include_apps\": true,
+    \"include_detect\": true,
+    \"include_internet_dependent\": true,
+    \"include_route_services\": true,
+    \"include_routing\": true,
+    \"include_zipkin\": true,
+    \"include_ssh\": true,
+    \"include_v3\": true,
   }" > integration_config.json
 
   export CONFIG=$PWD/integration_config.json

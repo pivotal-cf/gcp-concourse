@@ -11,7 +11,7 @@ groups:
   - upload-ert
   - configure-ert
   - deploy-ert
-  - run-cats-apps
+  - run-cats
 
 - name: init
   jobs:
@@ -32,7 +32,7 @@ groups:
 
 - name: cats
   jobs:
-  - run-cats-apps
+  - run-cats
 
 - name: services
 
@@ -657,7 +657,7 @@ jobs:
       params:
         globs:
         - "om-linux"
-  - task: run-cats-apps
+  - task: run-cats
     config:
       platform: linux
       image: docker:///virtmerlin/c0-worker
@@ -673,7 +673,6 @@ jobs:
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
         gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
-        cats_include: apps
 #    on_failure:
 #      put: slack-c0-coreteam
 #      params:
