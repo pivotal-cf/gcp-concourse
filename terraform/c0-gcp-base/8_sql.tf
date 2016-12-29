@@ -87,13 +87,21 @@ resource "google_sql_database" "console" {
   count = "1"
 }
 
+resource "google_sql_database" "routing" {
+  name     = "routing"
+  depends_on = ["google_sql_database.console"]
+  instance = "${google_sql_database_instance.master.name}"
+
+  count = "1"
+}
+
 ///////////////////////////////////////////////
 //////// SQL User /////////////////////////////
 ///////////////////////////////////////////////
 
 resource "google_sql_user" "ert" {
   name     = "${var.ert_sql_db_username}"
-  depends_on = ["google_sql_database.console"]
+  depends_on = ["google_sql_database.routing"]
   password = "${var.ert_sql_db_password}"
   instance = "${google_sql_database_instance.master.name}"
   host     = "%"
