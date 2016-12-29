@@ -11,6 +11,9 @@ githubtoken: ""  # Enter Your Github Token Here, token must have all read perms 
 ### PCF Object Params
 ##############################################
 pcf_iaas: "gcp" # Reserved for future use
+opsman_major_minor_version: '1\.9\..*' # Reqd
+ert_major_minor_version: '1\.9\..*' # Reqd
+
 pcf_pivnet_token: "" # REQUIRED, Your Pivnet API Token
 pcf_opsman_admin: admin # Opsman Credentials to be set
 pcf_opsman_admin_passwd: "pivotal" # Opsman Credentials to be set

@@ -1,3 +1,4 @@
+---
 groups:
 
 - name: all
@@ -76,7 +77,7 @@ resources:
   source:
     api_token: {{pcf_pivnet_token}}
     product_slug: ops-manager
-    product_version: 1\.8\..*
+    product_version: {{opsman_major_minor_version}}
     sort_by: semver
 
 - name: pivnet-elastic-runtime
@@ -85,7 +86,7 @@ resources:
   source:
     api_token: {{pcf_pivnet_token}}
     product_slug: elastic-runtime
-    product_version: 1\.8\..*
+    product_version: {{ert_major_minor_version}}
     sort_by: semver
 
 - name: slack-c0-coreteam
@@ -107,12 +108,12 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       params:
         globs:
         - "*GCP*"
@@ -139,18 +140,18 @@ jobs:
         gcp_zone_3: {{gcp_zone_3}}
         gcp_svc_acct_key: {{gcp_svc_acct_key}}
         gcp_terraform_prefix: {{gcp_terraform_prefix}}
-    on_success:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :clap: Job ${BUILD_JOB_NAME} Has Started ....
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_success:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :clap: Job ${BUILD_JOB_NAME} Has Started ....
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
   - task: init-public-ips
     config:
@@ -197,12 +198,12 @@ jobs:
         gcp_svc_acct_key: {{gcp_svc_acct_key}}
         pcf_ert_domain: {{pcf_ert_domain}}
         gcp_terraform_prefix: {{gcp_terraform_prefix}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
 #######################
 ## Job - Deploy-Iaas ##
@@ -218,13 +219,13 @@ jobs:
     - get: ert-concourse
       trigger: false
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [init-env]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [init-env]
       params:
         globs:
@@ -248,12 +249,12 @@ jobs:
         gcp_proj_id: {{gcp_proj_id}}
         gcp_region: {{gcp_region}}
         gcp_svc_acct_key: {{gcp_svc_acct_key}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
   - task: deploy-iaas
     config:
@@ -285,12 +286,12 @@ jobs:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_ert_ssl_cert: {{pcf_ert_ssl_cert}}
         pcf_ert_ssl_key: {{pcf_ert_ssl_key}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
 ##############################
 ## Job - Config OpsMan Auth ##
@@ -308,13 +309,13 @@ jobs:
         globs:
         - "om-linux"
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [deploy-iaas]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [deploy-iaas]
       params:
         globs:
@@ -336,12 +337,12 @@ jobs:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
 ###########################
 ## Job - Config-Director ##
@@ -359,13 +360,13 @@ jobs:
         globs:
         - "om-linux"
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [config-opsman-auth]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [config-opsman-auth]
       params:
         globs:
@@ -407,12 +408,12 @@ jobs:
         gcp_terraform_subnet_services_1_reserved: {{gcp_terraform_subnet_services_1_reserved}}
         gcp_terraform_subnet_services_1_dns: {{gcp_terraform_subnet_services_1_dns}}
         gcp_terraform_subnet_services_1_gw: {{gcp_terraform_subnet_services_1_gw}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
 ###########################
 ## Job - Deploy-Director ##
@@ -430,13 +431,13 @@ jobs:
         globs:
         - "om-linux"
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [config-director]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [config-director]
       params:
         globs:
@@ -458,12 +459,12 @@ jobs:
         pcf_ert_domain: {{pcf_ert_domain}}
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
 
 ###########################
@@ -478,13 +479,13 @@ jobs:
     - get: ert-concourse
       trigger: false
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [deploy-director]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [deploy-director]
       params:
         globs:
@@ -500,12 +501,12 @@ jobs:
       pcf_ert_domain: {{pcf_ert_domain}}
       pcf_opsman_admin: {{pcf_opsman_admin}}
       pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :bomb: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :bomb: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
 ###########################
 ## Job - Configure ERT   ##
@@ -519,13 +520,13 @@ jobs:
     - get: ert-concourse
       trigger: false
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [upload-ert]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [upload-ert]
       params:
         globs:
@@ -554,12 +555,12 @@ jobs:
       gcp_svc_acct_key: {{gcp_svc_acct_key}}
       gcp_storage_access_key: {{gcp_storage_access_key}}
       gcp_storage_secret_key: {{gcp_storage_secret_key}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :bomb: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :bomb: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
   - task: configure-ert
     file: ert-concourse/ci/tasks/configure-ert.yml
@@ -575,12 +576,12 @@ jobs:
       pcf_az_3: {{gcp_zone_3}}
       terraform_prefix: {{gcp_terraform_prefix}}
       terraform_template: {{gcp_pcf_terraform_template}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :bomb: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :bomb: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
 ###########################
 ## Job - Deploy    ERT   ##
@@ -595,13 +596,13 @@ jobs:
     - get: ert-concourse
       trigger: false
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [configure-ert]
       params:
         globs:
         - "*pivotal"
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [configure-ert]
       params:
         globs:
@@ -622,12 +623,12 @@ jobs:
       pcf_ert_ssl_key: {{pcf_ert_ssl_key}}
       terraform_template: {{gcp_pcf_terraform_template}}
       terraform_prefix: {{gcp_terraform_prefix}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
 
 ###########################
 ## Job - Run Cats        ##
@@ -672,9 +673,9 @@ jobs:
         pcf_opsman_admin: {{pcf_opsman_admin}}
         pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
         gcp_pcf_terraform_template: {{gcp_pcf_terraform_template}}
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
-          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
+#    on_failure:
+#      put: slack-c0-coreteam
+#      params:
+#        text: |
+#          :deadpool: Job ${BUILD_JOB_NAME} Failed!!!
+#          Check here for more details ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}
