@@ -56,7 +56,7 @@ resources:
   type: git
   source:
     uri: https://github.com/c0-ops/gcp-concourse.git
-    branch: mglynn-dev
+    branch: master
 
 - name: ert-concourse
   type: git
