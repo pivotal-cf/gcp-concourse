@@ -77,22 +77,7 @@ function fn_compile_cats {
     \"backend\": \"diego\",
     \"use_http\": false,
     \"enable_color\": true,
-    \"include_apps\": true,
-    \"include_backend_compatibility\": false,
-    \"include_diego_ssh\": true,
-    \"include_detect\": true,
-    \"include_docker\": false,
-    \"include_internet_dependent\": true,
-    \"include_privileged_container_support\": false,
-    \"include_route_services\": true,
-    \"include_routing\": true,
-    \"include_zipkin\": false,
-    \"include_security_groups\": false,
-    \"include_services\": false,
-    \"include_ssh\": true,
-    \"include_sso\": true,
-    \"include_tasks\": false,
-    \"include_v3\": false
+    \"include_${cats_include}\": true
   }" > integration_config.json
 
   export CONFIG=$PWD/integration_config.json
