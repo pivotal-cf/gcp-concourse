@@ -85,7 +85,7 @@ function fn_compile_cats {
     \"include_routing\": true,
     \"include_zipkin\": true,
     \"include_ssh\": true,
-    \"include_v3\": true,
+    \"include_v3\": true
   }" > integration_config.json
 
   export CONFIG=$PWD/integration_config.json
