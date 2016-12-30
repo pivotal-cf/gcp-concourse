@@ -75,6 +75,8 @@ function fn_compile_cats {
     \"artifacts_directory\": \"${root_path/pipeline-metadata}/\",
     \"java_buildpack_name\": \"java_buildpack_offline\",
     \"ruby_buildpack_name\": \"ruby_buildpack\",
+    \"default_timeout\": \"120\",
+    \"cf_push_timeout\": \"300\",
     \"backend\": \"diego\",
     \"use_http\": false,
     \"enable_color\": true,
@@ -85,6 +87,8 @@ function fn_compile_cats {
     \"include_routing\": true,
     \"include_zipkin\": true,
     \"include_ssh\": true,
+    \"include_security_groups\": true,
+    \"include_services\": true,
     \"include_v3\": true
   }" > integration_config.json
 
