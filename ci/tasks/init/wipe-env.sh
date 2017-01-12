@@ -152,6 +152,16 @@ echo "==========================================================================
 echo "All compute/networks objects with the prefix=$gcp_terraform_prefix in region=$gcp_region have been wiped !!!"
 echo "=============================================================================================="
 
+#If we were using a shared managed zone, wipe DNS record sets related to this prefix
+if [ -n "${gcp_managed_zone}" ]; then
+  echo "=============================================================================================="
+  echo "Removing DNS record sets for ${gcp_terraform_prefix} in managed zone ${gcp_managed_zone}"
+  echo "=============================================================================================="
+  gcloud dns record-sets export /tmp/old-record-sets -z "${gcp_managed_zone}" --zone-file-format
+  grep -v ".${gcp_terraform_prefix}." /tmp/old-record-sets > /tmp/new-record-sets
+  gcloud dns record-sets import /tmp/new-record-sets -z "${gcp_managed_zone}" --zone-file-format --delete-all-existing
+fi
+
 #Wipe Instance groups
 for y in ${ZONE[@]}; do
   echo "----------------------------------------------------------------------------------------------"
