@@ -1,0 +1,19 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: virtmerlin/c0-worker-gcp
+
+inputs:
+- name: gcp-concourse
+- name: pivnet-opsmgr
+
+params:
+  GOOGLE_PROJECT:
+  GOOGLE_REGION:
+  GOOGLE_CREDENTIALS:
+
+run:
+  path: gcp-concourse/tasks/upload-opsman.sh

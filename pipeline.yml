@@ -1,6 +1,11 @@
 groups: []
 
-resource_types: []
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
 
 resources:
 - name: tfstate
@@ -30,6 +35,15 @@ resources:
     uri: https://github.com/krishicks/gcp-concourse.git
     branch: master
 
+- name: pivnet-opsmgr
+  type: pivnet
+  check_every: 4h
+  source:
+    api_token: {{pcf_pivnet_token}}
+    product_slug: ops-manager
+    product_version: {{opsman_major_minor_version}}
+    sort_by: semver
+
 jobs:
 - name: wipe-env
   serial_groups: [terraform]
@@ -52,6 +66,20 @@ jobs:
   - put: tfstate-version
     params:
       file: tfstate-version/version
+
+- name: upload-opsman-image
+  plan:
+  - get: gcp-concourse
+  - get: pivnet-opsmgr
+    params:
+      globs:
+      - "*GCP*"
+  - task: upload
+    file: gcp-concourse/tasks/upload-opsman.yml
+    params:
+      GOOGLE_PROJECT: {{gcp_project_id}}
+      GOOGLE_REGION: {{gcp_region}}
+      GOOGLE_CREDENTIALS: {{gcp_service_account_key}}
 
 - name: create-public-ips
   serial_groups: [terraform]
