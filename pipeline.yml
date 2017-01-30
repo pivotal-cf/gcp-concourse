@@ -35,6 +35,12 @@ resources:
     uri: https://github.com/krishicks/gcp-concourse.git
     branch: master
 
+- name: ert-concourse
+  type: git
+  source:
+    uri: https://github.com/c0-ops/ert-concourse.git
+    branch: master
+
 - name: pivnet-opsmgr
   type: pivnet
   check_every: 4h
@@ -73,7 +79,7 @@ jobs:
   - get: pivnet-opsmgr
     params:
       globs:
-      - "*GCP*"
+      - "*GCP.yml"
   - task: upload
     file: gcp-concourse/tasks/upload-opsman.yml
     params:
@@ -81,24 +87,39 @@ jobs:
       GOOGLE_REGION: {{gcp_region}}
       GOOGLE_CREDENTIALS: {{gcp_service_account_key}}
 
-- name: create-public-ips
+- name: create-infrastructure
   serial_groups: [terraform]
   plan:
   - aggregate:
+    - get: ert-concourse
     - get: gcp-concourse
+      passed: [upload-opsman-image]
+    - get: pivnet-opsmgr
+      passed: [upload-opsman-image]
+      params:
+        globs:
+        - "*GCP.yml"
     - get: tfstate-version
       params:
         bump: major
-  - task: create-public-ips
-    file: gcp-concourse/tasks/create-public-ips.yml
+  - task: create-infrastructure
+    file: gcp-concourse/tasks/create-infrastructure.yml
     params:
       GOOGLE_PROJECT: {{gcp_project_id}}
       GOOGLE_REGION: {{gcp_region}}
       GOOGLE_CREDENTIALS: {{gcp_service_account_key}}
+      GCP_ZONE_1: {{gcp_zone_1}}
+      GCP_ZONE_2: {{gcp_zone_2}}
+      GCP_ZONE_3: {{gcp_zone_3}}
       RESOURCE_PREFIX: {{gcp_prefix}}
+      PCF_ERT_DOMAIN: {{pcf_ert_domain}}
+      PCF_ERT_SSL_CERT: {{pcf_ert_ssl_cert}}
+      PCF_ERT_SSL_KEY: {{pcf_ert_ssl_key}}
+      ERT_SQL_DB_USERNAME: {{ert_sql_db_username}}
+      ERT_SQL_DB_PASSWORD: {{ert_sql_db_password}}
   - put: tfstate
     params:
-      file: create-public-ips-output/*.tfstate
+      file: create-infrastructure-output/*.tfstate
   - put: tfstate-version
     params:
       file: tfstate-version/version
