@@ -1,0 +1,76 @@
+groups: []
+
+resource_types: []
+
+resources:
+- name: tfstate
+  type: s3
+  source:
+    bucket: gcp-concourse
+    endpoint: {{minio_endpoint}}
+    regexp: "terraform/terraform-(.*).tfstate"
+    access_key_id: {{minio_access_key_id}}
+    secret_access_key: {{minio_secret_access_key}}
+
+- name: tfstate-version
+  type: semver
+  source:
+   driver: s3
+   bucket: gcp-concourse
+   key: terraform/version
+   access_key_id: {{minio_access_key_id}}
+   secret_access_key: {{minio_secret_access_key}}
+   endpoint: {{minio_endpoint}}
+   initial_version: 0.0.0
+   region_name: us-east-1
+
+- name: gcp-concourse
+  type: git
+  source:
+    uri: https://github.com/krishicks/gcp-concourse.git
+    branch: master
+
+jobs:
+- name: wipe-env
+  serial_groups: [terraform]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+    - get: tfstate
+    - get: tfstate-version
+      params:
+        bump: major
+  - task: wipe
+    file: gcp-concourse/tasks/wipe-env.yml
+    params:
+      GOOGLE_PROJECT: {{gcp_project_id}}
+      GOOGLE_REGION: {{gcp_region}}
+      GOOGLE_CREDENTIALS: {{gcp_service_account_key}}
+  - put: tfstate
+    params:
+      file: wipe-output/*.tfstate
+  - put: tfstate-version
+    params:
+      file: tfstate-version/version
+
+- name: create-public-ips
+  serial_groups: [terraform]
+  plan:
+  - aggregate:
+    - get: gcp-concourse
+    - get: tfstate-version
+      params:
+        bump: major
+  - task: create-public-ips
+    file: gcp-concourse/tasks/create-public-ips.yml
+    params:
+      GOOGLE_PROJECT: {{gcp_project_id}}
+      GOOGLE_REGION: {{gcp_region}}
+      GOOGLE_CREDENTIALS: {{gcp_service_account_key}}
+      RESOURCE_PREFIX: {{gcp_prefix}}
+  - put: tfstate
+    params:
+      file: create-public-ips-output/*.tfstate
+  - put: tfstate-version
+    params:
+      file: tfstate-version/version

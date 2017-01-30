@@ -1,0 +1,4 @@
+gcp_prefix: CHANGEME
+gcp_project_id: CHANGEME
+gcp_region: CHANGEME
+gcp_service_account_key: CHANGEME
