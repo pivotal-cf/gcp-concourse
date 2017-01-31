@@ -117,9 +117,11 @@ jobs:
       PCF_ERT_SSL_KEY: {{pcf_ert_ssl_key}}
       ERT_SQL_DB_USERNAME: {{ert_sql_db_username}}
       ERT_SQL_DB_PASSWORD: {{ert_sql_db_password}}
-  - put: tfstate
-    params:
-      file: create-infrastructure-output/*.tfstate
-  - put: tfstate-version
-    params:
-      file: tfstate-version/version
+    ensure:
+      do:
+      - put: tfstate
+        params:
+          file: create-infrastructure-output/*.tfstate
+      - put: tfstate-version
+        params:
+          file: tfstate-version/version
