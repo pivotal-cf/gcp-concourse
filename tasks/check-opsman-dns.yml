@@ -1,0 +1,16 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: virtmerlin/c0-worker-gcp
+
+inputs:
+- name: gcp-concourse
+
+params:
+  pcf_ert_domain:
+
+run:
+  path: gcp-concourse/tasks/check-opsman-dns.sh
