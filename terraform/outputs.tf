@@ -23,15 +23,15 @@ output "ops_manager_dns" {
 }
 
 output "sys_domain" {
-  value = "sys.${var.prefix}.${var.pcf_ert_domain}"
+  value = "sys.${var.pcf_ert_domain}"
 }
 
 output "apps_domain" {
-  value = "apps.${var.prefix}.${var.pcf_ert_domain}"
+  value = "apps.${var.pcf_ert_domain}"
 }
 
 output "tcp_domain" {
-  value = "tcp.${var.prefix}.${var.pcf_ert_domain}"
+  value = "tcp.${var.pcf_ert_domain}"
 }
 
 output "ops_manager_public_ip" {
