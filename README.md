@@ -31,6 +31,7 @@ fly -t lite login -c http://192.168.100.4:8080
 # If you're using Minio
 docker run -e MINIO_ACCESS_KEY="example-access-key" \
            -e MINIO_SECRET_KEY="example-secret-key" \
+           --detach \
            --network host \
            minio/minio server /tmp
 
