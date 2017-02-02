@@ -109,6 +109,7 @@ jobs:
   - aggregate:
     - get: ert-concourse
     - get: gcp-concourse
+      trigger: true
       passed: [upload-opsman-image]
     - get: pivnet-opsmgr
       passed: [upload-opsman-image]
@@ -147,6 +148,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
+      trigger: true
       passed: [create-infrastructure]
     - get: tool-om
       params:
@@ -181,6 +183,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
+      trigger: true
       passed: [configure-director]
     - get: tool-om
       params:
@@ -198,6 +201,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
+      trigger: true
       passed: [deploy-director]
     - get: ert-concourse
     - get: pivnet-elastic-runtime
@@ -220,6 +224,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
+      trigger: true
       passed: [deploy-director]
     - get: ert-concourse
     - get: tool-om
