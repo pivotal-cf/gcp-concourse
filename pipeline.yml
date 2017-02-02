@@ -143,6 +143,7 @@ jobs:
           file: tfstate-version/version
 
 - name: configure-director
+  serial_groups: [opsman]
   plan:
   - aggregate:
     - get: gcp-concourse
@@ -176,6 +177,7 @@ jobs:
       gcp_svc_acct_key: {{gcp_service_account_key}}
 
 - name: deploy-director
+  serial_groups: [opsman]
   plan:
   - aggregate:
     - get: gcp-concourse
@@ -192,6 +194,7 @@ jobs:
       pcf_opsman_admin_password: {{pcf_opsman_admin_password}}
 
 - name: upload-ert
+  serial_groups: [opsman]
   plan:
   - aggregate:
     - get: gcp-concourse
@@ -213,6 +216,7 @@ jobs:
       pcf_opsman_admin_passwd: {{pcf_opsman_admin_password}}
 
 - name: deploy-ert
+  serial_groups: [opsman]
   plan:
   - aggregate:
     - get: gcp-concourse
