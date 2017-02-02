@@ -11,21 +11,21 @@ resources:
 - name: tfstate
   type: s3
   source:
-    bucket: gcp-concourse
-    endpoint: {{minio_endpoint}}
+    bucket: {{s3_bucket_terraform}}
+    endpoint: {{s3_endpoint}}
     regexp: "terraform/terraform-(.*).tfstate"
-    access_key_id: {{minio_access_key_id}}
-    secret_access_key: {{minio_secret_access_key}}
+    access_key_id: {{s3_access_key_id}}
+    secret_access_key: {{s3_secret_access_key}}
 
 - name: tfstate-version
   type: semver
   source:
    driver: s3
-   bucket: gcp-concourse
+   bucket: {{s3_bucket_terraform}}
    key: terraform/version
-   access_key_id: {{minio_access_key_id}}
-   secret_access_key: {{minio_secret_access_key}}
-   endpoint: {{minio_endpoint}}
+   access_key_id: {{s3_access_key_id}}
+   secret_access_key: {{s3_secret_access_key}}
+   endpoint: {{s3_endpoint}}
    initial_version: 0.0.0
    region_name: us-east-1
 
@@ -45,7 +45,7 @@ resources:
   type: pivnet
   check_every: 4h
   source:
-    api_token: {{pcf_pivnet_token}}
+    api_token: {{pivnet_token}}
     product_slug: ops-manager
     product_version: {{opsman_major_minor_version}}
     sort_by: semver
@@ -54,7 +54,7 @@ resources:
   type: pivnet
   check_every: 4h
   source:
-    api_token: {{pcf_pivnet_token}}
+    api_token: {{pivnet_token}}
     product_slug: elastic-runtime
     product_version: {{ert_major_minor_version}}
     sort_by: semver
