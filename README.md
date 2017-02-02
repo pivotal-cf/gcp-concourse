@@ -1,6 +1,6 @@
 # PCF on GCP
 
-![alt tag](https://raw.githubusercontent.com/krishicks/patrick/master/embed.png)
+![alt tag](https://raw.githubusercontent.com/krishicks/gcp-on-pcf/master/embed.png)
 
 This pipeline uses Terraform to create all the infrastructure required to run a
 3 AZ PCF deployment on GCP.
