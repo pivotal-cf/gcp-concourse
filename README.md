@@ -1,5 +1,7 @@
 # PCF on GCP
 
+![alt tag](https://raw.githubusercontent.com/krishicks/patrick/master/embed.png)
+
 This pipeline uses Terraform to create all the infrastructure required to run a
 3 AZ PCF deployment on GCP.
 
@@ -20,27 +22,44 @@ Terraform outputs a .tfstate file that contains plaintext secrets. For this
 reason Minio is preferrable to keep the visibility of the .tfstate local to
 Concourse.
 
-Set the pipeline:
+If you don't already have Concourse running:
 
 ```
-# If you don't already have Concourse running.
 vagrant init concourse/lite
 vagrant up
 fly -t lite login -c http://192.168.100.4:8080
+```
 
-# If you're using Minio
+If you want to use Minio as your S3-compatible object store:
+
+```
 docker run -e MINIO_ACCESS_KEY="example-access-key" \
            -e MINIO_SECRET_KEY="example-secret-key" \
            --detach \
            --network host \
            minio/minio server /tmp
+```
 
+Set the pipeline:
+
+```
 fly -t lite set-pipeline -p deploy-pcf -c pipeline.yml -l params.yml
 ```
 
-Unpause the pipeline and it will create the infrastructure. At the end of
-`create-infrastructure` it will print out the external IPs that were created in
-GCP. These will need to be configured with the associated DNS settings in the
-create-infrastructure output.
+## Usage
 
-Once DNS is set up you can trigger the `configure-director` job.
+Unpause the pipeline if you haven't already.
+
+`upload-opsman-image` will automatically upload the latest matching version of Operations Manager.
+
+Once that is complete you can trigger the `create-infrastructure` job. `create-infrastructure` will output at the end the DNS settings that you must configure before continuing.
+
+Once DNS is set up you can run `configure-director`. From there the pipeline should automatically run through to the end.
+
+### Tearing down the environment
+
+There is a job, `wipe-env`, which you can run to destroy the infrastructure
+that was created by `create-infrastructure`. If you want to bring the
+environment up again, run create-infrastructure. This can also be used if
+create-infrastructure fails for some reason, where Terraform creates only some
+of the infrastructure.
