@@ -1,7 +1,7 @@
 # GCP project to create the infrastructure in
 gcp_project_id: CHANGEME
 
-# GCP credentials JSON
+# GCP credentials JSON. The service account must have the Editor role.
 gcp_service_account_key: |
   CHANGEME
 
