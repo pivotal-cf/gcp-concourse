@@ -93,6 +93,7 @@ jobs:
   plan:
   - get: gcp-concourse
   - get: pivnet-opsmgr
+    trigger: true
     params:
       globs:
       - "*GCP.yml"
@@ -109,7 +110,6 @@ jobs:
   - aggregate:
     - get: ert-concourse
     - get: gcp-concourse
-      trigger: true
       passed: [upload-opsman-image]
     - get: pivnet-opsmgr
       passed: [upload-opsman-image]
