@@ -148,7 +148,6 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: true
       passed: [create-infrastructure]
     - get: tool-om
       params:
