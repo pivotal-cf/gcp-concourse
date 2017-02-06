@@ -11,6 +11,7 @@ resources:
 - name: tfstate
   type: s3
   source:
+    region_name: {{s3_region}}
     bucket: {{s3_bucket_terraform}}
     endpoint: {{s3_endpoint}}
     regexp: "terraform/terraform-(.*).tfstate"
@@ -27,7 +28,7 @@ resources:
    secret_access_key: {{s3_secret_access_key}}
    endpoint: {{s3_endpoint}}
    initial_version: 0.0.0
-   region_name: us-east-1
+   region_name: {{s3_region}}
 
 - name: gcp-concourse
   type: git
