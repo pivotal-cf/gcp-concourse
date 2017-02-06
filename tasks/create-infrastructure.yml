@@ -16,9 +16,9 @@ outputs:
 - name: create-infrastructure-output
 
 params:
-  GOOGLE_PROJECT:
-  GOOGLE_REGION:
-  GOOGLE_SERVICE_ACCOUNT_KEY:
+  GCP_PROJECT_ID:
+  GCP_REGION:
+  GCP_SERVICE_ACCOUNT_KEY:
   GCP_ZONE_1:
   GCP_ZONE_2:
   GCP_ZONE_3:

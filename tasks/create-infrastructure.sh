@@ -22,9 +22,13 @@ if [[ ${PCF_ERT_SSL_CERT} == "" ]]; then
   pcf_ert_ssl_key=$(cat sys.${pcf_ert_domain}.key)
 fi
 
+export GOOGLE_CREDENTIALS=${GCP_SERVICE_ACCOUNT_KEY}
+export GOOGLE_PROJECT=${GCP_PROJECT_ID}
+export GOOGLE_REGION=${GCP_REGION}
+
 /opt/terraform/terraform plan \
-  -var "gcp_proj_id=${GOOGLE_PROJECT}" \
-  -var "gcp_region=${GOOGLE_REGION}" \
+  -var "gcp_proj_id=${GCP_PROJECT_ID}" \
+  -var "gcp_region=${GCP_REGION}" \
   -var "gcp_zone_1=${GCP_ZONE_1}" \
   -var "gcp_zone_2=${GCP_ZONE_2}" \
   -var "gcp_zone_3=${GCP_ZONE_3}" \
@@ -43,11 +47,11 @@ fi
   -state-out $root/create-infrastructure-output/terraform-$version.tfstate \
   terraform-$version.tfplan
 
-echo $GOOGLE_CREDENTIALS > /tmp/blah
+echo $GCP_SERVICE_ACCOUNT_KEY > /tmp/blah
 gcloud auth activate-service-account --key-file /tmp/blah
 rm -rf /tmp/blah
 
-gcloud config set project $GOOGLE_PROJECT
+gcloud config set project $GCP_PROJECT_ID
 gcloud config set compute/region $GCP_REGION
 
 function fn_get_ip {

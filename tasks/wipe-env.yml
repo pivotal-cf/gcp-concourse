@@ -15,9 +15,9 @@ outputs:
 - name: wipe-output
 
 params:
-  GOOGLE_PROJECT:
-  GOOGLE_REGION:
-  GOOGLE_SERVICE_ACCOUNT_KEY:
+  GCP_PROJECT_ID:
+  GCP_REGION:
+  GCP_SERVICE_ACCOUNT_KEY:
 
 run:
   path: gcp-concourse/tasks/wipe-env.sh

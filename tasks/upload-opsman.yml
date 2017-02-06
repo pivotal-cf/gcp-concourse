@@ -11,9 +11,9 @@ inputs:
 - name: pivnet-opsmgr
 
 params:
-  GOOGLE_PROJECT:
-  GOOGLE_REGION:
-  GOOGLE_CREDENTIALS:
+  GCP_PROJECT_ID:
+  GCP_REGION:
+  GCP_SERVICE_ACCOUNT_KEY:
 
 run:
   path: gcp-concourse/tasks/upload-opsman.sh
