@@ -16,10 +16,10 @@ pcf_ert_ssl_cert=$PCF_ERT_SSL_CERT
 pcf_ert_ssl_key=$PCF_ERT_SSL_KEY
 
 if [[ ${PCF_ERT_SSL_CERT} == "" ]]; then
-  echo "Generating Self Signed Certs for sys.${pcf_ert_domain} & cfapps.${PCF_ERT_DOMAIN} ..."
-  ert-concourse/scripts/ssl/gen_ssl_certs.sh "sys.${pcf_ert_domain}" "cfapps.${pcf_ert_domain}"
-  pcf_ert_ssl_cert=$(cat sys.${pcf_ert_domain}.crt)
-  pcf_ert_ssl_key=$(cat sys.${pcf_ert_domain}.key)
+  echo "Generating Self Signed Certs for sys.${PCF_ERT_DOMAIN} & cfapps.${PCF_ERT_DOMAIN} ..."
+  ert-concourse/scripts/ssl/gen_ssl_certs.sh "sys.${PCF_ERT_DOMAIN}" "cfapps.${PCF_ERT_DOMAIN}"
+  pcf_ert_ssl_cert=$(cat sys.${PCF_ERT_DOMAIN}.crt)
+  pcf_ert_ssl_key=$(cat sys.${PCF_ERT_DOMAIN}.key)
 fi
 
 export GOOGLE_CREDENTIALS=${GCP_SERVICE_ACCOUNT_KEY}
@@ -68,11 +68,11 @@ pub_ip_opsman=$(fn_get_ip "opsman")
 
 echo "Please configure DNS as follows:"
 echo "----------------------------------------------------------------------------------------------"
-echo "*.sys.${pcf_ert_domain} == ${pub_ip_global_pcf}"
-echo "*.cfapps.${pcf_ert_domain} == ${pub_ip_global_pcf}"
-echo "ssh.sys.${pcf_ert_domain} == ${pub_ip_ssh_and_doppler}"
-echo "doppler.sys.${pcf_ert_domain} == ${pub_ip_ssh_and_doppler}"
-echo "loggregator.sys.${pcf_ert_domain} == ${pub_ip_ssh_and_doppler}"
-echo "tcp.${pcf_ert_domain} == ${pub_ip_ssh_tcp_lb}"
-echo "opsman.${pcf_ert_domain} == ${pub_ip_opsman}"
+echo "*.sys.${PCF_ERT_DOMAIN} == ${pub_ip_global_pcf}"
+echo "*.cfapps.${PCF_ERT_DOMAIN} == ${pub_ip_global_pcf}"
+echo "ssh.sys.${PCF_ERT_DOMAIN} == ${pub_ip_ssh_and_doppler}"
+echo "doppler.sys.${PCF_ERT_DOMAIN} == ${pub_ip_ssh_and_doppler}"
+echo "loggregator.sys.${PCF_ERT_DOMAIN} == ${pub_ip_ssh_and_doppler}"
+echo "tcp.${PCF_ERT_DOMAIN} == ${pub_ip_ssh_tcp_lb}"
+echo "opsman.${PCF_ERT_DOMAIN} == ${pub_ip_opsman}"
 echo "----------------------------------------------------------------------------------------------"
