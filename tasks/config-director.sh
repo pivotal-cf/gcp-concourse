@@ -26,7 +26,7 @@ cat > opsman.json <<EOF
     "network_collection[networks_attributes][0][guid]": "0",
     "network_collection[networks_attributes][0][name]": "infrastructure",
     "network_collection[networks_attributes][0][service_network]": "0",
-    "network_collection[networks_attributes][0][subnets][0][iaas_identifier]": "${gcp_terraform_prefix}-virt-net/${gcp_terraform_prefix}-subnet-infrastructure-${gcp_region}/${gcp_region}",
+    "network_collection[networks_attributes][0][subnets][0][iaas_identifier]": "${gcp_resource_prefix}-virt-net/${gcp_resource_prefix}-subnet-infrastructure-${gcp_region}/${gcp_region}",
     "network_collection[networks_attributes][0][subnets][0][cidr]": "192.168.101.0/26",
     "network_collection[networks_attributes][0][subnets][0][reserved_ip_ranges]": "192.168.101.1-192.168.101.9",
     "network_collection[networks_attributes][0][subnets][0][dns]": "192.168.101.1,8.8.8.8",
@@ -35,7 +35,7 @@ cat > opsman.json <<EOF
     "network_collection[networks_attributes][1][guid]": "1",
     "network_collection[networks_attributes][1][name]": "ert",
     "network_collection[networks_attributes][1][service_network]": "0",
-    "network_collection[networks_attributes][1][subnets][0][iaas_identifier]": "${gcp_terraform_prefix}-virt-net/${gcp_terraform_prefix}-subnet-ert-${gcp_region}/${gcp_region}",
+    "network_collection[networks_attributes][1][subnets][0][iaas_identifier]": "${gcp_resource_prefix}-virt-net/${gcp_resource_prefix}-subnet-ert-${gcp_region}/${gcp_region}",
     "network_collection[networks_attributes][1][subnets][0][cidr]": "192.168.16.0/22",
     "network_collection[networks_attributes][1][subnets][0][reserved_ip_ranges]": "192.168.16.1-192.168.16.9",
     "network_collection[networks_attributes][1][subnets][0][dns]": "192.168.16.1,8.8.8.8",
@@ -44,7 +44,7 @@ cat > opsman.json <<EOF
     "network_collection[networks_attributes][2][guid]": "2",
     "network_collection[networks_attributes][2][name]": "services-1",
     "network_collection[networks_attributes][2][service_network]": "1",
-    "network_collection[networks_attributes][2][subnets][0][iaas_identifier]": "${gcp_terraform_prefix}-virt-net/${gcp_terraform_prefix}-subnet-services-1-${gcp_region}/${gcp_region}",
+    "network_collection[networks_attributes][2][subnets][0][iaas_identifier]": "${gcp_resource_prefix}-virt-net/${gcp_resource_prefix}-subnet-services-1-${gcp_region}/${gcp_region}",
     "network_collection[networks_attributes][2][subnets][0][cidr]": "192.168.20.0/22",
     "network_collection[networks_attributes][2][subnets][0][reserved_ip_ranges]": "192.168.20.1-192.168.20.9",
     "network_collection[networks_attributes][2][subnets][0][dns]": "192.168.20.1,8.8.8.8",
@@ -72,7 +72,7 @@ EOF
 
 iaas_configuration_json=$(echo "{
   \"iaas_configuration[project]\": \"${gcp_proj_id}\",
-  \"iaas_configuration[default_deployment_tag]\": \"${gcp_terraform_prefix}\",
+  \"iaas_configuration[default_deployment_tag]\": \"${gcp_resource_prefix}\",
   \"access_type\": \"keys\",
   \"iaas_configuration[auth_json]\":
     $(echo ${gcp_svc_acct_key})
