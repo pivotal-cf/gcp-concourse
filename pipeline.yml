@@ -247,13 +247,10 @@ jobs:
       gcp_storage_access_key: {{gcp_storage_access_key}}
       gcp_storage_secret_key: {{gcp_storage_secret_key}}
       gcp_svc_acct_key: {{gcp_service_account_key}}
-      pcf_az_1: {{gcp_zone_1}}
-      pcf_az_2: {{gcp_zone_2}}
-      pcf_az_3: {{gcp_zone_3}}
       pcf_ert_domain: {{pcf_ert_domain}}
       pcf_opsman_admin: {{pcf_opsman_admin_username}}
       pcf_opsman_admin_passwd: {{pcf_opsman_admin_password}}
-      gcp_resource_prefix: {{gcp_resource_prefix}}
+      terraform_prefix: {{gcp_resource_prefix}}
   - task: configure-ert
     file: ert-concourse/ci/tasks/configure-ert.yml
     params:
@@ -266,7 +263,7 @@ jobs:
       pcf_ert_domain: {{pcf_ert_domain}}
       pcf_opsman_admin: {{pcf_opsman_admin_username}}
       pcf_opsman_admin_passwd: {{pcf_opsman_admin_password}}
-      gcp_resource_prefix: {{gcp_resource_prefix}}
+      terraform_prefix: {{gcp_resource_prefix}}
   - task: deploy
     file: ert-concourse/ci/tasks/deploy-ert.yml
     params:
