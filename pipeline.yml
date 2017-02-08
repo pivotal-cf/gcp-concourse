@@ -39,8 +39,8 @@ resources:
 - name: ert-concourse
   type: git
   source:
-    uri: https://github.com/c0-ops/ert-concourse.git
-    branch: master
+    uri: https://github.com/dlapiduz/ert-concourse.git
+    branch: fix-db-creds
 
 - name: pivnet-opsmgr
   type: pivnet
@@ -250,6 +250,8 @@ jobs:
       pcf_ert_domain: {{pcf_ert_domain}}
       pcf_opsman_admin: {{pcf_opsman_admin_username}}
       pcf_opsman_admin_passwd: {{pcf_opsman_admin_password}}
+      ert_sql_db_username: {{ert_sql_db_username}}
+      ert_sql_db_password: {{ert_sql_db_password}}
       terraform_prefix: {{gcp_resource_prefix}}
   - task: configure-ert
     file: ert-concourse/ci/tasks/configure-ert.yml
