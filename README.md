@@ -32,6 +32,16 @@ fly -t lite login -c http://192.168.100.4:8080
 
 If you want to use Minio as your S3-compatible object store:
 
+OSX:
+
+```
+docker run -e MINIO_ACCESS_KEY="example-access-key" \
+           -e MINIO_SECRET_KEY="example-secret-key" \
+           minio/minio server /tmp
+```
+
+Linux:
+
 ```
 docker run -e MINIO_ACCESS_KEY="example-access-key" \
            -e MINIO_SECRET_KEY="example-secret-key" \
